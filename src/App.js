@@ -76,9 +76,7 @@ export default function App() {
     //we're not already loading a user, and the user is not set
 
     //Well, time to get the user
-    //GetUser(Session, setLoading,setUser,setInvalidSession)
-
-    //TODO Actually code this
+    GetUser(Session, setLoading,setUser,setInvalidSession)
   }
 
   return (
@@ -99,6 +97,11 @@ export default function App() {
         <Route path='/Curriculums'>
           {Session
           ? <>Curriculums here</>
+          : <Redirect to='/Login'/> }
+        </Route>
+        <Route path='/Profile'>
+          {Session
+          ? <>Profile here</>
           : <Redirect to='/Login'/> }
         </Route>
         <Route path='/Admin'>
