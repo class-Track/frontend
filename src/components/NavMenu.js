@@ -63,7 +63,7 @@ export default function ButtonAppBar(props) {
                 props.Session
                   ? <> {props.User
                     ? <>
-                      <td width={'200px'}><WelcomeLabel user={props.User}/></td>
+                      <td width={'200px'}><WelcomeLabel user={props.User} DarkMode={props.DarkMode}/></td>
                       <td width={'20px'}><SettingsButton User={props.User} Session={props.Session} DarkMode={props.DarkMode} RefreshUser={props.RefreshUser} /></td>
                       <td width={'20px'}><UserButton User={props.User}/></td>
                       <td width={'20px'}><LogoutButton /></td>
