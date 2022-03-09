@@ -45,6 +45,21 @@ const GenerateDelete = (SessionID) => {
 
 export const GetUser = (Session, setLoading, setUser, setInvalidSession) =>{
 
+    //TODO REMOVE ONCE WE HAVE THE API DONE. OR IF ANYTHING UPDATE THIS SAMPLE USER WITH AN ACTUAL SAMPLE USER BECAUSE THIS IS ONE FROM NECO
+    setUser({
+        "name":"Chopo",
+        "imageURL":"https://avatars.githubusercontent.com/u/49919240",
+        "isAdmin":true,
+        "isGov":false,
+        "isSDC":false,
+        "isUploader":false,
+        "idGenerator":{},
+        "id":"57174",
+        "degree":{ "name":"Software Engineering" }
+    });
+
+    return;
+
     setLoading(true);
     fetch(APIURL + "/API/Users", GenerateGet(Session))
       .then(response => {
