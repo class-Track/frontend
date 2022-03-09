@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import {
   Dialog, DialogActions, DialogContent, DialogContentText,
-  DialogTitle, IconButton, AppBar, CircularProgress, Toolbar, Typography, Button,
+  DialogTitle, IconButton, AppBar, CircularProgress, Toolbar, Typography, Button, TextField
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import UserButton from "./navmenu/UserButton";
 import Hamburger from "./navmenu/Hamburger";
 import LogoutButton from "./navmenu/LogoutButton";
+import SettingsButton from "./navmenu/SettingsButton";
 
 // react.school/material-ui
 
@@ -19,11 +20,23 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar
 }));
 
+const WelcomeLabel = (props) => {
+
+  return(
+    <table>
+      <tr><td><b>Welcome {props.user.name}!</b></td></tr>
+      <tr><td style={{color:'#cccccc', fontSize:'.7em'}}>{props.user.degree ? props.user.degree.name : "Unknown Degree"}</td></tr>
+    </table>
+  );
+
+}
+
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [query,setQuery] = useState("");
 
   const sendToLogin = (event) => {
     history.push("/Login")
@@ -39,23 +52,30 @@ export default function ButtonAppBar(props) {
     <React.Fragment>
       <AppBar color={"primary"} enableColorOnDark>
         <Toolbar>
-          <IconButton onClick={() => { setMenuOpen(true) }} style={{ marginRight: "15px" }}><MenuIcon /></IconButton>
-          <a href="/">
-            <img src={"ct/logo.png"} alt="ClassTrack Logo" height="50" style={{marginTop:'7px'}} /></a>
-          <Typography variant="h6" className={classes.title} style={{ marginLeft: "10px", fontFamily: 'DM Serif Display' }}> </Typography>
-          {
-            props.Session
-              ? <> {props.User
-                ? <React.Fragment>
-                  <UserButton User={props.User} Session={props.Session} DarkMode={props.DarkMode} RefreshUser = {props.RefreshUser} />
-                  <LogoutButton />
-                </React.Fragment>
-                : <CircularProgress color="secondary" />}</>
+          <table width={'100%'}>
+            <tr>
+              <td width={'20px'}><IconButton onClick={() => { setMenuOpen(true) }} style={{ marginRight: "15px" }}><MenuIcon /></IconButton></td>
+              <td width={'70px'}><a href="/"><img src={`ct/widecenter${(props.DarkMode ? 'white' : '')}.png`} alt="ClassTrack Logo" height="40" style={{ marginTop: '7px' }} /></a></td>
+              <td><TextField placeholder="Search" value={query} onChange={(event)=>{setQuery(event.target.value)}} fullWidth style={{paddingRight:"20px", paddingLeft:'20px'}}/></td>
+              {/* This will probably need to be switched to an Autocomplete */}
+              {
+                props.Session
+                  ? <> {props.User
+                    ? <>
+                      <td width={'200px'}><WelcomeLabel user={props.User}/></td>
+                      <td width={'20px'}><SettingsButton User={props.User} Session={props.Session} DarkMode={props.DarkMode} RefreshUser={props.RefreshUser} /></td>
+                      <td width={'20px'}><UserButton User={props.User}/></td>
+                      <td width={'20px'}><LogoutButton /></td>
+                    </>: <td><CircularProgress color="secondary" /></td>}</>
 
-              : <React.Fragment>
-                <Button color="inherit" onClick={sendToLogin}> Log In </Button>
-                <Button color="inherit" onClick={sendToRegister}> Register </Button>
-              </React.Fragment>}
+                  : <>
+                    <td width={'20px'}><Button color="inherit" onClick={sendToLogin}> Log In </Button></td>
+                    <td width={'20px'}><Button color="inherit" onClick={sendToRegister}> Register </Button></td>
+                  </>}
+
+            </tr>
+          </table>
+          <Typography variant="h6" className={classes.title} style={{ marginLeft: "10px", fontFamily: 'DM Serif Display' }}> </Typography>
         </Toolbar>
       </AppBar>
       <Toolbar style={{ marginBottom: "20px" }} />
