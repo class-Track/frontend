@@ -24,8 +24,9 @@ const WelcomeLabel = (props) => {
 
   return(
     <table>
-      <tr><td><b>Welcome {props.user.name}!</b></td></tr>
-      <tr><td style={{color:'#cccccc', fontSize:'.7em'}}>{props.user.degree ? props.user.degree.name : "Unknown Degree"}</td></tr>
+      <tr><td><b>Welcome {props.user.name}!</b><br/>
+      <div style={{color:(props.DarkMode ? '#cccccc' : '#666666'), fontSize:'.7em'}}>{props.user.degree ? props.user.degree.name : "Unknown Degree"}</div>
+      </td></tr>
     </table>
   );
 
