@@ -38,7 +38,8 @@ export default function Hamburger(props) {
                 <Divider />
                 <List>
                     {/* TODO: Make a Curriculum icon */}
-                  <GenerateListItem text='Curriculums' url='/Curriculums' image='person.png' imageAlt='Curriculum' DarkMode={props.DarkMode} PushTo={PushTo} />
+                  <GenerateListItem text='Home' url='/Curriculums' image='person.png' imageAlt='Curriculum' DarkMode={props.DarkMode} PushTo={PushTo} />
+                  <GenerateListItem text='Community' url='/Community' image='person.png' imageAlt='Curriculum' DarkMode={props.DarkMode} PushTo={PushTo} />
                   {
                     props.User && (props.User.isAdmin)
                       ? <GenerateListItem text='Administrate' url='/Admin' image='admin.png' imageAlt='Admin' DarkMode={props.DarkMode} PushTo={PushTo} />
