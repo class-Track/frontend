@@ -10,6 +10,7 @@ import { GetUser } from './API';
 import { darkTheme, lightTheme } from './Themes';
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Footer } from './Footer';
+import Home from './components/Home';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -84,7 +85,7 @@ export default function App() {
       <CssBaseline />
       <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
       <Route exact path='/'>
-          <>Home component here</>
+          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
         </Route>
         <Route path='/Login'>
           {Session ? <Redirect to='/Curriculums'/>
