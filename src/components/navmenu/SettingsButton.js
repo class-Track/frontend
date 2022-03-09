@@ -1,5 +1,5 @@
 import { Settings } from "@mui/icons-material";
-import { IconButton, Divider, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
 export default function SettingsButton(props) {

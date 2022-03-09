@@ -1,14 +1,7 @@
-import { Button, Divider, IconButton, Menu, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
+import { IconButton} from "@mui/material";
 
-export default function UserButton(props) {
-
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-  
-    const handleClick = (event) => { setAnchorEl(event.currentTarget); };
-    const handleClose = () => { setAnchorEl(null); };
-  
+export default function UserButton(props) {  
     return (
         <a href="/profile">
             <IconButton>
