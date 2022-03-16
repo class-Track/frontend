@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Route, Redirect } from 'react-router';
 import { ThemeProvider } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
-import useWindowDimensions from './components/hooks/useWindowDimensions';
-import  Layout  from './components/Layout';
+import useWindowDimensions from './components/WindowDimensions/useWindowDimensions';
+import  Layout  from './NavMenuLayout';
 
 import './App.css';
 import { GetUser } from './API';
 import { darkTheme, lightTheme } from './Themes';
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Footer } from './Footer';
-import Home from './components/Home';
+import Home from './components/LandingPage/LandingPage';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
