@@ -11,6 +11,8 @@ import { darkTheme, lightTheme } from './Themes';
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Footer } from './Footer';
 import Home from './components/LandingPage/LandingPage';
+import SignUp from './components/UserAuth/SignUp';
+import Login from './components/UserAuth/Login';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -80,20 +82,20 @@ export default function App() {
     GetUser(Session, setLoading,setUser,setInvalidSession)
   }
 
+  // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
       <Route exact path='/'>
           <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
         </Route>
         <Route path='/Login'>
           {Session ? <Redirect to='/Curriculums'/>
-          : <>Login here</>  }          
+          : <Login/>  }          
         </Route>
-        <Route path='/Register'>
+        <Route path='/SignUp'>
           {Session ? <Redirect to='/Curriculums'/>
-          : <>Register here</>  }          
+          : <SignUp/>  }          
         </Route>
         <Route path='/Curriculums'>
           {Session
@@ -115,7 +117,6 @@ export default function App() {
               } </> : <Redirect to='/Login'/> }
         </Route>
       <Footer/>
-      </Layout>
     </ThemeProvider>
   );
 }
