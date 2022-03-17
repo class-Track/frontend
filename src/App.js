@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router';
 import { ThemeProvider } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
 import useWindowDimensions from './components/WindowDimensions/useWindowDimensions';
-import  Layout  from './NavMenuLayout';
+import Layout from './NavMenuLayout';
 
 import './App.css';
 import { GetUser } from './API';
@@ -17,7 +17,7 @@ import Login from './components/UserAuth/Login';
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
 
-function CenteredCircular() { return( <div style={{textAlign:'center'}}> <CircularProgress/> </div> ) }
+function CenteredCircular() { return (<div style={{ textAlign: 'center' }}> <CircularProgress /> </div>) }
 
 export default function App() {
 
@@ -79,7 +79,7 @@ export default function App() {
     //we're not already loading a user, and the user is not set
 
     //Well, time to get the user
-    GetUser(Session, setLoading,setUser,setInvalidSession)
+    GetUser(Session, setLoading, setUser, setInvalidSession)
   }
 
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
@@ -87,36 +87,37 @@ export default function App() {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Route exact path='/'>
-          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
-        </Route>
-        <Route path='/Login'>
-          {Session ? <Redirect to='/Curriculums'/>
-          : <Login/>  }          
-        </Route>
-        <Route path='/SignUp'>
-          {Session ? <Redirect to='/Curriculums'/>
-          : <SignUp/>  }          
-        </Route>
-        <Route path='/Curriculums'>
-          {Session
+        {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
+        {Session ? <Redirect to='/Curriculums' /> : <Login />}
+      </Route>
+      <Route path='/Login'>
+        {Session ? <Redirect to='/Curriculums' />
+          : <Login />}
+      </Route>
+      <Route path='/SignUp'>
+        {Session ? <Redirect to='/Curriculums' />
+          : <SignUp />}
+      </Route>
+      <Route path='/Curriculums'>
+        {Session
           ? <>Curriculums here</>
-          : <Redirect to='/Login'/> }
-        </Route>
-        <Route path='/Profile'>
-          {Session
+          : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/Profile'>
+        {Session
           ? <>Profile here</>
-          : <Redirect to='/Login'/> }
-        </Route>
-        <Route path='/Admin'>
-        { Session ? <>
-              { User ? <> {
-                    User.isAdmin //Set appropriate role names
-                    ? <>Admin component here</>
-                    : <>You do not have permission to access this resource</> }
-                </> : <CenteredCircular/>
-              } </> : <Redirect to='/Login'/> }
-        </Route>
-      <Footer/>
+          : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/Admin'>
+        {Session ? <>
+          {User ? <> {
+            User.isAdmin //Set appropriate role names
+              ? <>Admin component here</>
+              : <>You do not have permission to access this resource</>}
+          </> : <CenteredCircular />
+          } </> : <Redirect to='/Login' />}
+      </Route>
+      {/* <Footer /> */}
     </ThemeProvider>
   );
 }

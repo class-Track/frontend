@@ -86,7 +86,7 @@ export const LogIn = (email, password, setSession, setLoading, setError) => {
     fetch(APIURL + "/classTrack/login", GenerateJSONPost(null,{
         "email":email,"password":password
     }))
-    .then(a=>{
+    .then(response=>{
         if (!response.ok) {
             setError(true)
             return undefined;
