@@ -18,15 +18,15 @@ import axios from 'axios';
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
     const history = useHistory();
     const API = 'http://127.0.0.1:5000/classTrack/'
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        axios({
+        await axios({
             method: 'POST',
             url: API + 'login',
             data: {
@@ -35,6 +35,8 @@ export default function SignIn() {
             }
         }).then(res => {
             console.log('results:', res.data)
+            props.SetSession(res.data)
+            history.push('/Main')
         }).catch(error => {
             console.log('error:', error)
         });

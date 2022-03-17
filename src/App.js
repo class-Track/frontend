@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
 import useWindowDimensions from './components/WindowDimensions/useWindowDimensions';
 import Layout from './NavMenuLayout';
-
 import './App.css';
 import { GetUser } from './API';
 import { darkTheme, lightTheme } from './Themes';
@@ -13,6 +12,7 @@ import { Footer } from './Footer';
 import Home from './components/LandingPage/LandingPage';
 import SignUp from './components/UserAuth/SignUp';
 import Login from './components/UserAuth/Login';
+import Main from './components/Main/Main';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -47,6 +47,11 @@ export default function App() {
     //set the usestates
     setSession(SessionID)
     setInvalidSession(false)
+  }
+
+  const removeSession = () => {
+    setSession(null)
+    setInvalidSession(true)
   }
 
   const ToggleDarkMode = () => {
@@ -88,14 +93,14 @@ export default function App() {
       <CssBaseline />
       <Route exact path='/'>
         {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
-        {Session ? <Redirect to='/Curriculums' /> : <Login />}
+        {Session ? <Redirect to='/Main' /> : <Login />}
       </Route>
       <Route path='/Login'>
-        {Session ? <Redirect to='/Curriculums' />
-          : <Login />}
+        {Session ? <Redirect to='/Main' />
+          : <Login SetSession={SetSession} />}
       </Route>
       <Route path='/SignUp'>
-        {Session ? <Redirect to='/Curriculums' />
+        {Session ? <Redirect to='/Main' />
           : <SignUp />}
       </Route>
       <Route path='/Curriculums'>
@@ -116,6 +121,9 @@ export default function App() {
               : <>You do not have permission to access this resource</>}
           </> : <CenteredCircular />
           } </> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Main">
+        {Session ? <Main removeSession={removeSession} /> : <Redirect to='/Login' />}
       </Route>
       {/* <Footer /> */}
     </ThemeProvider>
