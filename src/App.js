@@ -39,7 +39,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(undefined);
 
   //This is the set session that must be passed down
-  const SetSession = (SessionID) => {
+  const saveSession = (SessionID) => {
 
     //Set the cookie
     cookies.set("SessionID", SessionID)
@@ -93,11 +93,11 @@ export default function App() {
       <CssBaseline />
       <Route exact path='/'>
         {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
-        {Session ? <Redirect to='/Main' /> : <Login />}
+        {Session ? <Redirect to='/Main' /> : <Redirect to='/Login' />}
       </Route>
       <Route path='/Login'>
         {Session ? <Redirect to='/Main' />
-          : <Login SetSession={SetSession} />}
+          : <Login saveSession={saveSession} />}
       </Route>
       <Route path='/SignUp'>
         {Session ? <Redirect to='/Main' />
