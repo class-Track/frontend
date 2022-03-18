@@ -19,9 +19,10 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
 	const history = useHistory();
-	const API = "http://127.0.0.1:5000/classTrack/";
+	// const API = "https://classtrack-backend.herokuapp.com/";
+	const API = props.API
 	const [degrees, setDegrees] = React.useState([]);
 
 	const handleSubmit = (event) => {

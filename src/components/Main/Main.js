@@ -9,7 +9,8 @@ import axios from 'axios';
 export default function Main(props) {
 
     const history = useHistory();
-    const API = 'http://127.0.0.1:5000/classTrack/'
+    // const API = 'https://classtrack-backend.herokuapp.com/'
+    const API = props.API
     const cookies = new Cookies()
     const [session_id, setSessionID] = useState(cookies.get("SessionID"))
     const [userData, setUserData] = useState(null)

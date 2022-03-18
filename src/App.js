@@ -21,6 +21,8 @@ function CenteredCircular() { return (<div style={{ textAlign: 'center' }}> <Cir
 
 export default function App() {
 
+  const API = 'https://classtrack-backend.herokuapp.com/classTrack/'
+
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
   const { width } = useWindowDimensions();
   const Vertical = width < 900;
@@ -97,11 +99,11 @@ export default function App() {
       </Route>
       <Route path='/Login'>
         {Session ? <Redirect to='/Main' />
-          : <Login saveSession={saveSession} />}
+          : <Login saveSession={saveSession} API={API} />}
       </Route>
       <Route path='/SignUp'>
         {Session ? <Redirect to='/Main' />
-          : <SignUp />}
+          : <SignUp API={API} />}
       </Route>
       <Route path='/Curriculums'>
         {Session
@@ -123,7 +125,7 @@ export default function App() {
           } </> : <Redirect to='/Login' />}
       </Route>
       <Route path="/Main">
-        {Session ? <Main removeSession={removeSession} /> : <Redirect to='/Login' />}
+        {Session ? <Main removeSession={removeSession} API={API} /> : <Redirect to='/Login' />}
       </Route>
       {/* <Footer /> */}
     </ThemeProvider>

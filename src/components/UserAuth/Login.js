@@ -20,7 +20,8 @@ const theme = createTheme();
 
 export default function SignIn(props) {
     const history = useHistory();
-    const API = 'http://127.0.0.1:5000/classTrack/'
+    // const API = 'https://classtrack-backend.herokuapp.com/'
+    const API = props.API
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,6 +30,7 @@ export default function SignIn(props) {
         await axios({
             method: 'POST',
             url: API + 'login',
+            headers: { 'Content-Type': 'application/json' },
             data: {
                 email: data.get('email'),
                 password: data.get('password')
