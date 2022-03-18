@@ -2,22 +2,26 @@ import React, { useState } from 'react';
 import { Route, Redirect } from 'react-router';
 import { ThemeProvider } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
-import useWindowDimensions from './components/hooks/useWindowDimensions';
-import  Layout  from './components/Layout';
-
+import useWindowDimensions from './components/WindowDimensions/useWindowDimensions';
+import Layout from './NavMenuLayout';
 import './App.css';
 import { GetUser } from './API';
 import { darkTheme, lightTheme } from './Themes';
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Footer } from './Footer';
-import Home from './components/Home';
+import Home from './components/LandingPage/LandingPage';
+import SignUp from './components/UserAuth/SignUp';
+import Login from './components/UserAuth/Login';
+import Main from './components/Main/Main';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
 
-function CenteredCircular() { return( <div style={{textAlign:'center'}}> <CircularProgress/> </div> ) }
+function CenteredCircular() { return (<div style={{ textAlign: 'center' }}> <CircularProgress /> </div>) }
 
 export default function App() {
+
+  const API = 'https://classtrack-backend.herokuapp.com/classTrack/'
 
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
   const { width } = useWindowDimensions();
@@ -37,7 +41,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(undefined);
 
   //This is the set session that must be passed down
-  const SetSession = (SessionID) => {
+  const saveSession = (SessionID) => {
 
     //Set the cookie
     cookies.set("SessionID", SessionID)
@@ -45,6 +49,11 @@ export default function App() {
     //set the usestates
     setSession(SessionID)
     setInvalidSession(false)
+  }
+
+  const removeSession = () => {
+    setSession(null)
+    setInvalidSession(true)
   }
 
   const ToggleDarkMode = () => {
@@ -77,45 +86,48 @@ export default function App() {
     //we're not already loading a user, and the user is not set
 
     //Well, time to get the user
-    GetUser(Session, setLoading,setUser,setInvalidSession)
+    GetUser(Session, setLoading, setUser, setInvalidSession)
   }
 
+  // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
       <Route exact path='/'>
-          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
-        </Route>
-        <Route path='/Login'>
-          {Session ? <Redirect to='/Curriculums'/>
-          : <>Login here</>  }          
-        </Route>
-        <Route path='/Register'>
-          {Session ? <Redirect to='/Curriculums'/>
-          : <>Register here</>  }          
-        </Route>
-        <Route path='/Curriculums'>
-          {Session
+        {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
+        {Session ? <Redirect to='/Main' /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/Login'>
+        {Session ? <Redirect to='/Main' />
+          : <Login saveSession={saveSession} API={API} />}
+      </Route>
+      <Route path='/SignUp'>
+        {Session ? <Redirect to='/Main' />
+          : <SignUp API={API} />}
+      </Route>
+      <Route path='/Curriculums'>
+        {Session
           ? <>Curriculums here</>
-          : <Redirect to='/Login'/> }
-        </Route>
-        <Route path='/Profile'>
-          {Session
+          : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/Profile'>
+        {Session
           ? <>Profile here</>
-          : <Redirect to='/Login'/> }
-        </Route>
-        <Route path='/Admin'>
-        { Session ? <>
-              { User ? <> {
-                    User.isAdmin //Set appropriate role names
-                    ? <>Admin component here</>
-                    : <>You do not have permission to access this resource</> }
-                </> : <CenteredCircular/>
-              } </> : <Redirect to='/Login'/> }
-        </Route>
-      <Footer/>
-      </Layout>
+          : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/Admin'>
+        {Session ? <>
+          {User ? <> {
+            User.isAdmin //Set appropriate role names
+              ? <>Admin component here</>
+              : <>You do not have permission to access this resource</>}
+          </> : <CenteredCircular />
+          } </> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Main">
+        {Session ? <Main removeSession={removeSession} API={API} /> : <Redirect to='/Login' />}
+      </Route>
+      {/* <Footer /> */}
     </ThemeProvider>
   );
 }

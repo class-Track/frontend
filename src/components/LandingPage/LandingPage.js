@@ -30,8 +30,15 @@ export default function Home(props) {
       </div>
 
       <h2 style={{ textAlign: 'center' }}>Are you ready to stay on track?</h2>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Button onClick={()=>{history.push("/Login")}}variant={'contained'}> Get Started</Button>
+      <div style={{ marginTop: '20px' }}>
+      <Grid container direction='row' justifyContent='center' spacing={2} alignItems='center'>
+        <Grid item>
+          <Button onClick={()=>{history.push("/Login")}}variant={'contained'}> Sign in</Button>
+        </Grid>
+        <Grid item>
+          <Button onClick={()=>{history.push("/SignUp")}}variant={'contained'}> Sign up</Button>
+        </Grid>
+      </Grid>
       </div>
       <br />
       <Grid container style={{ minWidth: '100%' }} spacing={2}>

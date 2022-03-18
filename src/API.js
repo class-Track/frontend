@@ -61,7 +61,7 @@ export const GetUser = (Session, setLoading, setUser, setInvalidSession) =>{
     return;
 
     setLoading(true);
-    fetch(APIURL + "/API/Users", GenerateGet(Session))
+    fetch(APIURL + "/classTrack/me", GenerateGet(Session))
       .then(response => {
         if (!response.ok) {
           setInvalidSession(true)
@@ -79,6 +79,28 @@ export const GetUser = (Session, setLoading, setUser, setInvalidSession) =>{
 
 }
 
+export const LogIn = (email, password, setSession, setLoading, setError) => {
+
+    setLoading(true)
+
+    fetch(APIURL + "/classTrack/login", GenerateJSONPost(null,{
+        "email":email,"password":password
+    }))
+    .then(response=>{
+        if (!response.ok) {
+            setError(true)
+            return undefined;
+          }
+          return response.json()
+      }).then( data => {
+
+        setSession(data)
+        setLoading(false)
+
+      })
+
+}
+
 export const LogOut = () => {
 
     const history = useHistory();
@@ -87,10 +109,9 @@ export const LogOut = () => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'SessionID' : cookies.get('SessionID') },
-        body : "\"" + cookies.get('SessionID') + "\""
       };
 
-    fetch(APIURL + "/API/Users/Out",requestOptions).then( response => {
+    fetch(APIURL + "/classTrack/logout",requestOptions).then( response => {
         cookies.remove("SessionID")
         history.go("/")
       })

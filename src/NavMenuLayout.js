@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import NavMenu from './NavMenu';
+import NavMenu from './components/NavBar/NavBar';
 
-export default function Layout(props) {
+export default function NavBarLayout(props) {
   
     return (
       <div>

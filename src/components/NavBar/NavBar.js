@@ -6,10 +6,10 @@ import {
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import UserButton from "./navmenu/UserButton";
-import Hamburger from "./navmenu/Hamburger";
-import LogoutButton from "./navmenu/LogoutButton";
-import SettingsButton from "./navmenu/SettingsButton";
+import UserButton from "../NavBarComponents/UserButton";
+import Hamburger from "../NavBarComponents/Hamburger";
+import LogoutButton from "../NavBarComponents/LogoutButton";
+import SettingsButton from "../NavBarComponents/SettingsButton";
 
 // react.school/material-ui
 
