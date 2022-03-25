@@ -42,26 +42,9 @@ export default function Main(props) {
         })
     }
 
-    const logout = async () => {
-        await axios({
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            url: API + 'logout',
-            data: {
-                session_id: session_id
-            }
-        }).then(res => {
-            console.log('result:', res.data)
-            cookies.remove("SessionID")
-            props.removeSession()
-            history.push('/')
-        }).catch(error => {
-            console.log('error:', error)
-        })
-    }
-
     return (
         <div>
+            <p>Main page works!</p>
             <Grid
                 container
                 direction="column"
@@ -69,7 +52,6 @@ export default function Main(props) {
                 alignItems="center"
             >
                 <Grid item>
-                    <p>Main page works!</p>
                     {userData ?
                         <div>
                             <p>session_id: {session_id}</p>
@@ -81,9 +63,6 @@ export default function Main(props) {
                             <p>isAdmin: {userData.isAdmin.toString()}</p>
                         </div>
                         : <></>}
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" onClick={() => { logout() }}>Log Out</Button>
                 </Grid>
             </Grid>
         </div>

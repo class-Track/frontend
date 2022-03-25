@@ -9,10 +9,15 @@ import { GetUser } from './API';
 import { darkTheme, lightTheme } from './Themes';
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Footer } from './Footer';
-import Home from './components/LandingPage/LandingPage';
+import Home from './components/Main/Home/Home';
 import SignUp from './components/UserAuth/SignUp';
 import Login from './components/UserAuth/Login';
 import Main from './components/Main/Main';
+import Navbar from './components/NavBar/NavBar';
+import Community from './components/Main/Community/Community';
+import Profile from './components/Main/Profile/Profile';
+import Settings from './components/Main/Settings/Settings';
+import Builder from './components/Main/Builder/Builder';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -92,6 +97,9 @@ export default function App() {
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+
+      {Session ? <Navbar removeSession={removeSession} API={API} /> : <></>}
+
       <CssBaseline />
       <Route exact path='/'>
         {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
@@ -110,11 +118,6 @@ export default function App() {
           ? <>Curriculums here</>
           : <Redirect to='/Login' />}
       </Route>
-      <Route path='/Profile'>
-        {Session
-          ? <>Profile here</>
-          : <Redirect to='/Login' />}
-      </Route>
       <Route path='/Admin'>
         {Session ? <>
           {User ? <> {
@@ -126,6 +129,21 @@ export default function App() {
       </Route>
       <Route path="/Main">
         {Session ? <Main removeSession={removeSession} API={API} /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Home">
+        {Session ? <Home /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Community">
+        {Session ? <Community /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Profile">
+        {Session ? <Profile /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Settings">
+        {Session ? <Settings /> : <Redirect to='/Login' />}
+      </Route>
+      <Route path="/Builder">
+        {Session ? <Builder /> : <Redirect to='/Login' />}
       </Route>
       {/* <Footer /> */}
     </ThemeProvider>
