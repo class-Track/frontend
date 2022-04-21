@@ -12,8 +12,8 @@ export default function CurriculumCarrousel(props) {
     const Backward = () => { setStartIndex(startIndex-3) }
 
     return (<>
-        <h3>{props.title}</h3>
-        <Divider />
+        <div style={{fontSize:'1.25em'}}><b>{props.title}</b></div>
+        <Divider style={{marginTop:'5px', marginBottom:'25px'}}/>
         <table width='100%' style={{minHeight:'200px'}}>
             <tr>
                 <td width={1}><IconButton onClick={Backward} disabled={props.loading || !props.curriculums || startIndex === 0}><ArrowLeft /></IconButton></td>
