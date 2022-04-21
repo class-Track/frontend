@@ -13,6 +13,10 @@ import Home from './components/LandingPage/LandingPage';
 import SignUp from './components/UserAuth/SignUp';
 import Login from './components/UserAuth/Login';
 import Main from './components/Main/Main';
+import ProfileSelf from './components/ProfileSelf/ProfileSelf'
+import ProfileUser from './components/ProfileUser/ProfileUser'
+import ProfileUni from './components/ProfileUni/ProfileUni'
+import ProfileDepartment from './components/ProfileDepartment/ProfileDepartment'
 import { useParams } from 'react-router-dom';
 
 //Cookies should only really be accessed here.
@@ -127,21 +131,22 @@ export default function App() {
           : <Redirect to='/Login' />}
       </Route>
       <Route path='/Curriculum/:id'>
+        {/* The curriculum viewer comes later so imma just leave this here for now */}
         <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"Curriculum"}/>
       </Route>
       <Route path='/Profile'>
         {Session
-          ? <>Profile here for current user</>
+          ? <ProfileSelf {...PropsPackage}/>
           : <Redirect to='/Login' />}
       </Route>
       <Route path='/User/:id'>
-        <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"user"}/>
+        <PreIDedDisplay {...PropsPackage} component={ProfileUser} typename={"user"}/>
       </Route>
       <Route path='/Department/:id'>
-        <PreIDedDisplay  {...PropsPackage} component={GenericIDDisplay} typename={"Department"}/>
+        <PreIDedDisplay  {...PropsPackage} component={ProfileDepartment} typename={"Department"}/>
       </Route>
       <Route path='/University/:id'>
-        <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"University"}/>
+        <PreIDedDisplay {...PropsPackage} component={ProfileUni} typename={"University"}/>
       </Route>
       <Route path='/Admin'>
         {Session ? <>
@@ -167,7 +172,5 @@ function PreIDedDisplay(props) {
 }
 
 function GenericIDDisplay(props){
-  
   return(<>Display for {props.typename} with id {props.id}</>)
-
 }
