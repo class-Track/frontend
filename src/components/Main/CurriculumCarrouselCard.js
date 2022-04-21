@@ -46,7 +46,9 @@ function CardButtonRow(props) {
         <ButtonGroup fullWidth variant="outlined">
             <Button LinkComponent={Link} to={`/curriculum/${item.id}`} >View</Button>
             {/* User is passed down from App.js. Check there, or pass down another User object */}
-            <Button disabled={item.user_id !== props.User.id}>Edit</Button>
+            {/* Also please change this link to whatever the builder will use and whatever it will use eventually to specify we're going to build */}
+            <Button LinkComponent={Link} to={`/Builder/${item.id}`} disabled={item.user_id !== props.User.id}>Edit</Button>
+            {/* We will need to define an onclick */}
             <Button onClick={undefined}>Delete</Button>
         </ButtonGroup>
     )
