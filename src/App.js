@@ -158,7 +158,7 @@ export default function App() {
           } </> : <Redirect to='/Login' />}
       </Route>
       <Route path="/Main">
-        {Session ? <Main removeSession={removeSession} API={API} /> : <Redirect to='/Login' />}
+        {Session ? <Main {...PropsPackage} removeSession={removeSession} API={API} /> : <Redirect to='/Login' />}
       </Route>
       {/* <Footer /> */}
     </ThemeProvider>
