@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-
+import CurriculumCarrousel from './CurriculumCarrousel';
+import DummyData from './DummyData.json';
 
 export default function Main(props) {
 
@@ -62,6 +63,7 @@ export default function Main(props) {
 
     return (
         <div>
+            <CurriculumCarrousel {...props} title={'Recent'} loading={false} curriculums={DummyData}/>
             <Grid
                 container
                 direction="column"
