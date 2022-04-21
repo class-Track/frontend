@@ -13,6 +13,7 @@ import Home from './components/LandingPage/LandingPage';
 import SignUp from './components/UserAuth/SignUp';
 import Login from './components/UserAuth/Login';
 import Main from './components/Main/Main';
+import { useParams } from 'react-router-dom';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -21,6 +22,7 @@ function CenteredCircular() { return (<div style={{ textAlign: 'center' }}> <Cir
 
 export default function App() {
 
+  //There's already a const for API in API.js. IDK why there's one here (?)
   const API = 'https://classtrack-backend.herokuapp.com/classTrack/'
 
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
@@ -86,7 +88,21 @@ export default function App() {
     //we're not already loading a user, and the user is not set
 
     //Well, time to get the user
-    GetUser(Session, setLoading, setUser, setInvalidSession)
+    GetUser(Session, setLoading, setUser, setInvalidSession) //TODO: Was this fixed??? Si no please replace this with the thing to get the user!!!!!!
+  }
+
+  //This is a properties package that we pass down to every component from here.
+  //Please pass it down to everything. It defines whether or not dark mode is enabled, whether or not to use vertical display mode, 
+  //provides the session (and if it is invalid) and the user
+  //***We only need to load the user once and its handled by this thing and is then passed down. See the if statement right above this definition***
+  let PropsPackage = {
+    DarkMode:darkMode,
+    Session:Session,
+    InvalidSession:InvalidSession,
+    setSession:setSession,
+    RefreshUser:RefreshUser,
+    User:User,
+    Vertical:Vertical
   }
 
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
@@ -110,10 +126,22 @@ export default function App() {
           ? <>Curriculums here</>
           : <Redirect to='/Login' />}
       </Route>
+      <Route path='/Curriculum/:id'>
+        <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"Curriculum"}/>
+      </Route>
       <Route path='/Profile'>
         {Session
-          ? <>Profile here</>
+          ? <>Profile here for current user</>
           : <Redirect to='/Login' />}
+      </Route>
+      <Route path='/User/:id'>
+        <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"user"}/>
+      </Route>
+      <Route path='/Department/:id'>
+        <PreIDedDisplay  {...PropsPackage} component={GenericIDDisplay} typename={"Department"}/>
+      </Route>
+      <Route path='/University/:id'>
+        <PreIDedDisplay {...PropsPackage} component={GenericIDDisplay} typename={"University"}/>
       </Route>
       <Route path='/Admin'>
         {Session ? <>
@@ -130,4 +158,16 @@ export default function App() {
       {/* <Footer /> */}
     </ThemeProvider>
   );
+}
+
+//This function lets us grab the id and pass it down to any component that needs an "id" field
+function PreIDedDisplay(props) {
+  let { id } = useParams(); //Pass all props except the component we're displaying (because we don't need to do that), and the id
+  return(<props.component {...props} component={undefined} id={id} />)
+}
+
+function GenericIDDisplay(props){
+  
+  return(<>Display for {props.typename} with id {props.id}</>)
+
 }
