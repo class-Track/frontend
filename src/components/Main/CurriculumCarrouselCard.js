@@ -2,6 +2,7 @@ import { Star } from '@mui/icons-material';
 import { Button, ButtonGroup, Card, CardContent, Divider } from '@mui/material';
 import { fontSize } from '@mui/system';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default function CurriculumCarrouselCard(props) {
@@ -43,10 +44,10 @@ function CardButtonRow(props) {
     let item=props.item
     return (
         <ButtonGroup fullWidth variant="outlined">
-            <Button>View</Button>
+            <Button LinkComponent={Link} to={`/curriculum/${item.id}`} >View</Button>
             {/* User is passed down from App.js. Check there, or pass down another User object */}
             <Button disabled={item.user_id !== props.User.id}>Edit</Button>
-            <Button>Delete</Button>
+            <Button onClick={undefined}>Delete</Button>
         </ButtonGroup>
     )
 
