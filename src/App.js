@@ -21,6 +21,12 @@ import Community from "./components/Main/Community/Community";
 import Profile from "./components/Main/Profile/Profile";
 import Settings from "./components/Main/Settings/Settings";
 import Builder from "./components/Main/Builder/Builder";
+import Viewer from "./components/Main/Viewer/Viewer";
+import ProfileSelf from "./components/ProfileSelf/ProfileSelf";
+import ProfileUser from "./components/ProfileUser/ProfileUser";
+import ProfileUni from "./components/ProfileUni/ProfileUni";
+import ProfileDepartment from "./components/ProfileDepartment/ProfileDepartment";
+import { useParams } from "react-router-dom";
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -35,7 +41,6 @@ function CenteredCircular() {
 }
 
 export default function App() {
-  const API = "https://classtrack-backend.herokuapp.com/classTrack/";
   const cookies = new Cookies();
 
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
@@ -43,6 +48,8 @@ export default function App() {
 
   const [currLists, setCurrLists] = useState(lists);
   const [currCourses, setCurrCourses] = useState(courses);
+  //There's already a const for API in API.js. IDK why there's one here (?)
+  const API = "https://classtrack-backend.herokuapp.com/classTrack/";
 
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
   const { width } = useWindowDimensions();
@@ -60,28 +67,6 @@ export default function App() {
 
   //Dark mode will not be a user saved preference. It'll be saved in a cookie
   const [darkMode, setDarkMode] = useState(undefined);
-
-  useEffect(() => {
-    if (session_id) {
-      getUserData();
-    }
-  }, []);
-  const getUserData = async () => {
-    await axios({
-      method: "POST",
-      url: API + "me",
-      data: {
-        session_id: session_id,
-      },
-    })
-      .then((res) => {
-        console.log("result:", res.data);
-        setUserData(res.data);
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
-  };
 
   const dragEnd = (result) => {
     console.log(result);
@@ -201,8 +186,22 @@ export default function App() {
     //we're not already loading a user, and the user is not set
 
     //Well, time to get the user
-    GetUser(Session, setLoading, setUser, setInvalidSession);
+    GetUser(Session, setLoading, setUser, setInvalidSession); //TODO: Was this fixed??? Si no please replace this with the thing to get the user!!!!!!
   }
+
+  //This is a properties package that we pass down to every component from here.
+  //Please pass it down to everything. It defines whether or not dark mode is enabled, whether or not to use vertical display mode,
+  //provides the session (and if it is invalid) and the user
+  //***We only need to load the user once and its handled by this thing and is then passed down. See the if statement right above this definition***
+  let PropsPackage = {
+    DarkMode: darkMode,
+    Session: Session,
+    InvalidSession: InvalidSession,
+    setSession: setSession,
+    RefreshUser: RefreshUser,
+    User: User,
+    Vertical: Vertical,
+  };
 
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
@@ -250,7 +249,7 @@ export default function App() {
         </Route>
         <Route path="/Main">
           {Session ? (
-            <Main removeSession={removeSession} API={API} />
+            <Main {...PropsPackage} removeSession={removeSession} API={API} />
           ) : (
             <Redirect to="/Login" />
           )}
@@ -262,20 +261,73 @@ export default function App() {
           {Session ? <Community /> : <Redirect to="/Login" />}
         </Route>
         <Route path="/Profile">
-          {Session ? <Profile /> : <Redirect to="/Login" />}
+          {Session ? (
+            <ProfileSelf {...PropsPackage} />
+          ) : (
+            <Redirect to="/Login" />
+          )}
         </Route>
         <Route path="/Settings">
           {Session ? <Settings /> : <Redirect to="/Login" />}
         </Route>
         <Route path="/Builder">
           {Session ? (
-            <Builder lists={currLists} userData={userData} API={API} />
+            <Builder lists={currLists} API={API} />
           ) : (
             <Redirect to="/Login" />
           )}
         </Route>
+        <Route path="/Viewer">
+          {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Curriculums">
+          {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Curriculum/:id">
+          {/* The curriculum viewer comes later so imma just leave this here for now */}
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={GenericIDDisplay}
+            typename={"Curriculum"}
+          />
+        </Route>
+        <Route path="/User/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileUser}
+            typename={"user"}
+          />
+        </Route>
+        <Route path="/Department/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileDepartment}
+            typename={"Department"}
+          />
+        </Route>
+        <Route path="/University/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileUni}
+            typename={"University"}
+          />
+        </Route>
         {/* <Footer /> */}
       </ThemeProvider>
     </DragDropContext>
+  );
+}
+
+//This function lets us grab the id and pass it down to any component that needs an "id" field
+function PreIDedDisplay(props) {
+  let { id } = useParams(); //Pass all props except the component we're displaying (because we don't need to do that), and the id
+  return <props.component {...props} component={undefined} id={id} />;
+}
+
+function GenericIDDisplay(props) {
+  return (
+    <>
+      Display for {props.typename} with id {props.id}
+    </>
   );
 }

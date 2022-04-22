@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 //These generate gets using SessionIDs on the header as in Neco
 //I'm not entirely sure if flask lets us see the headers, so we can change this if needed
