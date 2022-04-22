@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import Cookies from "universal-cookie/es6";
 import useWindowDimensions from "./components/WindowDimensions/useWindowDimensions";
 import Layout from "./NavMenuLayout";
-import "./App.css";
 import { GetUser } from "./API";
 import { darkTheme, lightTheme } from "./Themes";
 import { CircularProgress, CssBaseline } from "@mui/material";
@@ -23,7 +22,7 @@ import Settings from "./components/Main/Settings/Settings";
 import Builder from "./components/Main/Builder/Builder";
 
 //Cookies should only really be accessed here.
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 function CenteredCircular() {
   return (
