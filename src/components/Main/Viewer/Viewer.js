@@ -2,17 +2,31 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie/es6";
 import PrintIcon from "@mui/icons-material/Print";
-import { IconButton, Button, Icon } from "@mui/material";
+import List from "../Builder/List";
+import {
+  Stack,
+  IconButton,
+  Button,
+  Icon,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
+  Fab,
+} from "@mui/material";
 
 export default function Viewer(props) {
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
+  const [curriculumData, setCurriculumData] = useState();
+  const [loadCurriculum, setLoadCurriculum] = useState(false);
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
+  const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const curriculum_id = "CIIC_57_V1";
 
   useEffect(() => {
     if (session_id) {
-      getUserData();
+      // getUserData();
+      getCurriculum();
     }
   }, []);
 
@@ -50,14 +64,51 @@ export default function Viewer(props) {
         console.log(error.data);
       });
   };
-  
+
+  const getCurriculum = async () => {
+    setLoadCurriculum(false);
+    await axios({
+      method: "GET",
+      url: tempAPI + "currGraph/curr",
+      params: {
+        id: "CIIC_57_V28",
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setCurriculumData(res.data);
+        setLoadCurriculum(true);
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
+  };
 
   return (
     <div>
-      <p>Viewer component works!</p>
-      <IconButton onClick={() => createHistory()}>
-        <PrintIcon />
-      </IconButton>
+      {loadCurriculum ? (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          {curriculumData["years"].map((year, i) =>
+            curriculumData[year]["semesters_ids"].map((semester_id, i) => (
+              <List
+                key={i}
+                list={curriculumData[semester_id]}
+                courses={curriculumData[semester_id]["courses"]}
+                title={curriculumData[semester_id].name}
+                subtitle={"Year " + year}
+                length={450}
+              />
+            ))
+          )}
+        </Stack>
+      ) : (
+        <p>loading curriculum...</p>
+      )}
     </div>
   );
 }

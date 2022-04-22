@@ -161,7 +161,7 @@ export default function Builder(props) {
             courses={props.lists[value]["courses"]}
             title={props.lists[value].name}
             subtitle={props.lists[value].year}
-            length={425}
+            length={450}
           />
         ))}
         {yearIndex === years.length - 1 ? (

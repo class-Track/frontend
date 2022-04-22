@@ -1,0 +1,62 @@
+[
+    {
+        "id":"CIIC_57_V1",
+        "name":"CIIC v1",
+        "user_id":57,
+        "user_name":"Fulano De Tal",
+        "department_id":2,
+        "department_name":"Computer Science and Engineering",
+        "semesters":10,
+        "courses":52,
+        "credits":130,
+        "rating":3.4
+    },
+    {
+        "id":"INSO_57_V1",
+        "name":"INSO v1",
+        "user_id":57,
+        "user_name":"Juan Del Valle",
+        "department_id":2,
+        "department_name":"Computer Science and Engineering",
+        "semesters":10,
+        "courses":50,
+        "credits":120,
+        "rating":3.1
+    },
+    {
+        "id":"4YEARINSO",
+        "name":"INSO SPEEDRUN (4 YEARS NO CAP)!!!",
+        "user_id":52,
+        "user_name":"Ad Renaline",
+        "department_id":2,
+        "department_name":"Computer Science and Engineering",
+        "semesters":8,
+        "courses":50,
+        "credits":120,
+        "rating":4.1
+    },
+    {
+        "id":"CIPO_57_V1",
+        "name":"CIPO Secuencia Curricular",
+        "user_id":52,
+        "user_name":"Juan Del Valle",
+        "department_id":3,
+        "department_name":"Humanities",
+        "semesters":4,
+        "courses":6,
+        "credits":18,
+        "rating":4.5
+    },
+    {
+        "id":"INCI_57_V5",
+        "name":"INCI v5",
+        "user_id":57,
+        "user_name":"Juan Del Valle",
+        "department_id":4,
+        "department_name":"Civil Engineering",
+        "semesters":13,
+        "courses":60,
+        "credits":140,
+        "rating":2.1
+    }
+]
