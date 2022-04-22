@@ -21,6 +21,7 @@ import Community from "./components/Main/Community/Community";
 import Profile from "./components/Main/Profile/Profile";
 import Settings from "./components/Main/Settings/Settings";
 import Builder from "./components/Main/Builder/Builder";
+import Viewer from "./components/Main/Viewer/Viewer";
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -60,28 +61,6 @@ export default function App() {
 
   //Dark mode will not be a user saved preference. It'll be saved in a cookie
   const [darkMode, setDarkMode] = useState(undefined);
-
-  useEffect(() => {
-    if (session_id) {
-      getUserData();
-    }
-  }, []);
-  const getUserData = async () => {
-    await axios({
-      method: "POST",
-      url: API + "me",
-      data: {
-        session_id: session_id,
-      },
-    })
-      .then((res) => {
-        console.log("result:", res.data);
-        setUserData(res.data);
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
-  };
 
   const dragEnd = (result) => {
     console.log(result);
@@ -269,10 +248,13 @@ export default function App() {
         </Route>
         <Route path="/Builder">
           {Session ? (
-            <Builder lists={currLists} userData={userData} API={API} />
+            <Builder lists={currLists} API={API} />
           ) : (
             <Redirect to="/Login" />
           )}
+        </Route>
+        <Route path="/Viewer">
+          {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
         </Route>
         {/* <Footer /> */}
       </ThemeProvider>
