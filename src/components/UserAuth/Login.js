@@ -25,8 +25,9 @@ export default function SignIn(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
         const data = new FormData(event.currentTarget);
-
+        console.log("event", data)
         await axios({
             method: 'POST',
             url: API + 'login',
