@@ -55,7 +55,6 @@ export default function Hamburger(props) {
           <List>
             <GenerateListItem text='Home' url='/Home' image='person.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo} />
             <GenerateListItem text='Community' url='/Community' image='Add.png' imageAlt='Add' DarkMode={props.DarkMode} PushTo={PushTo} />
-            <GenerateListItem text='Main' url='/Main' image='person.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo} />
           </List>
         }
 

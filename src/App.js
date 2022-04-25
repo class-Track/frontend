@@ -15,7 +15,6 @@ import axios from "axios";
 import Home from "./components/Main/Home/Home";
 import SignUp from "./components/UserAuth/SignUp";
 import Login from "./components/UserAuth/Login";
-import Main from "./components/Main/Main";
 import Navbar from "./components/NavBar/NavBar";
 import Community from "./components/Main/Community/Community";
 import Profile from "./components/Main/Profile/Profile";
@@ -212,17 +211,17 @@ export default function App() {
         <CssBaseline />
         <Route exact path="/">
           {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
-          {Session ? <Redirect to="/Main" /> : <Redirect to="/Login" />}
+          {Session ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
         </Route>
         <Route path="/Login">
           {Session ? (
-            <Redirect to="/Main" />
+            <Redirect to="/Home" />
           ) : (
             <Login saveSession={saveSession} API={API} />
           )}
         </Route>
         <Route path="/SignUp">
-          {Session ? <Redirect to="/Main" /> : <SignUp API={API} />}
+          {Session ? <Redirect to="/Home" /> : <SignUp API={API} />}
         </Route>
         <Route path="/Curriculums">
           {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
@@ -247,15 +246,8 @@ export default function App() {
             <Redirect to="/Login" />
           )}
         </Route>
-        <Route path="/Main">
-          {Session ? (
-            <Main {...PropsPackage} removeSession={removeSession} API={API} />
-          ) : (
-            <Redirect to="/Login" />
-          )}
-        </Route>
         <Route path="/Home">
-          {Session ? <Home /> : <Redirect to="/Login" />}
+          {Session ? <Home {...PropsPackage} /> : <Redirect to="/Login" />}
         </Route>
         <Route path="/Community">
           {Session ? <Community /> : <Redirect to="/Login" />}
@@ -287,7 +279,7 @@ export default function App() {
           {/* The curriculum viewer comes later so imma just leave this here for now */}
           <PreIDedDisplay
             {...PropsPackage}
-            component={GenericIDDisplay}
+            component={Viewer}
             typename={"Curriculum"}
           />
         </Route>

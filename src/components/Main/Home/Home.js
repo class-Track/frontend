@@ -1,30 +1,41 @@
 import { useHistory } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CurriculumCarrousel from "../Curriculum/CurriculumCarrousel";
+import DummyData from "../../../data/DummyData.json";
+import {
+  Stack,
+  Grid,
+  IconButton,
+  Button,
+  Icon,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
+  Fab,
+} from "@mui/material";
 
-export default function Home() {
+export default function Home(props) {
+  const history = useHistory();
 
-    const history = useHistory();
-
-    const navigateToBuilder = () => {
-        history.push("/Builder")
-    }
-
-    return (
-        <div>
-            <p>Home works!</p>
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Grid item>
-                    <Button variant="contained" onClick={() => navigateToBuilder()}>Builder</Button>
-                </Grid>
-            </Grid>
-        </div>
-    )
+  return (
+    <div style={{ margin: 50 }}>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Recent"}
+          loading={false}
+          curriculums={DummyData}
+        />
+      </div>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Recent"}
+          loading={false}
+          curriculums={DummyData}
+        />
+      </div>
+    </div>
+  );
 }

@@ -21,7 +21,7 @@ export default function Viewer(props) {
   const [loadCurriculum, setLoadCurriculum] = useState(false);
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
-  const curriculum_id = "CIIC_57_V1";
+  const curriculum_id = props.id;
 
   useEffect(() => {
     if (session_id) {

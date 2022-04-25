@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import CurriculumCarrousel from "./CurriculumCarrousel";
-import DummyData from "./DummyData.json";
+import CurriculumCarrousel from "./Curriculum/CurriculumCarrousel";
+import DummyData from "../../data/DummyData.json";
 
 export default function Main(props) {
   const history = useHistory();
@@ -43,7 +43,7 @@ export default function Main(props) {
   };
 
   return (
-    <div style={{margin: 50}}>
+    <div style={{ margin: 50 }}>
       <CurriculumCarrousel
         {...props}
         title={"Recent"}
