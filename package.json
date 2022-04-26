@@ -44,7 +44,7 @@
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/src/setupTests.js"
+      "<rootDir>/src/setup-tests.js"
     ]
   },
   "eslintConfig": {

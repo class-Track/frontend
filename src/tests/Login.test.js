@@ -1,33 +1,28 @@
 import React from "react";
-import { screen, render, cleanup, waitForElement } from '@testing-library/react'
-import "@testing-library/jest-dom/extend-expect"
+import "@testing-library/jest-dom"
 import SignIn from "../components/UserAuth/Login";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import Enzyme, { mount } from "enzyme";
+import { mount, configure } from "enzyme";
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import "jsdom-global/register";
-import mockAxios from "axios";
 
-const mockSignInComponent = jest.fn()
-
-jest.mock("../components/UserAuth/Login", () => (props) => {
-    mockSignInComponent(props);
-
-    return <mock-signIn />;
-})
+configure({ adapter: new Adapter()})
 
 let wrapper;
 beforeEach(() => {
-    const api = "https://classtrack-backend.herokuapp.com/classTrack/"
-    const saveSession = ""
-    wrapper = mount(<SignIn saveSession={saveSession} API={api}/> )
+    const props = { saveSession: "", API: "https://classtrack-backend.herokuapp.com/classTrack/"}
+    wrapper = mount(<SignIn props={props}/> )
 })
 
-test("testing", () => {
-    console.log(wrapper.find("TextField"))
+test("Logging in...", () => {
+    const credentials = { username: 'test@testjulian.com', password: "test"};
+    const text = wrapper.find({ id: "email", label: "Email Address"})
+    text.simulate("change", { target: { value: credentials.username }} )
+    wrapper.update();
+    console.log(wrapper.debug());
 
 })
 
-// Enzyme.configure({ adapter: new Adapter() });
+// Enzyme.configure({ adapter: new Adapter() });1
 
 
 
