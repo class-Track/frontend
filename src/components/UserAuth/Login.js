@@ -38,7 +38,7 @@ export default function SignIn(props) {
         }).then(res => {
             console.log('results:', res.data)
             props.saveSession(res.data)
-            history.push('/Main')
+            history.push('/')
         }).catch(error => {
             console.log('error:', error)
         });

@@ -26,6 +26,7 @@ import ProfileUser from "./components/ProfileUser/ProfileUser";
 import ProfileUni from "./components/ProfileUni/ProfileUni";
 import ProfileDepartment from "./components/ProfileDepartment/ProfileDepartment";
 import { useParams } from "react-router-dom";
+import Admin from "./components/Main/Admin/Admin";
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -43,8 +44,6 @@ export default function App() {
   const cookies = new Cookies();
 
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-  const [userData, setUserData] = useState(null);
-
   const [currLists, setCurrLists] = useState(lists);
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
@@ -233,7 +232,7 @@ export default function App() {
                 <>
                   {" "}
                   {User.isAdmin ? ( //Set appropriate role names
-                    <>Admin component here</>
+                    <Admin />
                   ) : (
                     <>You do not have permission to access this resource</>
                   )}
