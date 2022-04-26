@@ -13,25 +13,45 @@ import {
   SpeedDialIcon,
   SpeedDialAction,
   Fab,
+  Tooltip,
 } from "@mui/material";
+import { Add } from "@mui/icons-material";
+
+function NewCurriculumButton(props) {
+  //TODO Have this thing do something. Do we show a popup asking for name/department/other details or do we just link to a completely blank builder (?)
+  return(
+    <Tooltip title='Create a new curriculum'><Fab size='small' color='primary'> <Add/> </Fab></Tooltip>
+  )
+}
 
 export default function Home(props) {
   const history = useHistory();
 
   return (
-    <div style={{ margin: 50 }}>
+    <div style={{ margin: 50}}>
       <div style={{ padding: 10 }}>
         <CurriculumCarrousel
           {...props}
-          title={"Recent"}
+          title={"Your Curriculums"}
           loading={false}
           curriculums={DummyData}
+          headerButton={NewCurriculumButton}
+          editButtons={true}
         />
       </div>
       <div style={{ padding: 10 }}>
         <CurriculumCarrousel
           {...props}
-          title={"Recent"}
+          title={"Drafts"}
+          loading={false}
+          curriculums={DummyData}
+          editButtons={true}
+        />
+      </div>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Recomended"}
           loading={false}
           curriculums={DummyData}
         />
