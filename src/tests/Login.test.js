@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom"
 import SignIn from "../components/UserAuth/Login";
-import { mount, configure } from "enzyme";
+import { shallow, mount, configure } from "enzyme";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import "jsdom-global/register";
 
@@ -10,16 +10,33 @@ configure({ adapter: new Adapter()})
 let wrapper;
 beforeEach(() => {
     const props = { saveSession: "", API: "https://classtrack-backend.herokuapp.com/classTrack/"}
-    wrapper = mount(<SignIn props={props}/> )
+    wrapper = mount(<SignIn /> )
 })
 
-test("Logging in...", () => {
-    const credentials = { username: 'test@testjulian.com', password: "test"};
-    const text = wrapper.find({ id: "email", label: "Email Address"})
-    text.simulate("change", { target: { value: credentials.username }} )
-    wrapper.update();
-    console.log(wrapper.debug());
+afterEach(() => {
+    wrapper.update()
+})
 
+describe("Logging in...", () => {
+    const credentials = { username: 'test@testjulian.com', password: "test"};
+    test("Render email textfield", () => {
+        const email = wrapper.find({ id: "email", label: "Email Address", multiline: false})
+        console.log(email.debug())
+        email.simulate("change", { target: { value: credentials.username }} )
+        expect(email.length).toBe(1)
+    })
+
+    test("Render password textfield", () => {
+        const password = wrapper.find({ margin: "normal", id: "password", label: "Password"})
+        password.simulate("change", { target: { value: credentials.password }} )
+        expect(password.length).toBe(1)
+    })
+
+    test("Render button textfield", () => {
+        const button = wrapper.find({ type: "submit" })
+        button.simulate("submit")
+        expect(button.length).toBe(1)
+    })
 })
 
 // Enzyme.configure({ adapter: new Adapter() });1
