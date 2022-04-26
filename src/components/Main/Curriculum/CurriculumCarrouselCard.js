@@ -1,17 +1,24 @@
-import { Star } from '@mui/icons-material';
-import { Button, ButtonGroup, Card, CardContent, Divider } from '@mui/material';
+import { Delete, Edit, Star } from '@mui/icons-material';
+import { Button, ButtonGroup, Card, CardActionArea, CardActions, CardContent, Divider, IconButton } from '@mui/material';
 import { fontSize } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
 export default function CurriculumCarrouselCard(props) {
+
+    const [highlight, setHighlight] = useState(false)
+
     let item = props.item
 
-    return (<Card>
-        <table width='100%'>
-            <tr><td>
-                <CardContent>
+    return (<Card style={highlight ? {background:'lightgray'} : {}}>
+        <CardContent 
+            onClick={()=>{}} 
+            onMouseEnter={()=>{setHighlight(true)}} 
+            onMouseLeave={()=>{setHighlight(false)}}
+        >
+            <table width='100%'>
+                <tr><td>
                     <table width='100%'><tr>
                         {/* Maybe implement a cutoff function so that we keep the item name to just one line */}
                         <td><b>{item.name}</b></td>
@@ -29,28 +36,33 @@ export default function CurriculumCarrouselCard(props) {
                         By {item.user_name}<br />
                         {item.department_name}
                     </div>
+                </td></tr>
 
-                </CardContent>
-
-            </td></tr>
-            <tr><td><CardButtonRow {...props} /></td></tr>
-        </table>
-
+            </table>
+        </CardContent>
+        {
+            props.editButtons
+                ? <CardActions>
+                    <table width={'100%'}>
+                        <tr><td><CardButtonRow {...props} /></td></tr>
+                    </table>
+                </CardActions>
+                : <></>
+        }
     </Card>)
 }
 
 function CardButtonRow(props) {
 
-    let item=props.item
+    let item = props.item
     return (
-        <ButtonGroup fullWidth variant="outlined">
-            <Button LinkComponent={Link} to={`/curriculum/${item.id}`} >View</Button>
-            {/* User is passed down from App.js. Check there, or pass down another User object */}
-            {/* Also please change this link to whatever the builder will use and whatever it will use eventually to specify we're going to build */}
-            <Button LinkComponent={Link} to={`/Builder/${item.id}`} disabled={item.user_id !== props.User.id}>Edit</Button>
-            {/* We will need to define an onclick */}
-            <Button onClick={undefined}>Delete</Button>
-        </ButtonGroup>
+        <table width='100%'>
+            <tr>
+                <td></td>
+                <td width={1}><IconButton onClick={()=>{}} ><Edit/></IconButton></td>
+                <td width={1}><IconButton onClick={()=>{}} ><Delete /></IconButton></td>
+            </tr>
+        </table>
     )
 
 }
