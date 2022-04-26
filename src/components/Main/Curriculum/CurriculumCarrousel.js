@@ -16,7 +16,10 @@ export default function CurriculumCarrousel(props) {
   return (
     <>
       <div style={{ fontSize: "1.25em" }}>
-        <b>{props.title}</b>
+        <table width='100%'><tr>
+          <td><b>{props.title}</b></td>
+          <td width='1'>{props.headerButton ? <props.headerButton/> : <></>}</td>
+        </tr></table>
       </div>
       <Divider style={{ marginTop: "5px", marginBottom: "25px" }} />
       <table width="100%" style={{ minHeight: "200px" }}>
@@ -39,6 +42,7 @@ export default function CurriculumCarrousel(props) {
                 {...props}
                 curriculums={undefined}
                 items={props.curriculums.slice(startIndex, startIndex + 3)}
+                editButtons={props.editButtons}
               />
             )}
           </td>
@@ -66,13 +70,14 @@ function CarrouselGrid(props) {
 
   return (
     <>
-      <Grid container spacing={2} width="100%">
+      <Grid container spacing={5} width="100%" direction={props.Vertical ? 'column' : 'row'}>
         <Grid item xs={4}>
           {props.items[0] ? ( //Pass down everything but the items
             <CurriculumCarrouselCard
               {...props}
               items={undefined}
               item={props.items[0]}
+              editButtons={props.editButtons}
             />
           ) : (
             <></>
@@ -84,6 +89,7 @@ function CarrouselGrid(props) {
               {...props}
               items={undefined}
               item={props.items[1]}
+              editButtons={props.editButtons}
             />
           ) : (
             <></>
@@ -95,6 +101,7 @@ function CarrouselGrid(props) {
               {...props}
               items={undefined}
               item={props.items[2]}
+              editButtons={props.editButtons}
             />
           ) : (
             <></>
