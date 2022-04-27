@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import List from "./List";
-import Cookies from "universal-cookie/es6";
-import axios from "axios";
+//import Cookies from "universal-cookie/es6";
+//import axios from "axios";
 import { DragDropContext } from "react-beautiful-dnd";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -22,16 +22,17 @@ import {
   SpeedDialAction,
   Fab,
 } from "@mui/material";
-import { Cookie } from "@mui/icons-material";
+import { getGraph, saveGraph } from "../../../API";
+//import { Cookie } from "@mui/icons-material";
 
 export default function Builder(props) {
-  const cookies = new Cookies();
+  //const cookies = new Cookies();
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const sessionID = cookies.get("SessionID");
   const years = props.lists["year_list"]["year_ids"];
   const [yearIndex, setYearIndex] = useState(years.length - 1);
   const actions = [
-    { icon: <SaveIcon onClick={() => saveGraph()} />, name: "Save" },
+    { icon: <SaveIcon onClick={() => saveGraph(props.Session, props.lists)} />, name: "Save" },
     {
       icon: <DeleteIcon onClick={() => console.log("pressed delete")} />,
       name: "Delete",
@@ -43,80 +44,80 @@ export default function Builder(props) {
   ];
 
   useEffect(() => {
-    getGraph();
+    getGraph(props.Session, "Test_Curriculum_4_54");
   });
 
-  const getGraph = async () => {
-    await axios({
-      method: "GET",
-      url: tempAPI + "currGraph/curr",
-      params: {
-        name: "Test_Curriculum_4_54",
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error.data);
-      });
-  };
+  // const getGraph = async () => {
+  //   await axios({
+  //     method: "GET",
+  //     url: tempAPI + "currGraph/curr",
+  //     params: {
+  //       name: "Test_Curriculum_4_54",
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.data);
+  //     });
+  // };
 
-  const saveGraph = async () => {
-    let semesters = [];
-    await axios({
-      method: "POST",
-      url: props.API + "me",
-      data: {
-        session_id: sessionID,
-      },
-    })
-      .then((res) => {
-        years.forEach((year) => {
-          props.lists[year]["semester_ids"].forEach((semester) => {
-            semesters.push({
-              ...props.lists[semester],
-              id:
-                res.data["degree_id"] +
-                "_" +
-                res.data["user_id"] +
-                "_" +
-                props.lists[semester].id,
-            });
-          });
-        });
-        let tempResponse = {
-          graph: [
-            {
-              name:
-                "Test_Curriculum_" +
-                res.data["degree_id"] +
-                "_" +
-                res.data["user_id"],
-              // program: res.data["degree_id"],
-              program: 4,
-              user: res.data["user_id"],
-              semesters: semesters,
-            },
-          ],
-        };
-        console.log(tempResponse);
-        axios({
-          method: "POST",
-          url: tempAPI + "currGraph/student",
-          data: tempResponse,
-        })
-          .then((res) => {
-            console.log("result:", res.data);
-          })
-          .catch((error) => {
-            console.log("error:", error);
-          });
-      })
-      .catch((error) => {
-        console.log(error.data);
-      });
-  };
+  // const saveGraph = async () => {
+  //   let semesters = [];
+  //   await axios({
+  //     method: "POST",
+  //     url: props.API + "me",
+  //     data: {
+  //       session_id: sessionID,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       years.forEach((year) => {
+  //         props.lists[year]["semester_ids"].forEach((semester) => {
+  //           semesters.push({
+  //             ...props.lists[semester],
+  //             id:
+  //               res.data["degree_id"] +
+  //               "_" +
+  //               res.data["user_id"] +
+  //               "_" +
+  //               props.lists[semester].id,
+  //           });
+  //         });
+  //       });
+  //       let tempResponse = {
+  //         graph: [
+  //           {
+  //             name:
+  //               "Test_Curriculum_" +
+  //               res.data["degree_id"] +
+  //               "_" +
+  //               res.data["user_id"],
+  //             // program: res.data["degree_id"],
+  //             program: 4,
+  //             user: res.data["user_id"],
+  //             semesters: semesters,
+  //           },
+  //         ],
+  //       };
+  //       console.log(tempResponse);
+  //       axios({
+  //         method: "POST",
+  //         url: tempAPI + "currGraph/student",
+  //         data: tempResponse,
+  //       })
+  //         .then((res) => {
+  //           console.log("result:", res.data);
+  //         })
+  //         .catch((error) => {
+  //           console.log("error:", error);
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.data);
+  //     });
+  // };
 
   const nextYear = () => {
     if (yearIndex + 1 < years.length) {

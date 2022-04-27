@@ -12,60 +12,63 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { Footer } from "../../Footer";
-import axios from "axios";
+// import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { getDegrees, SignUpAPI } from "../../API";
 
 const theme = createTheme();
 
 export default function SignUp(props) {
-	const history = useHistory();
+	//const history = useHistory();
 	// const API = "https://classtrack-backend.herokuapp.com/";
-	const API = props.API
+	//const API = props.API
 	const [degrees, setDegrees] = React.useState([]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		axios({
-			method: "POST",
-			url: API + "user",
-			data: {
-				isAdmin: false,
-				variant_id: parseInt(data.get("degree")),
-				first_name: data.get("first_name"),
-				last_name: data.get("last_name"),
-				email: data.get("email"),
-				password: data.get("password"),
-			},
-		})
-			.then((res) => {
-				console.log("results:", res.data);
-				history.push("/");
-			})
-			.catch((error) => {
-				console.log("error:", error);
-			});
+		SignUpAPI(data)
+
+		// axios({
+		// 	method: "POST",
+		// 	url: API + "user",
+		// 	data: {
+		// 		isAdmin: false,
+		// 		variant_id: parseInt(data.get("degree")),
+		// 		first_name: data.get("first_name"),
+		// 		last_name: data.get("last_name"),
+		// 		email: data.get("email"),
+		// 		password: data.get("password"),
+		// 	},
+		// })
+		// 	.then((res) => {
+		// 		console.log("results:", res.data);
+		// 		history.push("/");
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log("error:", error);
+		// 	});
 	};
 
-	const getDegrees = async () => {
-		axios({
-			method: "GET",
-			url: API + "degrees_dept",
-		})
-			.then((res) => {
-				console.log("Degrees: ", res.data);
-				setDegrees(res.data);
-			})
-			.catch((error) => {
-				console.log("error", error);
-			});
-	};
+	// const getDegrees = async () => {
+	// 	axios({
+	// 		method: "GET",
+	// 		url: API + "degrees_dept",
+	// 	})
+	// 		.then((res) => {
+	// 			console.log("Degrees: ", res.data);
+	// 			setDegrees(res.data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("error", error);
+	// 		});
+	// };
 
 	React.useEffect(() => {
-		getDegrees();
+		getDegrees(setDegrees);
 	}, []);
 
 	return (

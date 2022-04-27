@@ -26,8 +26,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
-import Cookies from "universal-cookie";
+import { logout } from "../../API";
 
 // react.school/material-ui
 
@@ -38,26 +37,26 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
-const WelcomeLabel = (props) => {
-  return (
-    <table>
-      <tr>
-        <td>
-          <b>Welcome {props.user.name}!</b>
-          <br />
-          <div
-            style={{
-              color: props.DarkMode ? "#cccccc" : "#666666",
-              fontSize: ".7em",
-            }}
-          >
-            {props.user.degree ? props.user.degree.name : "Unknown Degree"}
-          </div>
-        </td>
-      </tr>
-    </table>
-  );
-};
+// const WelcomeLabel = (props) => {
+//   return (
+//     <table>
+//       <tr>
+//         <td>
+//           <b>Welcome {props.user.name}!</b>
+//           <br />
+//           <div
+//             style={{
+//               color: props.DarkMode ? "#cccccc" : "#666666",
+//               fontSize: ".7em",
+//             }}
+//           >
+//             {props.user.degree ? props.user.degree.name : "Unknown Degree"}
+//           </div>
+//         </td>
+//       </tr>
+//     </table>
+//   );
+// };
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -106,10 +105,7 @@ export default function ButtonAppBar(props) {
   const history = useHistory();
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const API = props.API;
-  const cookies = new Cookies();
-  const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-
+  
   const sendToLogin = (event) => {
     history.push("/Login");
     setMenuOpen(false);
@@ -126,27 +122,6 @@ export default function ButtonAppBar(props) {
 
   const navigateToSettings = () => {
     history.push("/Settings");
-  };
-
-  const logout = async () => {
-    await axios({
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      url: API + "logout",
-      data: {
-        session_id: session_id,
-      },
-    })
-      .then((res) => {
-        console.log("result:", res.data);
-        cookies.remove("SessionID");
-        props.removeSession();
-        props.setUser(undefined);
-        history.push("/");
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
   };
 
   return (
@@ -198,7 +173,7 @@ export default function ButtonAppBar(props) {
                   </IconButton>
                 </td>
                 <td width={"20px"}>
-                  <IconButton onClick={() => logout()}>
+                  <IconButton onClick={() => logout(props.Session, props.removeSession, props.setUser)}>
                     <LogoutIcon />
                   </IconButton>
                 </td>
