@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import CurriculumCarrousel from "../Curriculum/CurriculumCarrousel";
 import DummyData from "../../../data/DummyData.json";
 import {
