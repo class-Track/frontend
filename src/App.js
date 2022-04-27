@@ -11,7 +11,6 @@ import { CircularProgress, CssBaseline } from "@mui/material";
 import { Footer } from "./Footer";
 import { DragDropContext } from "react-beautiful-dnd";
 import { lists, courses } from "./data/dummy_data";
-import axios from "axios";
 import Home from "./components/Main/Home/Home";
 import SignUp from "./components/UserAuth/SignUp";
 import Login from "./components/UserAuth/Login";
@@ -229,26 +228,23 @@ export default function App() {
             {Session ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Login">
-            {Session ? (
-              <Redirect to="/Home" />
-            ) : (
-              <Login saveSession={saveSession} setLoading={setLoading} />
-            )}
+            {Session ? <Redirect to="/Home" /> :  <Login {...PropsPackage} saveSession={saveSession} setLoading={setLoading} /> }
           </Route>
           <Route path="/SignUp">
-            {Session ? <Redirect to="/Home" /> : <SignUp API={API} />}
+            {Session ? <Redirect to="/Home" /> : <SignUp {...PropsPackage} API={API} />}
           </Route>
           <Route path="/Curriculums">
             {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Admin">
+            {/* why was the user check removed (?) */}
             {Session ? <p>Admin working!</p> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Home">
-            {Session ? <Home /> : <Redirect to="/Login" />}
+            {Session ? <Home {...PropsPackage} /> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Community">
-            {Session ? <Community /> : <Redirect to="/Login" />}
+            {Session ? <Community {...PropsPackage} /> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Profile">
             {Session ? (
@@ -258,17 +254,17 @@ export default function App() {
             )}
           </Route>
           <Route path="/Settings">
-            {Session ? <Settings /> : <Redirect to="/Login" />}
+            {Session ? <Settings {...PropsPackage} /> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Builder">
             {Session ? (
-              <Builder lists={currLists} API={API} />
+              <Builder {...PropsPackage} lists={currLists} API={API} />
             ) : (
               <Redirect to="/Login" />
             )}
           </Route>
           <Route path="/Viewer">
-            {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
+            {Session ? <Viewer {...PropsPackage} API={API} /> : <Redirect to="/Login" />}
           </Route>
           <Route path="/Curriculums">
             {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
