@@ -4,6 +4,7 @@ import SignIn from "../components/UserAuth/Login";
 import { shallow, mount, configure } from "enzyme";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import "jsdom-global/register";
+import { Button, TextField } from "@mui/material";
 
 configure({ adapter: new Adapter()})
 
@@ -20,20 +21,19 @@ afterEach(() => {
 describe("Logging in...", () => {
     const credentials = { username: 'test@testjulian.com', password: "test"};
     test("Render email textfield", () => {
-        const email = wrapper.find({ id: "email", label: "Email Address", multiline: false})
-        console.log(email.debug())
+        const email = wrapper.find(TextField).find('input').at(0);
         email.simulate("change", { target: { value: credentials.username }} )
         expect(email.length).toBe(1)
     })
 
     test("Render password textfield", () => {
-        const password = wrapper.find({ margin: "normal", id: "password", label: "Password"})
+        const password = wrapper.find(TextField).find('input').at(1);
         password.simulate("change", { target: { value: credentials.password }} )
         expect(password.length).toBe(1)
     })
 
     test("Render button textfield", () => {
-        const button = wrapper.find({ type: "submit" })
+        const button = wrapper.find(Button).find('button').at(0);
         button.simulate("submit")
         expect(button.length).toBe(1)
     })
