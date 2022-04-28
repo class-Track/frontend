@@ -56,7 +56,6 @@ export const GetUser = async (
   setInvalidSession
 ) => {
   setLoading(true);
-  console.log(Session);
   await axios({
     method: "POST",
     url: APIURL + "me",

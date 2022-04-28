@@ -27,6 +27,9 @@ import ProfileUni from "./components/ProfileUni/ProfileUni";
 import ProfileDepartment from "./components/ProfileDepartment/ProfileDepartment";
 import { useParams } from "react-router-dom";
 import Admin from "./components/Main/Admin/Admin";
+import AdminCourses from "./components/Main/Admin/AdminCourses";
+import AdminDepartments from "./components/Main/Admin/AdminDepartments";
+import AdminDegrees from "./components/Main/Admin/AdminDegrees";
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -52,7 +55,7 @@ export default function App() {
   const Vertical = width < 900;
 
   //Auth stuff. Session and User is passed down to the components.
-  const [Session, setSession] = useState(undefined);
+  const [Session, setSession] = useState(cookies.get("SessionID"));
   const [User, setUser] = useState(undefined);
 
   //Loading usestate to make sure we don't start loading 50 times
@@ -66,11 +69,6 @@ export default function App() {
 
   useEffect(() => {
     if (Session) {
-      //Check that session reflects the cookie's state
-      if (Session !== cookies.get("SessionID")) {
-        console.log("retrieving SessionID");
-        setSession(cookies.get("SessionID"));
-      }
       GetUser(Session, setLoading, setUser, setInvalidSession);
     }
   }, [Session]);
@@ -217,12 +215,12 @@ export default function App() {
               User={User}
               removeSession={removeSession}
               setUser={setUser}
+              InvalidSession={InvalidSession}
               API={API}
             />
           ) : (
-            <></>
+            <div />
           )}
-
           <CssBaseline />
           <Route exact path="/">
             {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
@@ -241,11 +239,12 @@ export default function App() {
           <Route path="/Curriculums">
             {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
           </Route>
-          <Route path="/Admin">
-            {Session ? <p>Admin working!</p> : <Redirect to="/Login" />}
-          </Route>
           <Route path="/Home">
-            {Session ? <Home /> : <Redirect to="/Login" />}
+            {Session ? (
+              <Home Session={Session} User={User} />
+            ) : (
+              <Redirect to="/Login" />
+            )}
           </Route>
           <Route path="/Community">
             {Session ? <Community /> : <Redirect to="/Login" />}
@@ -302,6 +301,56 @@ export default function App() {
               typename={"University"}
             />
           </Route>
+          {User ? (
+            <div>
+              <Route path="/Admin">
+                {Session ? (
+                  User.isAdmin ? (
+                    <Admin Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+              <Route path="/AdminCourses">
+                {Session ? (
+                  User.isAdmin ? (
+                    <AdminCourses Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+              <Route path="/AdminDepartments">
+                {Session ? (
+                  User.isAdmin ? (
+                    <AdminDepartments Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+              <Route path="/AdminDegrees">
+                {Session ? (
+                  User.isAdmin ? (
+                    <AdminDegrees Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+            </div>
+          ) : (
+            <div />
+          )}
           {/* <Footer /> */}
         </ThemeProvider>
       </DragDropContext>

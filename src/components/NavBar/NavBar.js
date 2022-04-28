@@ -14,6 +14,8 @@ import {
   Typography,
   Button,
   TextField,
+  Stack,
+  Grid,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -146,6 +148,10 @@ export default function ButtonAppBar(props) {
       })
       .catch((error) => {
         console.log("error:", error);
+        cookies.remove("SessionID");
+        props.removeSession();
+        props.setUser(undefined);
+        history.push("/");
       });
   };
 
@@ -153,7 +159,58 @@ export default function ButtonAppBar(props) {
     <React.Fragment>
       <AppBar color={"primary"} enableColorOnDark>
         <Toolbar>
-          <table width={"100%"}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={2}
+          >
+            <Grid item>
+              <Stack
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+                spacing={3}
+              >
+                <IconButton
+                  onClick={() => {
+                    setMenuOpen(true);
+                  }}
+                  // style={{ marginRight: "15px" }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <img
+                  src={`ct/widecenter${props.DarkMode ? "white" : ""}.png`}
+                  alt="ClassTrack Logo"
+                  height="40"
+                  // style={{ marginTop: "7px" }}
+                />
+                {/* <Search >
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </Search> */}
+              </Stack>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => navigateToProfile()}>
+                <AccountCircleIcon />
+              </IconButton>
+              <IconButton onClick={() => navigateToSettings()}>
+                <SettingsIcon />
+              </IconButton>
+              <IconButton onClick={() => logout()}>
+                <LogoutIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          {/* <table width={"100%"}>
             <tr>
               <td width={"20px"}>
                 <IconButton
@@ -182,11 +239,11 @@ export default function ButtonAppBar(props) {
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
                   />
-                </Search>
-                {/* <TextField placeholder="Search" value={query} onChange={(event) => { setQuery(event.target.value) }} fullWidth style={{ paddingRight: "20px", paddingLeft: '20px' }} /> */}
-              </td>
-              {/* This will probably need to be switched to an Autocomplete */}
-              <>
+                </Search> */}
+          {/* <TextField placeholder="Search" value={query} onChange={(event) => { setQuery(event.target.value) }} fullWidth style={{ paddingRight: "20px", paddingLeft: '20px' }} /> */}
+          {/* </td> */}
+          {/* This will probably need to be switched to an Autocomplete */}
+          {/* <>
                 <td width={"20px"}>
                   <IconButton onClick={() => navigateToProfile()}>
                     <AccountCircleIcon />
@@ -202,8 +259,8 @@ export default function ButtonAppBar(props) {
                     <LogoutIcon />
                   </IconButton>
                 </td>
-              </>
-              {/* {props.Session ? (
+              </> */}
+          {/* {props.Session ? (
                 <>
                   {" "}
                   {props.User ? (
@@ -254,8 +311,8 @@ export default function ButtonAppBar(props) {
                   </td>
                 </>
               )} */}
-            </tr>
-          </table>
+          {/* </tr>
+          </table> */}
           <Typography
             variant="h6"
             className={classes.title}
@@ -273,11 +330,10 @@ export default function ButtonAppBar(props) {
           <DialogContentText>
             Your session was not found on the server, and has most likely
             expired. Please log in again.
-          </DialogContentText>{" "}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {" "}
-          <LogoutButton />{" "}
+          <LogoutButton logout={logout} />
         </DialogActions>
       </Dialog>
 
