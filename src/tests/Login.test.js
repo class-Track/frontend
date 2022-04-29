@@ -1,21 +1,42 @@
 import React from "react";
 import "@testing-library/jest-dom"
 import SignIn from "../components/UserAuth/Login";
-import { shallow, mount, configure } from "enzyme";
+import { mount, configure } from "enzyme";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import "jsdom-global/register";
 import { Button, TextField } from "@mui/material";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 
+const baseUrl = "https://classtrack-backend.herokuapp.com/classTrack/"
 configure({ adapter: new Adapter()})
 
+const loginResponse = rest.post(baseUrl + "login", (req, res, ctx) => {
+    return res(ctx.json("436ba57b-4022-4afa-bd93-32190f79ff1b"))
+})
+
+const handlers = [loginResponse];
+
+const server = new setupServer(...handlers);
+
 let wrapper;
+
+beforeAll(() => {
+    server.listen();
+})
+
 beforeEach(() => {
     const props = { saveSession: "", API: "https://classtrack-backend.herokuapp.com/classTrack/"}
-    wrapper = mount(<SignIn /> )
+    wrapper = mount(<SignIn /> );
+})
+
+afterAll(() => {
+    server.close();
 })
 
 afterEach(() => {
-    wrapper.update()
+    wrapper.update();
+    server.resetHandlers();
 })
 
 describe("Logging in...", () => {
@@ -32,48 +53,10 @@ describe("Logging in...", () => {
         expect(password.length).toBe(1)
     })
 
-    test("Render button textfield", () => {
+    test("Render button textfield", async () => {
         const button = wrapper.find(Button).find('button').at(0);
-        button.simulate("submit")
+        await button.simulate("submit")
         expect(button.length).toBe(1)
     })
+
 })
-
-// Enzyme.configure({ adapter: new Adapter() });1
-
-
-
-// describe("App rendering", () => {
-//     const data = new FormData()
-//     data.append("email", "test@testjulian.com")
-//     data.append("password", "test")
-    
-//     const prop = jest.fn()
-// 	let wrapper;
-// 	beforeEach(() => {
-// 		wrapper = mount(<SignIn prop={prop} />);
-// 	});
-
-//     afterEach(cleanup);
-
-//     it("login", async () => {
-//         mockAxios.post.mockResolvedValueOnce( { data: {sessionID: '436ba57b-4022-4afa-bd93-32190f79ff1b'}})
-//         const { getByTestId } = render(<SignIn prop={prop} />)
-//         expect(prop).not.toBeNull()
-        
-//     })
-
-//     it("renders", () => {
-//         console.log(wrapper.debug())
-//         expect(wrapper).not.toBeNull();
-//     });
-
-//     it("should run?", async () => {
-//         const result = await SignIn.handleSubmit(data)
-//         console.log(result)
-//         expect(type(result)).toBe(String)
-//     })
-	
-// });
-
-
