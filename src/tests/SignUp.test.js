@@ -1,10 +1,10 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import SignUp from "../components/UserAuth/SignUp";
-import { mount, configure } from "enzyme";
+import { shallow, mount, configure } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import "jsdom-global/register";
-import { Button, Select, TextField } from "@mui/material";
+import { Box, Button, FormControl, Select, TextField } from "@mui/material";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import sinon from "sinon"
@@ -45,9 +45,11 @@ const handlers = [loginResponse, degreesResponse];
 const server = new setupServer(...handlers);
 
 let wrapper;
+let wrapper2;
 
 beforeAll(() => {
 	server.listen({ onUnhandledRequest: "bypass" });
+	wrapper = mount(<SignUp />);
 });
 
 beforeEach(() => {
@@ -55,7 +57,7 @@ beforeEach(() => {
 		saveSession: "",
 		API: "https://classtrack-backend.herokuapp.com/classTrack/",
 	};
-	wrapper = mount(<SignUp props={props} />);
+	wrapper2 = shallow(<SignUp/>)
 });
 
 afterAll(() => {
@@ -75,6 +77,12 @@ describe("Wrapper testing...", () => {
 
 describe("Signing up...", () => {
 	const credentials = { username: "test@testjulian.com", password: "test" };
+	
+	test("Render first name textfield", () => {
+		const box = wrapper.find(Box).at(0);
+		console.log(box.find(FormControl).debug())
+		expect(box.length).toBe(1);
+	});
 
 	test("Render first name textfield", () => {
 		const firstName = wrapper.find(TextField).find("input").at(0);
