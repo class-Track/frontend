@@ -16,6 +16,7 @@ import {
   Stack,
   Autocomplete,
 } from "@mui/material";
+import AdminCategories from "./AdminCategories";
 
 export default function Admin() {
   return (
@@ -29,6 +30,7 @@ export default function Admin() {
         <AdminCourses />
         <AdminDepartments />
         <AdminDegrees />
+        <AdminCategories />
       </Stack>
     </div>
   );

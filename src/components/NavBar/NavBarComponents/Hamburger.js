@@ -12,6 +12,8 @@ import {
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
+import BuildIcon from '@mui/icons-material/Build';
+import CategoryIcon from '@mui/icons-material/Category';
 import { React, useState, useEffect } from "react";
 
 export default function Hamburger(props) {
@@ -93,7 +95,7 @@ export default function Hamburger(props) {
                     text="Courses"
                     url="/AdminCourses"
                     image={<MenuBookIcon />}
-                    imageAlt="Courses"
+                    imageAlt="Admin Courses"
                     DarkMode={props.DarkMode}
                     PushTo={PushTo}
                   />
@@ -101,7 +103,7 @@ export default function Hamburger(props) {
                     text="Departments"
                     url="/AdminDepartments"
                     image={<AccountBalanceIcon />}
-                    imageAlt="Admin"
+                    imageAlt="Admin Departments"
                     DarkMode={props.DarkMode}
                     PushTo={PushTo}
                   />
@@ -109,7 +111,23 @@ export default function Hamburger(props) {
                     text="Degrees"
                     url="/AdminDegrees"
                     image={<SchoolIcon />}
-                    imageAlt="Admin"
+                    imageAlt="Admin Degrees"
+                    DarkMode={props.DarkMode}
+                    PushTo={PushTo}
+                  />
+                  <GenerateListItem
+                    text="Categories"
+                    url="/AdminCategories"
+                    image={<CategoryIcon />}
+                    imageAlt="Admin Categories"
+                    DarkMode={props.DarkMode}
+                    PushTo={PushTo}
+                  />
+                  <GenerateListItem
+                    text="Builder"
+                    url="/AdminBuilder"
+                    image={<BuildIcon />}
+                    imageAlt="Admin Builder"
                     DarkMode={props.DarkMode}
                     PushTo={PushTo}
                   />

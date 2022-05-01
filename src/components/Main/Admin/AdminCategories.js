@@ -15,75 +15,49 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-export default function AdminDegrees(props) {
+export default function AdminCategories(props) {
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
-  const [degrees, setDegrees] = useState();
-  const [departments, setDepartments] = useState();
+  const [categories, setCategories] = useState();
   const [name, setName] = useState("");
   const [id, setID] = useState("");
-  const [length, setLength] = useState(0);
-  const [credits, setCredits] = useState(0);
-  const [curriculumSequence, setCurriculumSequence] = useState("");
+  const [classification, setClassification] = useState("");
   const [departmentID, setDepartmentID] = useState("");
   const [addOpen, setAddOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
   const [errorAdd, setErrorAdd] = useState(false);
   const [errorEdit, setErrorEdit] = useState(false);
-  const addMessage = "Enter the information for this new degree below";
-  const editMessage = "Enter the new information for this degree below";
-  const deleteMessage = "Deleting the following degree";
+  const addMessage = "Enter the information for this new category below";
+  const editMessage = "Enter the new information for this category below";
+  const deleteMessage = "Deleting the following category";
   const errorMessage = "Invalid input!";
   const columns = [
     { id: "index", label: "Index", minWidth: 50 },
     { id: "id", label: "ID", minWidth: 50 },
-    { id: "name", label: "Degree Name", minWidth: 100 },
-    { id: "department_id", label: "Department ID", minWidth: 100 },
-    { id: "curriculum_sequence", label: "Curriculum Sequence", minWidth: 100 },
-    { id: "length", label: "Length in Years", minWidth: 50 },
-    { id: "credits", label: "Total Credits", minWidth: 50 },
+    { id: "name", label: "Category Name", minWidth: 100 },
+    { id: "classification", label: "Classification", minWidth: 100 },
   ];
 
   useEffect(() => {
-    getDegrees();
-    getDepartments();
+    getCategories();
   }, []);
 
-  const createData = (
-    index,
-    id,
-    name,
-    department_id,
-    curriculum_sequence,
-    length,
-    credits
-  ) => {
+  const createData = (index, id, name, classification) => {
     return {
       index,
       id,
       name,
-      department_id,
-      curriculum_sequence,
-      length,
-      credits,
+      classification,
     };
   };
 
-  const addDegree = async (
-    name,
-    department_id,
-    length,
-    credits,
-    session_id
-  ) => {
+  const addCategory = async (name, classification, session_id) => {
     await axios({
       method: "POST",
-      url: tempAPI + "degree",
+      url: tempAPI + "category",
       data: {
         name: name,
-        department_id: department_id,
-        length: length,
-        credits: credits,
+        classification: classification,
         session_id: session_id,
       },
     })
@@ -97,10 +71,10 @@ export default function AdminDegrees(props) {
       });
   };
 
-  const getDegrees = async () => {
+  const getCategories = async () => {
     await axios({
       method: "GET",
-      url: tempAPI + "degrees",
+      url: tempAPI + "categories",
     })
       .then((res) => {
         console.log(res.data);
@@ -109,12 +83,9 @@ export default function AdminDegrees(props) {
           tempList.push(
             createData(
               i,
-              value["degree_id"],
+              value["category_id"],
               value["name"],
-              value["department_id"],
-              value["curriculum_sequence"],
-              value["length"],
-              value["credits"]
+              value["classification"]
             )
           );
         });
@@ -122,46 +93,27 @@ export default function AdminDegrees(props) {
         setAddOpen(false);
         setEditOpen(false);
         setDelOpen(false);
-        setDegrees(tempList);
+        setCategories(tempList);
       })
       .catch((err) => {
         console.log(err.data);
       });
   };
 
-  const getDepartments = async () => {
-    await axios({
-      method: "GET",
-      url: tempAPI + "departments",
-    })
-      .then((res) => {
-        console.log(res.data);
-        setDepartments(res.data);
-      })
-      .catch((err) => {
-        console.log(err.data);
-      });
-  };
-
-  const editDegree = async (
-    degree_id,
+  const editCategory = async (
+    category_id,
     name,
-    department_id,
-    curriculum_sequence,
-    length,
-    credits,
+    classification,
     session_id
   ) => {
     await axios({
       method: "PUT",
-      url: tempAPI + "degree/update/" + degree_id,
+      url: tempAPI + "category/update/" + category_id,
       data: {
-        session_id: session_id,
+        category_id: category_id,
         name: name,
-        department_id: department_id,
-        curriculum_sequence: curriculum_sequence,
-        length: length,
-        credits: credits,
+        classification: classification,
+        session_id: session_id,
       },
     })
       .then((res) => {
@@ -174,10 +126,10 @@ export default function AdminDegrees(props) {
       });
   };
 
-  const deleteDegree = async (degree_id, session_id) => {
+  const deleteCategory = async (category_id, session_id) => {
     await axios({
       method: "POST",
-      url: tempAPI + "degree/delete/" + degree_id,
+      url: tempAPI + "category/delete/" + category_id,
       data: {
         session_id: session_id,
       },
@@ -214,11 +166,10 @@ export default function AdminDegrees(props) {
   };
 
   const resetDialogs = () => {
-    getDegrees();
+    getCategories();
     setName("");
+    setClassification("");
     setID("");
-    setLength(0);
-    setCredits(0);
     setAddOpen(false);
     setEditOpen(false);
     setDelOpen(false);
@@ -231,7 +182,7 @@ export default function AdminDegrees(props) {
         setAddOpen(false);
       }}
     >
-      <DialogTitle>Add Degree</DialogTitle>
+      <DialogTitle>Add Category</DialogTitle>
       <DialogContent style={{ minWidth: 500 }}>
         <DialogContentText color={errorAdd ? "red" : "gray"}>
           {errorAdd ? errorMessage : addMessage}
@@ -239,36 +190,17 @@ export default function AdminDegrees(props) {
         <Stack style={{ margin: 10, padding: 10 }} spacing={2}>
           <TextField
             id="name"
-            label="Degree Name"
+            label="Category Name"
             onChange={(e) => {
               setErrorAdd(false);
               setName(e.target.value);
             }}
           />
           <TextField
-            label="Degree Length in Years"
+            label="Category Classification"
             onChange={(e) => {
               setErrorEdit(false);
-              setLength(parseInt(e.target.value));
-            }}
-          />
-          <TextField
-            label="Total Credits"
-            onChange={(e) => {
-              setErrorEdit(false);
-              setCredits(parseInt(e.target.value));
-            }}
-          />
-          <Autocomplete
-            options={departments}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField {...params} label="Select Department" />
-            )}
-            onChange={(e, value) => {
-              if (value) {
-                setDepartmentID(value.department_id);
-              }
+              setClassification(e.target.value);
             }}
           />
         </Stack>
@@ -284,15 +216,10 @@ export default function AdminDegrees(props) {
         </Button>
         <Button
           onClick={() => {
-            console.log("adding course", name);
-            if (
-              name !== "" &&
-              length !== 0 &&
-              credits !== 0 &&
-              departmentID !== ""
-            ) {
+            console.log("adding category", name);
+            if (name !== "" && classification !== "") {
               setErrorAdd(false);
-              addDegree(name, departmentID, length, credits, props.Session);
+              addCategory(name, classification, props.Session);
             } else {
               setErrorAdd(true);
             }
@@ -310,43 +237,25 @@ export default function AdminDegrees(props) {
         setEditOpen(false);
       }}
     >
-      <DialogTitle>Edit Course</DialogTitle>
+      <DialogTitle>Edit Category</DialogTitle>
       <DialogContent style={{ minWidth: 500 }}>
         <DialogContentText color={errorEdit ? "red" : "gray"}>
           {errorEdit ? errorMessage : editMessage}
         </DialogContentText>
         <Stack style={{ margin: 10, padding: 10 }} spacing={2}>
           <TextField
-            label="Degree Name"
+            id="name"
+            label="Category Name"
             onChange={(e) => {
-              setErrorEdit(false);
+              setErrorAdd(false);
               setName(e.target.value);
             }}
           />
           <TextField
-            label="Degree Length in Years"
+            label="Category Classification"
             onChange={(e) => {
               setErrorEdit(false);
-              setLength(parseInt(e.target.value));
-            }}
-          />
-          <TextField
-            label="Total Credits"
-            onChange={(e) => {
-              setErrorEdit(false);
-              setCredits(parseInt(e.target.value));
-            }}
-          />
-          <Autocomplete
-            options={departments}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField {...params} label="Select Department" />
-            )}
-            onChange={(e, value) => {
-              if (value) {
-                setDepartmentID(value.department_id);
-              }
+              setClassification(e.target.value);
             }}
           />
         </Stack>
@@ -362,23 +271,10 @@ export default function AdminDegrees(props) {
         </Button>
         <Button
           onClick={() => {
-            console.log("editing course", name);
-            if (
-              name !== "" &&
-              length !== 0 &&
-              credits !== 0 &&
-              departmentID !== ""
-            ) {
+            console.log("editing category", name);
+            if (name !== "" && classification !== "") {
               setErrorEdit(false);
-              editDegree(
-                id,
-                name,
-                departmentID,
-                curriculumSequence,
-                length,
-                credits,
-                props.Session
-              );
+              editCategory(id, name, classification, props.Session);
             } else {
               setErrorEdit(true);
             }
@@ -396,7 +292,7 @@ export default function AdminDegrees(props) {
         setDelOpen(false);
       }}
     >
-      <DialogTitle>Delete Degree</DialogTitle>
+      <DialogTitle>Delete Category</DialogTitle>
       <DialogContent>
         <DialogContentText>{deleteMessage}</DialogContentText>
         <Typography>{name}</Typography>
@@ -412,8 +308,8 @@ export default function AdminDegrees(props) {
         </Button>
         <Button
           onClick={() => {
-            console.log("deleting course", name);
-            deleteDegree(id, props.Session);
+            console.log("deleting category", name);
+            deleteCategory(id, props.Session);
           }}
         >
           Confirm
@@ -424,10 +320,10 @@ export default function AdminDegrees(props) {
 
   return (
     <div style={{ margin: 50 }}>
-      {degrees ? (
+      {categories ? (
         <CRUDTable
-          list={degrees}
-          title="Degrees"
+          list={categories}
+          title="Categories"
           columns={columns}
           openAdd={openAdd}
           openEdit={openEdit}
@@ -435,10 +331,10 @@ export default function AdminDegrees(props) {
           setID={setID}
         />
       ) : (
-        <p>loading degrees...</p>
+        <p>loading categories...</p>
       )}
-      {departments ? addDialog : <div />}
-      {departments ? editDialog : <div />}
+      {addDialog}
+      {editDialog}
       {deleteDialog}
     </div>
   );

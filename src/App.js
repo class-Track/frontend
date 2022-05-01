@@ -30,6 +30,8 @@ import Admin from "./components/Main/Admin/Admin";
 import AdminCourses from "./components/Main/Admin/AdminCourses";
 import AdminDepartments from "./components/Main/Admin/AdminDepartments";
 import AdminDegrees from "./components/Main/Admin/AdminDegrees";
+import AdminCategories from "./components/Main/Admin/AdminCategories";
+import AdminBuilder from "./components/Main/Admin/AdminBuilder/AdminBuilder";
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -342,6 +344,28 @@ export default function App() {
                     <AdminDegrees Session={Session} User={User} />
                   ) : (
                     <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+              <Route path="/AdminCategories">
+                {Session ? (
+                  User.isAdmin ? (
+                    <AdminCategories Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Home" />
+                  )
+                ) : (
+                  <Redirect to="/Login" />
+                )}
+              </Route>
+              <Route path="/AdminBuilder">
+                {Session ? (
+                  User.isAdmin ? (
+                    <AdminBuilder Session={Session} User={User} />
+                  ) : (
+                    <Redirect to="/Builder" />
                   )
                 ) : (
                   <Redirect to="/Login" />
