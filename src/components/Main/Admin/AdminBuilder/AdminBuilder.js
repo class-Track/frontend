@@ -77,10 +77,6 @@ export default function AdminBuilder() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const stepper = (
     <Stepper activeStep={activeStep}>
       {steps.map((label, index) => {
