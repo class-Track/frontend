@@ -21,7 +21,6 @@ export default function Viewer(props) {
   const [curriculumData, setCurriculumData] = useState();
   const [loadCurriculum, setLoadCurriculum] = useState(false);
   //const [session_id, setSessionID] = useState(cookies.get("SessionID")); //This salso comes from the prop package
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const curriculum_id = props.id;
 
   useEffect(() => {

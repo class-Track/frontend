@@ -63,13 +63,15 @@ export default function App() {
   //Dark mode will not be a user saved preference. It'll be saved in a cookie
   const [darkMode, setDarkMode] = useState(undefined);
 
+  //Do not move this into use-effect. This HAS to be outside!
+  if (Session !== cookies.get("SessionID")) {
+    console.log("retrieving SessionID");
+    setSession(cookies.get("SessionID"));
+  }
+
   useEffect(() => {
     if (Session) {
       //Check that session reflects the cookie's state
-      if (Session !== cookies.get("SessionID")) {
-        console.log("retrieving SessionID");
-        setSession(cookies.get("SessionID"));
-      }
       GetUser(Session, setLoading, setUser, setInvalidSession);
     }
   }, [Session]);

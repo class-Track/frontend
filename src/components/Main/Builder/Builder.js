@@ -27,12 +27,10 @@ import { getGraph, saveGraph } from "../../../API";
 
 export default function Builder(props) {
   //const cookies = new Cookies();
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
-  const sessionID = cookies.get("SessionID");
   const years = props.lists["year_list"]["year_ids"];
   const [yearIndex, setYearIndex] = useState(years.length - 1);
   const actions = [
-    { icon: <SaveIcon onClick={() => saveGraph(props.Session, props.lists)} />, name: "Save" },
+    { icon: <SaveIcon onClick={() => saveGraph(props.Session, props.lists, years)} />, name: "Save" },
     {
       icon: <DeleteIcon onClick={() => console.log("pressed delete")} />,
       name: "Delete",

@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Footer } from "../../Footer";
 // import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
@@ -21,7 +21,7 @@ import { getDegrees, SignUpAPI } from "../../API";
 const theme = createTheme();
 
 export default function SignUp(props) {
-	//const history = useHistory();
+	const history = useHistory();
 	// const API = "https://classtrack-backend.herokuapp.com/";
 	//const API = props.API
 	const [degrees, setDegrees] = React.useState([]);
@@ -30,7 +30,7 @@ export default function SignUp(props) {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		SignUpAPI(data)
+		SignUpAPI(data, history)
 
 		// axios({
 		// 	method: "POST",

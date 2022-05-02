@@ -3,8 +3,11 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 // export const APIURL = process.env.APIURL ?? "https://classtrack-backend.herokuapp.com/classTrack/";
-export const APIURL = process.env.APIURL ?? "http://127.0.0.1:5000/classTrack/";
+export const APIURL = process.env.APIURL ?? "https://classtrack-backend.herokuapp.com/classTrack/";
 //TODO: REPLACE THE DEFAULT WITH THE ACTUAL API
+
+const cookies = new Cookies();
+
 
 export const GetUser = async (
   Session,
@@ -50,10 +53,8 @@ export const LogIn = async (email, password) => {
     });
 };
 
-export const logout = async (Session, removeSession, setUser) => {
-  const history = useHistory();
-  const cookies = new Cookies();
-
+export const LogOut = async (Session, removeSession, setUser, history) => {
+    
   await axios({
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -74,7 +75,7 @@ export const logout = async (Session, removeSession, setUser) => {
     });
 };
 
-export const SignUpAPI = async (data) => {
+export const SignUpAPI = async (data, history) => {
 
   await axios({
     method: "POST",
@@ -162,7 +163,7 @@ export const getCurriculum = async (Session, id, setLoadCurriculum, setCurriculu
 export const getGraph = async (Session, name) => {
   await axios({
     method: "GET",
-    url: tempAPI + "currGraph/curr",
+    url: APIURL + "currGraph/curr",
     params: {
       name: name ?? "Test_Curriculum_4_54",
     },
@@ -175,11 +176,14 @@ export const getGraph = async (Session, name) => {
     });
 };
 
-export const saveGraph = async (Session, lists) => {
+export const saveGraph = async (Session, lists, years) => {
   let semesters = [];
   await axios({
     method: "POST",
     url: APIURL + "me",
+    headers:{
+      sessionID: Session,
+    },
     data: {
       session_id: Session,
     },

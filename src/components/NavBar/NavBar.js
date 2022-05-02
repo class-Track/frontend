@@ -26,7 +26,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { logout } from "../../API";
+import { LogOut } from "../../API";
 
 // react.school/material-ui
 
@@ -173,9 +173,7 @@ export default function ButtonAppBar(props) {
                   </IconButton>
                 </td>
                 <td width={"20px"}>
-                  <IconButton onClick={() => logout(props.Session, props.removeSession, props.setUser)}>
-                    <LogoutIcon />
-                  </IconButton>
+                  <LogoutButton {...props}/>
                 </td>
               </>
               {/* {props.Session ? (
@@ -252,7 +250,7 @@ export default function ButtonAppBar(props) {
         </DialogContent>
         <DialogActions>
           {" "}
-          <LogoutButton />{" "}
+          <LogoutButton {...props}/>{" "}
         </DialogActions>
       </Dialog>
 
