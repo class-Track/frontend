@@ -3,7 +3,7 @@ import { Card, Grid } from "@mui/material";
 import CourseCard from "./CourseCard";
 
 const card_style = {
-  backgroundColor: "#F2EECB",
+  backgroundColor: "#FBFBF8",
   // width: 275,
   margin: 10,
   padding: 10,
@@ -11,26 +11,25 @@ const card_style = {
 
 export default function Course(props) {
   return (
-    <Draggable draggableId={props.id} index={props.index}>
+    <Draggable key={props.id} draggableId={props.id} index={props.index}>
       {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CourseCard {...props} />
-          {/* <Card style={card_style}>
+          {/* <CourseCard {...props} /> */}
+          <Card style={card_style}>
             <Grid
               container
               direction="column"
               justifyContent="center"
               alignItems="center"
             >
-              <Grid item>code = {props.code}</Grid>
-              <Grid item>id = {props.id}</Grid>
-              <Grid item>name = {props.name}</Grid>
+              <Grid item>{props.course.classification}</Grid>
+              <Grid item>{props.course.name}</Grid>
             </Grid>
-          </Card> */}
+          </Card>
         </div>
       )}
     </Draggable>

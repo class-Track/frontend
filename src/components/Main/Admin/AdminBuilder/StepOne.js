@@ -70,6 +70,18 @@ export default function StepOne(props) {
           length: length,
           credits: credits,
         });
+        props.setCurriculum({
+          name: curriculum_sequence,
+          user_id: props.user["user_id"],
+          degree_id: degree_id,
+          degree_name: degree_name,
+          department_id: department_id,
+          department_name: res["name"],
+          deptCode: res["classification"],
+          curriculum_sequence: curriculum_sequence,
+          length: length,
+          credits: credits,
+        })
       })
       .catch((err) => {
         console.log(err);

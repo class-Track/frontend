@@ -47,6 +47,7 @@ function CenteredCircular() {
 
 export default function App() {
   const cookies = new Cookies();
+  const [builderLists, setBuilderLists] = useState({});
   const [currLists, setCurrLists] = useState(lists);
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
@@ -75,11 +76,15 @@ export default function App() {
     }
   }, [Session]);
 
+  const dragStart = (result) => {
+    // console.log(result);
+  };
+
   const dragEnd = (result) => {
     console.log(result);
     const { destination, source, draggableId } = result;
     const draggableObject =
-      currLists[source.droppableId]["courses"][source.index];
+      builderLists[source.droppableId]["courses"][source.index];
 
     if (!destination) {
       return;
@@ -92,8 +97,8 @@ export default function App() {
       return;
     }
 
-    const start = currLists[source.droppableId];
-    const end = currLists[destination.droppableId];
+    const start = builderLists[source.droppableId];
+    const end = builderLists[destination.droppableId];
 
     // if dropping into the same list, run this code
     if (destination.droppableId === source.droppableId) {
@@ -104,15 +109,15 @@ export default function App() {
       // create a new list
       const newStart = {
         ...start,
-        course_ids: newStartCourses,
+        courses: newStartCourses,
       };
       // create a state
       const newCurrLists = {
-        ...currLists,
+        ...builderLists,
         [newStart.id]: newStart,
       };
       // update state
-      setCurrLists(newCurrLists);
+      setBuilderLists(newCurrLists);
       return;
     }
     // if dropping into a different list, run this code
@@ -133,12 +138,12 @@ export default function App() {
       };
       // create a state
       const newCurrLists = {
-        ...currLists,
+        ...builderLists,
         [newStart.id]: newStart,
         [newEnd.id]: newEnd,
       };
       // update state
-      setCurrLists(newCurrLists);
+      setBuilderLists(newCurrLists);
       return;
     }
   };
@@ -209,7 +214,7 @@ export default function App() {
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <div>
-      <DragDropContext onDragEnd={dragEnd}>
+      <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
           {Session ? (
             <Navbar
@@ -263,7 +268,7 @@ export default function App() {
           </Route>
           <Route path="/Builder">
             {Session ? (
-              <Builder lists={currLists} API={API} />
+              <Builder lists={builderLists} API={API} />
             ) : (
               <Redirect to="/Login" />
             )}
@@ -363,7 +368,12 @@ export default function App() {
               <Route path="/AdminBuilder">
                 {Session ? (
                   User.isAdmin ? (
-                    <AdminBuilder Session={Session} User={User} />
+                    <AdminBuilder
+                      builderLists={builderLists}
+                      setBuilderLists={setBuilderLists}
+                      Session={Session}
+                      User={User}
+                    />
                   ) : (
                     <Redirect to="/Builder" />
                   )
