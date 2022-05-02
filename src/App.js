@@ -10,11 +10,9 @@ import { CircularProgress, CssBaseline } from "@mui/material";
 import { Footer } from "./Footer";
 import { DragDropContext } from "react-beautiful-dnd";
 import { lists, courses } from "./data/dummy_data";
-import axios from "axios";
 import Home from "./components/Main/Home/Home";
 import SignUp from "./components/UserAuth/SignUp";
 import Login from "./components/UserAuth/Login";
-import Main from "./components/Main/Main";
 import Navbar from "./components/NavBar/NavBar";
 import Community from "./components/Main/Community/Community";
 import Profile from "./components/Main/Profile/Profile";
@@ -26,6 +24,7 @@ import ProfileUser from "./components/ProfileUser/ProfileUser";
 import ProfileUni from "./components/ProfileUni/ProfileUni";
 import ProfileDepartment from "./components/ProfileDepartment/ProfileDepartment";
 import { useParams } from "react-router-dom";
+import Admin from "./components/Main/Admin/Admin";
 
 //Cookies should only really be accessed here.
 // const cookies = new Cookies();
@@ -41,10 +40,6 @@ function CenteredCircular() {
 
 export default function App() {
   const cookies = new Cookies();
-
-  const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-  const [userData, setUserData] = useState(null);
-
   const [currLists, setCurrLists] = useState(lists);
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
@@ -66,6 +61,17 @@ export default function App() {
 
   //Dark mode will not be a user saved preference. It'll be saved in a cookie
   const [darkMode, setDarkMode] = useState(undefined);
+
+  useEffect(() => {
+    if (Session) {
+      //Check that session reflects the cookie's state
+      if (Session !== cookies.get("SessionID")) {
+        console.log("retrieving SessionID");
+        setSession(cookies.get("SessionID"));
+      }
+      GetUser(Session, setLoading, setUser, setInvalidSession);
+    }
+  }, [Session]);
 
   const dragEnd = (result) => {
     console.log(result);
@@ -146,7 +152,7 @@ export default function App() {
   };
 
   const removeSession = () => {
-    setSession(null);
+    setSession(undefined);
     setInvalidSession(true);
   };
 
@@ -171,22 +177,18 @@ export default function App() {
   //This runs at legitiately *EVERY* time we load and render ANY page in the app
   //So here we can set the session and user
 
-  //Check that session reflects the cookie's state
-  if (Session !== cookies.get("SessionID")) {
-    setSession(cookies.get("SessionID"));
-  }
   if (darkMode !== cookies.get("DarkMode")) {
     setDarkMode(cookies.get("DarkMode"));
   }
 
-  //Check that the user is defined
-  if (Session && !InvalidSession && !Loading && !User) {
-    //If there is a session, and it's not invalid, and
-    //we're not already loading a user, and the user is not set
+  // //Check that the user is defined
+  // if (Session && !InvalidSession && !Loading && !User) {
+  //   //If there is a session, and it's not invalid, and
+  //   //we're not already loading a user, and the user is not set
 
-    //Well, time to get the user
-    GetUser(Session, setLoading, setUser, setInvalidSession); //TODO: Was this fixed??? Si no please replace this with the thing to get the user!!!!!!
-  }
+  //   //Well, time to get the user
+  //   GetUser(Session, setLoading, setUser, setInvalidSession); //TODO: Was this fixed??? Si no please replace this with the thing to get the user!!!!!!
+  // }
 
   //This is a properties package that we pass down to every component from here.
   //Please pass it down to everything. It defines whether or not dark mode is enabled, whether or not to use vertical display mode,
@@ -204,116 +206,101 @@ export default function App() {
 
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
-    <DragDropContext onDragEnd={dragEnd}>
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        {Session ? <Navbar removeSession={removeSession} API={API} /> : <></>}
+    <div>
+      <DragDropContext onDragEnd={dragEnd}>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+          {Session ? (
+            <Navbar
+              Session={Session}
+              User={User}
+              removeSession={removeSession}
+              setUser={setUser}
+              API={API}
+            />
+          ) : (
+            <></>
+          )}
 
-        <CssBaseline />
-        <Route exact path="/">
-          {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
-          {Session ? <Redirect to="/Main" /> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Login">
-          {Session ? (
-            <Redirect to="/Main" />
-          ) : (
-            <Login saveSession={saveSession} API={API} />
-          )}
-        </Route>
-        <Route path="/SignUp">
-          {Session ? <Redirect to="/Main" /> : <SignUp API={API} />}
-        </Route>
-        <Route path="/Curriculums">
-          {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Admin">
-          {Session ? (
-            <>
-              {User ? (
-                <>
-                  {" "}
-                  {User.isAdmin ? ( //Set appropriate role names
-                    <>Admin component here</>
-                  ) : (
-                    <>You do not have permission to access this resource</>
-                  )}
-                </>
-              ) : (
-                <CenteredCircular />
-              )}{" "}
-            </>
-          ) : (
-            <Redirect to="/Login" />
-          )}
-        </Route>
-        <Route path="/Main">
-          {Session ? (
-            <Main {...PropsPackage} removeSession={removeSession} API={API} />
-          ) : (
-            <Redirect to="/Login" />
-          )}
-        </Route>
-        <Route path="/Home">
-          {Session ? <Home /> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Community">
-          {Session ? <Community /> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Profile">
-          {Session ? (
-            <ProfileSelf {...PropsPackage} />
-          ) : (
-            <Redirect to="/Login" />
-          )}
-        </Route>
-        <Route path="/Settings">
-          {Session ? <Settings /> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Builder">
-          {Session ? (
-            <Builder lists={currLists} API={API} />
-          ) : (
-            <Redirect to="/Login" />
-          )}
-        </Route>
-        <Route path="/Viewer">
-          {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Curriculums">
-          {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
-        </Route>
-        <Route path="/Curriculum/:id">
-          {/* The curriculum viewer comes later so imma just leave this here for now */}
-          <PreIDedDisplay
-            {...PropsPackage}
-            component={GenericIDDisplay}
-            typename={"Curriculum"}
-          />
-        </Route>
-        <Route path="/User/:id">
-          <PreIDedDisplay
-            {...PropsPackage}
-            component={ProfileUser}
-            typename={"user"}
-          />
-        </Route>
-        <Route path="/Department/:id">
-          <PreIDedDisplay
-            {...PropsPackage}
-            component={ProfileDepartment}
-            typename={"Department"}
-          />
-        </Route>
-        <Route path="/University/:id">
-          <PreIDedDisplay
-            {...PropsPackage}
-            component={ProfileUni}
-            typename={"University"}
-          />
-        </Route>
-        {/* <Footer /> */}
-      </ThemeProvider>
-    </DragDropContext>
+          <CssBaseline />
+          <Route exact path="/">
+            {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
+            {Session ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Login">
+            {Session ? <Redirect to="/Home" /> :  <Login {...PropsPackage} saveSession={saveSession} setLoading={setLoading} /> }
+          </Route>
+          <Route path="/SignUp">
+            {Session ? <Redirect to="/Home" /> : <SignUp {...PropsPackage} API={API} />}
+          </Route>
+          <Route path="/Curriculums">
+            {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Admin">
+            {/* why was the user check removed (?) */}
+            {Session ? <p>Admin working!</p> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Home">
+            {Session ? <Home {...PropsPackage} /> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Community">
+            {Session ? <Community {...PropsPackage} /> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Profile">
+            {Session ? (
+              <ProfileSelf {...PropsPackage} />
+            ) : (
+              <Redirect to="/Login" />
+            )}
+          </Route>
+          <Route path="/Settings">
+            {Session ? <Settings {...PropsPackage} /> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Builder">
+            {Session ? (
+              <Builder {...PropsPackage} lists={currLists} API={API} />
+            ) : (
+              <Redirect to="/Login" />
+            )}
+          </Route>
+          <Route path="/Viewer">
+            {Session ? <Viewer {...PropsPackage} API={API} /> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Curriculums">
+            {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
+          </Route>
+          <Route path="/Curriculum/:id">
+            {/* The curriculum viewer comes later so imma just leave this here for now */}
+            <PreIDedDisplay
+              {...PropsPackage}
+              component={Viewer}
+              typename={"Curriculum"}
+            />
+          </Route>
+          <Route path="/User/:id">
+            <PreIDedDisplay
+              {...PropsPackage}
+              component={ProfileUser}
+              typename={"user"}
+            />
+          </Route>
+          <Route path="/Department/:id">
+            <PreIDedDisplay
+              {...PropsPackage}
+              component={ProfileDepartment}
+              typename={"Department"}
+            />
+          </Route>
+          <Route path="/University/:id">
+            <PreIDedDisplay
+              {...PropsPackage}
+              component={ProfileUni}
+              typename={"University"}
+            />
+          </Route>
+          {/* <Footer /> */}
+        </ThemeProvider>
+      </DragDropContext>
+    </div>
   );
 }
 

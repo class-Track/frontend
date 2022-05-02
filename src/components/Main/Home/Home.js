@@ -1,30 +1,60 @@
 import { useHistory } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import CurriculumCarrousel from "../Curriculum/CurriculumCarrousel";
+import DummyData from "../../../data/DummyData.json";
+import {
+  Stack,
+  Grid,
+  IconButton,
+  Button,
+  Icon,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
+  Fab,
+  Tooltip,
+} from "@mui/material";
+import { Add } from "@mui/icons-material";
 
-export default function Home() {
+function NewCurriculumButton(props) {
+  //TODO Have this thing do something. Do we show a popup asking for name/department/other details or do we just link to a completely blank builder (?)
+  return(
+    <Tooltip title='Create a new curriculum'><Fab size='small' color='primary'> <Add/> </Fab></Tooltip>
+  )
+}
 
-    const history = useHistory();
+export default function Home(props) {
+  const history = useHistory();
 
-    const navigateToBuilder = () => {
-        history.push("/Builder")
-    }
-
-    return (
-        <div>
-            <p>Home works!</p>
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Grid item>
-                    <Button variant="contained" onClick={() => navigateToBuilder()}>Builder</Button>
-                </Grid>
-            </Grid>
-        </div>
-    )
+  return (
+    <div style={{ margin: 50}}>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Your Curriculums"}
+          loading={false}
+          curriculums={DummyData}
+          headerButton={NewCurriculumButton}
+          editButtons={true}
+        />
+      </div>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Drafts"}
+          loading={false}
+          curriculums={DummyData}
+          editButtons={true}
+        />
+      </div>
+      <div style={{ padding: 10 }}>
+        <CurriculumCarrousel
+          {...props}
+          title={"Recomended"}
+          loading={false}
+          curriculums={DummyData}
+        />
+      </div>
+    </div>
+  );
 }

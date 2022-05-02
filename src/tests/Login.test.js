@@ -1,5 +1,5 @@
 import React from "react";
-import "@testing-library/jest-dom"
+import { waitFor} from '@testing-library/react'
 import SignIn from "../components/UserAuth/Login";
 import { mount, configure } from "enzyme";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -7,7 +7,6 @@ import "jsdom-global/register";
 import { Button, TextField } from "@mui/material";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import sinon from "sinon";
 
 const baseUrl = "https://classtrack-backend.herokuapp.com/classTrack/"
 configure({ adapter: new Adapter()})
@@ -36,7 +35,6 @@ afterAll(() => {
 })
 
 afterEach(() => {
-    wrapper.update();
     server.resetHandlers();
 })
 
@@ -54,11 +52,10 @@ describe("Logging in...", () => {
         expect(password.length).toBe(1)
     })
 
-    test("Render button textfield", async () => {
-        const buttonClick = sinon.spy()
-        const button = wrapper.find(Button).find('button').at(0);
-        await button.simulate("submit")
-        expect(button.length).toBe(1)
-    })
+    // test("Render button textfield", () => {
+    //     const button = wrapper.find(Button).find('button').at(0);
+    //     button.simulate("submit")
+    //     expect(button.length).toBe(1)
+    // })
 
 })

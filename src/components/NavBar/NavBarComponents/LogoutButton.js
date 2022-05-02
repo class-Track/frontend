@@ -1,12 +1,11 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 import { Logout } from '@mui/icons-material'
-import { LogOut } from "../../../API";
+import { logout } from "../../../API";
 
 
 export default function LogoutButton() {
-
-    const handleLogout = (event) => { LogOut(); }
+    const handleLogout = () => { logout(); }
 
     return (
         <React.Fragment>

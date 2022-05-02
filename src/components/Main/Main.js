@@ -1,49 +1,44 @@
-import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import axios from "axios";
-import CurriculumCarrousel from "./CurriculumCarrousel";
-import DummyData from "./DummyData.json";
+//import axios from "axios";
+import CurriculumCarrousel from "./Curriculum/CurriculumCarrousel";
+import DummyData from "../../data/DummyData.json";
+import { GetUser } from "../../API";
 
 export default function Main(props) {
   const history = useHistory();
   // const API = 'https://classtrack-backend.herokuapp.com/'
-  const API = props.API;
-  const cookies = new Cookies();
-  const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-  const [userData, setUserData] = useState(null);
+  
 
-  useEffect(() => {
-    if (session_id) {
-      getUserData();
-    }
-  }, []);
+  //We don't need any of this. The suer and Session are in the props package
 
-  const checkSession = async () => {
-    await axios({});
-  };
+  // useEffect(() => {
+  //   if (session_id) {
+  //     GetUser()
+  //   }
+  // }, []);
 
-  const getUserData = async () => {
-    await axios({
-      method: "POST",
-      url: API + "me",
-      data: {
-        session_id: session_id,
-      },
-    })
-      .then((res) => {
-        console.log("result:", res.data);
-        setUserData(res.data);
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
-  };
+  // const getUserData = async () => {
+  //   await axios({
+  //     method: "POST",
+  //     url: API + "me",
+  //     data: {
+  //       session_id: session_id,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log("result:", res.data);
+  //       setUserData(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("error:", error);
+  //     });
+  // };
 
   return (
-    <div style={{margin: 50}}>
+    <div style={{ margin: 50 }}>
       <CurriculumCarrousel
         {...props}
         title={"Recent"}
