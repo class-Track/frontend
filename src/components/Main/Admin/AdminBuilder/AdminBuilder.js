@@ -42,31 +42,6 @@ export default function AdminBuilder(props) {
   const [categoryLists, setCategoryLists] = useState({});
   const [builderLists, setBuilderLists] = useState({});
 
-  const components = [
-    <StepOne
-      info={info}
-      setInfo={setInfo}
-      curriculum={curriculum}
-      setCurriculum={setCurriculum}
-      session={props.Session}
-      user={props.User}
-    />,
-    <StepTwo
-      categories={categories}
-      setCategories={setCategories}
-      courses={courses}
-    />,
-    <StepThree
-      categories={categories}
-      categoryKeys={categoryKeys}
-      categoryLists={categoryLists}
-      setCategoryLists={setCategoryLists}
-      courses={courses}
-      setCourses={setCourses}
-    />,
-    <StepFour {...props} user={props.User} session={props.Session} />,
-  ];
-
   useEffect(() => {
     console.log(curriculum);
   }, [curriculum]);
@@ -263,6 +238,38 @@ export default function AdminBuilder(props) {
       </Button>
     </Box>
   );
+
+  const components = [
+    <StepOne
+      info={info}
+      setInfo={setInfo}
+      curriculum={curriculum}
+      setCurriculum={setCurriculum}
+      session={props.Session}
+      user={props.User}
+    />,
+    <StepTwo
+      categories={categories}
+      setCategories={setCategories}
+      courses={courses}
+    />,
+    <StepThree
+      categories={categories}
+      categoryKeys={categoryKeys}
+      categoryLists={categoryLists}
+      setCategoryLists={setCategoryLists}
+      courses={courses}
+      setCourses={setCourses}
+    />,
+    <StepFour
+      {...props}
+      // category_ids={props.builderLists["category_list"]["category_ids"]}
+      // year_ids={props.builderLists["year_list"]["year_ids"]}
+      info={info}
+      user={props.User}
+      session={props.Session}
+    />,
+  ];
 
   return (
     <div style={{ margin: 50 }}>

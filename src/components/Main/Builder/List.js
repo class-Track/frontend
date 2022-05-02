@@ -37,35 +37,7 @@ export default function List(props) {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  
-  const navigation = (
-    <MobileStepper
-      style={{ background: "#FBFBF8" }}
-      variant="dots"
-      steps={6}
-      position="static"
-      activeStep={activeStep}
-      sx={{ maxWidth: 400, flexGrow: 1 }}
-      nextButton={
-        <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </Button>
-      }
-      backButton={
-        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-        </Button>
-      }
-    />
-  );
+
   return (
     <div>
       <Card style={card_style} elevation={6}>
@@ -83,14 +55,18 @@ export default function List(props) {
               style={{ ...list_style, minHeight: props.length }}
             >
               {props.courses.map((course, index) => (
-                <Course course={course} id={course.id} index={index} />
+                <Course
+                  {...props}
+                  course={course}
+                  id={course.id}
+                  index={index}
+                />
               ))}
               {provided.placeholder}
             </div>
           )}
         </Droppable>
-        {props.footer ? navigation : <div />}
-        {/* <CardActions>{props.footer ?  : <div />}</CardActions> */}
+        {props.footer ? props.footer : <div />}
       </Card>
     </div>
   );

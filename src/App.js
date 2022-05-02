@@ -76,6 +76,10 @@ export default function App() {
     }
   }, [Session]);
 
+  useEffect(() => {
+    console.log(builderLists);
+  }, [builderLists]);
+
   const dragStart = (result) => {
     // console.log(result);
   };
