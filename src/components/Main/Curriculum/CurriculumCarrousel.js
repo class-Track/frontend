@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { CircularProgress, Divider, Grid, IconButton } from "@mui/material";
+import { CircularProgress, Divider, Grid, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 import CurriculumCarrouselCard from "./CurriculumCarrouselCard";
 

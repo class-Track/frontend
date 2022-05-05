@@ -49,14 +49,14 @@ export default function CurriculumCarrouselCard(props) {
               <Divider style={{ marginBottom: "10px" }} />
               {/* I think the course/credit load is the most important thing. Optionally both of these should be displayed but idk. We can't be that information dense */}
               <div>
-                {item.courses} courses ({item.credits} credits)
+                {item.course_count} courses ({item.credits} credits)
                 <br />
                 {item.semesters} semesters
               </div>
               <div style={{ fontSize: ".7em", marginTop: "1em" }}>
                 By {item.user_name}
                 <br />
-                {item.department_name}
+                {item.degree_name}
               </div>
             </td>
           </tr>

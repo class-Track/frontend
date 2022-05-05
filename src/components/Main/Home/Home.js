@@ -4,18 +4,12 @@ import axios from "axios";
 import CurriculumCarrousel from "../Curriculum/CurriculumCarrousel";
 import DummyData from "../../../data/DummyData.json";
 import {
-  Stack,
-  Grid,
-  IconButton,
-  Button,
-  Icon,
-  SpeedDial,
-  SpeedDialIcon,
-  SpeedDialAction,
   Fab,
   Tooltip,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { getUserCurriculum } from "../../../API";
+import { red } from "@mui/material/colors";
 
 function NewCurriculumButton(props) {
   //TODO Have this thing do something. Do we show a popup asking for name/department/other details or do we just link to a completely blank builder (?)
@@ -31,6 +25,42 @@ function NewCurriculumButton(props) {
 
 export default function Home(props) {
   const history = useHistory();
+  const APIURL = "http://127.0.0.1:5000/classTrack/"
+  const [userCurriculum, setUserCurriculum] = useState()
+  const [user, setUser] = useState()
+  // getUserCurriculum(props.Session, setCurriculum).then((res) => {
+  //   console.log("Frontend getUserCurriculum: ", res)
+  //   userCurriculum = res
+  // })
+
+  const getCurriculum = async(session_id) => {
+    return await axios({
+      method: "POST",
+      url: APIURL + "me",
+      data: {
+        session_id: session_id,
+      },
+    })
+      .then((res) => {
+        setUser(res.data.first_name + " " + res.data.last_name)
+        axios({
+          method: "GET",
+          url: APIURL + "curriculum/user/" + (res.data.user_id),
+        }).then((res) => {
+          setUserCurriculum(res.data)
+          })
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  }
+
+  useEffect(() => {
+    getCurriculum(props.Session)
+    userCurriculum.forEach(c => {
+      c.user_name = user
+    });
+  },[])
 
   return (
     <div style={{ margin: 50 }}>
@@ -41,7 +71,7 @@ export default function Home(props) {
               {...props}
               title={"Your Curriculums"}
               loading={false}
-              curriculums={DummyData}
+              curriculums={userCurriculum}
               headerButton={NewCurriculumButton}
               editButtons={true}
             />
