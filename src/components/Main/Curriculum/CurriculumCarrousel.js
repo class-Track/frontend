@@ -39,7 +39,7 @@ export default function CurriculumCarrousel(props) {
             </IconButton>
           </td>
           <td>
-            {!props.curriculums || props.loading ? (
+            {props.curriculums.length == 0 || props.loading ? (
               <div style={{ textAlign: "center", marginTop: "20px" }}>
                 <CircularProgress size={"50px"} />
               </div> //pass down everything but all the curriculums

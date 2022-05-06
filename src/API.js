@@ -235,27 +235,29 @@ export const saveGraph = async (Session, lists, years) => {
     });
 };
 
-  export const getUserCurriculum = async(session_id, setUserCurriculum) => {
-    // Get user id
-    await axios({
-      method: "POST",
-      url: APIURL + "me",
-      data: {
-        session_id: session_id,
-      },
-    })
-      .then((res) => {
-        console.log("result:", res.data.user_id);
-        axios({
-          method: "GET",
-          url: APIURL + "curriculum/user/" + (res.data.user_id),
-        }).then((res) => {
-          console.log("API file result: ", res.data)
-          setCurriculum(res.data)})
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
+  // export const getUserCurriculum = async (session_id) => {
+  //   // Get user id
+  //   let curriculum;
+  //   await axios({
+  //     method: "POST",
+  //     url: APIURL + "me",
+  //     data: {
+  //       session_id: session_id,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log("result:", res.data.user_id);
+  //       axios({
+  //         method: "GET",
+  //         url: APIURL + "curriculum/user/" + (res.data.user_id),
+  //       }).then((res) => res.data)
+  //       .catch((err) => {
+  //         console.log("Error: ", err)
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log("error:", error);
+  //     });
 
     
-  }
+  // }
