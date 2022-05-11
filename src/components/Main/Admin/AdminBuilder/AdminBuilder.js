@@ -112,7 +112,7 @@ export default function AdminBuilder(props) {
       temp_categories[key] = {
         id: categories[key]["id"],
         category_id: categories[key]["category_id"],
-        classification: categories[key]["classsification"],
+        classification: categories[key]["classification"],
         name: categories[key]["name"],
         list_type: "CATEGORY",
         credits: categories[key]["credits"],
@@ -126,6 +126,9 @@ export default function AdminBuilder(props) {
         })),
       };
     });
+
+    console.log("categories:", categories);
+    console.log("temp_categories:", temp_categories);
 
     let course_list = {
       id: "course_list",
