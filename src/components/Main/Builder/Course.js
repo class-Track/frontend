@@ -110,31 +110,35 @@ export default function Course(props) {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid
-                key={"reqs_button"}
-                xs={2.5}
-                item
-                // style={{ background: "green" }}
-                container
-                direction="row"
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                <Grid item>
-                  <IconButton
-                    disabled={props.isDragDisabled}
-                    onClick={() => {
-                      console.log(
-                        "clicked course card",
-                        props.course.classification
-                      );
-                      getCourses();
-                    }}
-                  >
-                    <ErrorOutline />
-                  </IconButton>
+              {props.User.isAdmin ? (
+                <Grid
+                  key={"reqs_button"}
+                  xs={2.5}
+                  item
+                  // style={{ background: "green" }}
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <IconButton
+                      disabled={props.isDragDisabled}
+                      onClick={() => {
+                        console.log(
+                          "clicked course card",
+                          props.course.classification
+                        );
+                        getCourses();
+                      }}
+                    >
+                      <ErrorOutline />
+                    </IconButton>
+                  </Grid>
                 </Grid>
-              </Grid>
+              ) : (
+                <></>
+              )}
             </Grid>
           </Card>
         </div>

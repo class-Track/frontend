@@ -158,6 +158,14 @@ export default function App() {
     const draggableObject =
       currLists[source.droppableId]["courses"][source.index];
 
+    let prereqs = currLists[draggableId]["prereqs"];
+    let coreqs = currLists[draggableId]["coreqs"];
+
+    console.log("prereqs:", prereqs);
+    console.log("coreqs:", coreqs);
+
+    verifyReqs(prereqs, coreqs);
+
     if (!destination) {
       return;
     }
@@ -189,7 +197,7 @@ export default function App() {
         [newStart.id]: newStart,
       };
       // update state
-      setBuilderLists(newCurrLists);
+      setCurrLists(newCurrLists);
       return;
     }
     // if dropping into a different list, run this code
@@ -215,9 +223,32 @@ export default function App() {
         [newEnd.id]: newEnd,
       };
       // update state
-      setBuilderLists(newCurrLists);
+      setCurrLists(newCurrLists);
       return;
     }
+  };
+
+  const verifyReqs = (prereqs, coreqs, source, destination) => {
+    let temp_reqs = {};
+    prereqs.forEach((req, i) => {
+      temp_reqs[req["classification"]] = req;
+    });
+    coreqs.forEach((req, i) => {
+      temp_reqs[req["classification"]] = req;
+    });
+
+    currLists["year_list"]["year_ids"].forEach((year, i) => {
+      currLists[year]["semester_ids"].forEach((semester, j) => {
+        currLists[semester]["courses"].forEach((course, k) => {
+          if (course["classification"] in temp_reqs) {
+            console.log("found", course["classification"], "in", year, semester);
+            delete temp_reqs[course];
+          }
+        });
+      });
+    });
+
+    console.log("done:", temp_reqs);
   };
 
   //This is the set session that must be passed down

@@ -26,11 +26,9 @@ import {
 import { Cookie } from "@mui/icons-material";
 
 export default function Builder(props) {
-  const cookies = new Cookies();
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const [info, setInfo] = useState({});
   const [loadCurriculum, setLoadCurriculum] = useState(false);
-  const [yearIndex, setYearIndex] = useState(0);
   const actions = [
     {
       icon: <SaveIcon onClick={() => console.log("pressed save")} />,
@@ -47,10 +45,13 @@ export default function Builder(props) {
   ];
 
   useEffect(() => {
-    getCurriculum();
+    if (props.id) {
+      getCurriculum();
+    }
   }, []);
 
   const getCurriculum = async () => {
+    console.log(props.id);
     await axios({
       method: "GET",
       url: tempAPI + "currGraph",
@@ -66,18 +67,6 @@ export default function Builder(props) {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const nextYear = () => {
-    // if (yearIndex + 1 < years.length) {
-    //   setYearIndex(yearIndex + 1);
-    // }
-  };
-
-  const prevYear = () => {
-    // if (yearIndex - 1 >= 0) {
-    //   setYearIndex(yearIndex - 1);
-    // }
   };
 
   const createSemesters = (degree_id, user_id, year) => {
@@ -165,7 +154,7 @@ export default function Builder(props) {
             <ChevronRightIcon />
           </IconButton>
         )}
-      </Stack>
+      </Stack> */}
       <Fab
         size="large"
         aria-label="add"
@@ -185,7 +174,7 @@ export default function Builder(props) {
             tooltipTitle={action.name}
           />
         ))}
-      </SpeedDial> */}
+      </SpeedDial>
     </div>
   );
 }

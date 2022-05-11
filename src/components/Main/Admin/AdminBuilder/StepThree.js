@@ -45,11 +45,16 @@ export default function StepThree(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [checked, setChecked] = useState([]);
+  const [filter, setFilter] = useState("");
   const leftChecked = intersection(checked, props.courses);
   const rightChecked = intersection(
     checked,
     props.categoryLists[props.categoryKeys[activeStep]]
   );
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -178,6 +183,79 @@ export default function StepThree(props) {
     </Card>
   );
 
+  const customListFiltered = (title, items) => (
+    <Card>
+      <CardHeader
+        sx={{ px: 2, py: 1 }}
+        avatar={
+          <Checkbox
+            onClick={handleToggleAll(items)}
+            checked={
+              numberOfChecked(items) === items.length && items.length !== 0
+            }
+            indeterminate={
+              numberOfChecked(items) !== items.length &&
+              numberOfChecked(items) !== 0
+            }
+            disabled={items.length === 0}
+            inputProps={{
+              "aria-label": "all items selected",
+            }}
+          />
+        }
+        title={title}
+        subheader={`${numberOfChecked(items)}/${items.length} selected`}
+      />
+      <Divider />
+      <List
+        sx={{
+          // width: 200,
+          height: 230,
+          bgcolor: "background.paper",
+          overflow: "auto",
+        }}
+        dense
+        component="div"
+        role="list"
+      >
+        {items
+          .filter(
+            (object) =>
+              object["classification"].toLowerCase().includes(filter) ||
+              object["classification"].includes(filter) ||
+              filter === ""
+          )
+          .map((value, i) => {
+            const labelId = `transfer-list-all-item-${value}-label`;
+            return (
+              <ListItem
+                key={i}
+                role="listitem"
+                button
+                onClick={handleToggle(value)}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    checked={checked.indexOf(value) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{
+                      "aria-labelledby": labelId,
+                    }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  id={labelId}
+                  primary={value["classification"] + ": " + value["name"]}
+                />
+              </ListItem>
+            );
+          })}
+        <ListItem />
+      </List>
+    </Card>
+  );
+
   const stepper = (
     <MobileStepper
       variant="dots"
@@ -224,7 +302,7 @@ export default function StepThree(props) {
               alignItems="center"
             >
               <Grid xs={5.5} item style={{ background: "" }}>
-                {customList("Courses", props.courses)}
+                {customListFiltered("Courses", props.courses)}
               </Grid>
               <Grid xs={1} item style={{ background: "" }}>
                 <Grid container direction="column" alignItems="center">
@@ -279,7 +357,26 @@ export default function StepThree(props) {
               alignItems="stretch"
               spacing={2}
             >
-              <Grid style={{ background: "" }} xs={5.5} item />
+              <Grid style={{ background: "" }} xs={5.5} item>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid xs={12} item>
+                    <TextField
+                      fullWidth
+                      label="Search..."
+                      value={filter}
+                      onChange={(e) => {
+                        setFilter(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid style={{ background: "" }} xs={1} item />
               <Grid style={{ background: "" }} xs={5.5} item>
                 <Grid
