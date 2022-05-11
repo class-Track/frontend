@@ -52,10 +52,6 @@ export default function StepThree(props) {
     props.categoryLists[props.categoryKeys[activeStep]]
   );
 
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
