@@ -185,7 +185,14 @@ export default function StepThree(props) {
         sx={{ px: 2, py: 1 }}
         avatar={
           <Checkbox
-            onClick={handleToggleAll(items)}
+            onClick={handleToggleAll(
+              items.filter(
+                (object) =>
+                  object["classification"].toLowerCase().includes(filter) ||
+                  object["classification"].includes(filter) ||
+                  filter === ""
+              )
+            )}
             checked={
               numberOfChecked(items) === items.length && items.length !== 0
             }
