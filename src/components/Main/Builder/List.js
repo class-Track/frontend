@@ -17,7 +17,7 @@ import {
 
 const list_style = {
   overflowY: "auto",
-  width: 300,
+  // width: 300,
   minHeight: 325,
   maxHeight: 325,
 };
@@ -60,6 +60,8 @@ export default function List(props) {
                   course={course}
                   id={course.id}
                   index={index}
+                  key={course.id}
+                  disableDrag={props.disableDrag}
                 />
               ))}
               {provided.placeholder}

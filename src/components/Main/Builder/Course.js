@@ -26,8 +26,14 @@ export default function Course(props) {
         let filtered_courses = res.data.filter((object) => {
           return object.classification !== props.course.classification;
         });
-
-        props.loadReqs(props.course.classification, filtered_courses);
+        let updated_courses = [];
+        filtered_courses.forEach((course) => {
+          updated_courses.push({
+            ...course,
+            id: course.classification,
+          });
+        });
+        props.loadReqs(props.course.classification, updated_courses);
       })
       .catch((err) => {
         throw err;
@@ -35,7 +41,12 @@ export default function Course(props) {
   };
 
   return (
-    <Draggable key={props.id} draggableId={props.id} index={props.index}>
+    <Draggable
+      key={props.id}
+      draggableId={props.id}
+      index={props.index}
+      isDragDisabled={props.isDragDisabled}
+    >
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -46,65 +57,83 @@ export default function Course(props) {
           <Card style={card_style}>
             <Grid
               container
+              direction="row"
               justifyContent="space-between"
-              alignItems="space-between"
+              alignItems="center"
             >
-              <Grid item>
-                <Grid
-                  container
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                >
-                  <Grid item>{props.course.classification}</Grid>
-                  <Grid item>
-                    <Grid container direction="row" spacing={1}>
-                      {props.builderLists[props.course.classification].prereqs
-                        .length ? (
-                        props.builderLists[
-                          props.course.classification
-                        ].prereqs.map((course, i) => (
+              <Grid
+                key={"course"}
+                xs={9.5}
+                item
+                // style={{ background: "red" }}
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="flex-start"
+                spacing={1}
+              >
+                <Grid key={"classification"} item>
+                  {props.course.classification}
+                </Grid>
+                <Grid key={"reqs"} item>
+                  <Grid container direction="row" spacing={0.5}>
+                    {props.lists[props.course.classification].prereqs.length ? (
+                      props.lists[props.course.classification].prereqs.map(
+                        (course, i) => (
                           <Grid
+                            key={"prereqs" + i}
                             item
                             style={{ fontSize: "small", color: "red" }}
                           >
                             {course.classification}
                           </Grid>
-                        ))
-                      ) : (
-                        <div />
-                      )}
-                      {props.builderLists[props.course.classification].coreqs
-                        .length ? (
-                        props.builderLists[
-                          props.course.classification
-                        ].coreqs.map((course, i) => (
+                        )
+                      )
+                    ) : (
+                      <></>
+                    )}
+                    {props.lists[props.course.classification].coreqs.length ? (
+                      props.lists[props.course.classification].coreqs.map(
+                        (course, i) => (
                           <Grid
+                            key={"coreqs" + i}
                             item
                             style={{ fontSize: "small", color: "orange" }}
                           >
                             {course.classification}
                           </Grid>
-                        ))
-                      ) : (
-                        <div />
-                      )}
-                    </Grid>
+                        )
+                      )
+                    ) : (
+                      <></>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={() => {
-                    console.log(
-                      "clicked course card",
-                      props.course.classification
-                    );
-                    getCourses();
-                  }}
-                >
-                  <ErrorOutline />
-                </IconButton>
+              <Grid
+                key={"reqs_button"}
+                xs={2.5}
+                item
+                // style={{ background: "green" }}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Grid item>
+                  <IconButton
+                    disabled={props.isDragDisabled}
+                    onClick={() => {
+                      console.log(
+                        "clicked course card",
+                        props.course.classification
+                      );
+                      getCourses();
+                    }}
+                  >
+                    <ErrorOutline />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
           </Card>

@@ -108,8 +108,11 @@ export default function AdminBuilder(props) {
         };
       });
       temp_categories[key] = {
-        id: key,
+        id: categories[key]["id"],
+        category_id: categories[key]["category_id"],
         name: categories[key]["name"],
+        list_type: "CATEGORY",
+        credits: categories[key]["credits"],
         courses: categoryLists[key].map((course, i) => ({
           id: course["classification"],
           course_id: course["course_id"],
@@ -119,6 +122,12 @@ export default function AdminBuilder(props) {
         })),
       };
     });
+
+    let course_list = {
+      id: "course_list",
+      name: "Course List",
+      course_ids: Object.keys(temp_courses).map((key) => key),
+    };
 
     let temp_years = {};
     let temp_semesters = {};
@@ -136,6 +145,7 @@ export default function AdminBuilder(props) {
         temp_semesters[semester] = {
           id: semester,
           name: getSemesterName(j),
+          list_type: "SEMESTER",
           year: year,
           courses: [],
         };
@@ -145,6 +155,7 @@ export default function AdminBuilder(props) {
     let newBuilderList = {
       year_list: year_list,
       category_list: category_list,
+      course_list: course_list,
       ...temp_categories,
       ...temp_courses,
       ...temp_years,
@@ -183,9 +194,9 @@ export default function AdminBuilder(props) {
   const createSemesters = (degree_id, user_id, year) => {
     return [
       degree_id + "_" + year + "_spring",
-      degree_id + "_" + year + "_fall",
       degree_id + "_" + year + "_summer",
       degree_id + "_" + year + "_ext_summer",
+      degree_id + "_" + year + "_fall",
     ];
   };
 
@@ -195,17 +206,88 @@ export default function AdminBuilder(props) {
         return "Spring";
         break;
       case 1:
-        return "Fall";
-        break;
-      case 2:
         return "Summer";
         break;
-      case 3:
+      case 2:
         return "Extended Summer";
+        break;
+      case 3:
+        return "Fall";
         break;
       default:
         return undefined;
     }
+  };
+
+  const saveGraph = async () => {
+    let response = {
+      ...curriculum,
+      ...props.lists,
+      session_id: props.Session,
+    };
+    console.log(response);
+    await axios({
+      method: "POST",
+      url: tempAPI + "standard_curriculum",
+      data: response,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const saveGraph1 = () => {
+    let temp_semesters = [];
+    let temp_prereqs = [];
+    let temp_coreqs = [];
+    if (props.lists["year_list"]["year_ids"].length) {
+      props.lists["year_list"]["year_ids"].forEach((year) => {
+        if (props.lists[year]["semester_ids"].length) {
+          props.lists[year]["semester_ids"].forEach((semester) => {
+            temp_semesters.push(props.lists[semester]);
+            if (props.lists[semester]["courses"].length) {
+              props.lists[semester]["courses"].forEach((course) => {
+                if (props.lists[course["id"]]["prereqs"].length) {
+                  props.lists[course["id"]]["prereqs"].forEach(
+                    (prereq) => {
+                      console.log("before pushing:", prereq);
+                      temp_prereqs.push({
+                        id: course["id"],
+                        pre_requisite: prereq["id"],
+                      });
+                    }
+                  );
+                }
+                if (props.lists[course["id"]]["coreqs"].length) {
+                  props.lists[course["id"]]["coreqs"].forEach(
+                    (coreq) => {
+                      console.log("before pushing:", coreq);
+                      temp_coreqs.push({
+                        id: course["id"],
+                        co_requisite: coreq["id"],
+                      });
+                    }
+                  );
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+    console.log("temp_semesters:", temp_semesters);
+    console.log("temp_prereqs:", temp_prereqs);
+    console.log("temp_coreqs:", temp_coreqs);
+    let response = {
+      ...curriculum,
+      graph: [{ semesters: temp_semesters }],
+      pre_reqs: temp_prereqs,
+      co_reqs: temp_coreqs,
+    };
+    console.log(response);
   };
 
   const stepper = (
@@ -232,7 +314,7 @@ export default function AdminBuilder(props) {
           (activeStep === 1 && emptyObject(categories)) ||
           (activeStep === 2 && !totalCourses())
         }
-        onClick={handleNext}
+        onClick={activeStep < steps.length ? handleNext : saveGraph}
       >
         {activeStep < steps.length ? "Next" : "Finish"}
       </Button>
@@ -252,6 +334,8 @@ export default function AdminBuilder(props) {
       categories={categories}
       setCategories={setCategories}
       courses={courses}
+      curriculum={curriculum}
+      user={props.User}
     />,
     <StepThree
       categories={categories}
@@ -263,11 +347,14 @@ export default function AdminBuilder(props) {
     />,
     <StepFour
       {...props}
-      // category_ids={props.builderLists["category_list"]["category_ids"]}
-      // year_ids={props.builderLists["year_list"]["year_ids"]}
+      // category_ids={props.lists["category_list"]["category_ids"]}
+      // year_ids={props.lists["year_list"]["year_ids"]}
       info={info}
       user={props.User}
       session={props.Session}
+      isDragDisabled={false}
+      createSemesters={createSemesters}
+      getSemesterName={getSemesterName}
     />,
   ];
 

@@ -1,0 +1,210 @@
+{
+    "2022": {
+        "id": "2022",
+        "name": "2022",
+        "semester_ids": [
+            "46_2022_spring",
+            "46_2022_summer",
+            "46_2022_ext_summer",
+            "46_2022_fall"
+        ]
+    },
+    "name": "2_46_admin",
+    "user_id": 126,
+    "degree_id": 46,
+    "degree_name": "Software Engineering",
+    "department_id": 2,
+    "department_name": "Computer Science and Engineering",
+    "deptCode": "CIICv2",
+    "curriculum_sequence": "2_46_admin",
+    "length": 6,
+    "credits": 132,
+    "year_list": {
+        "id": "year_list",
+        "name": "Year List",
+        "year_ids": [
+            "2022"
+        ]
+    },
+    "category_list": {
+        "id": "category_list",
+        "name": "Category List",
+        "category_ids": [
+            "REGU"
+        ]
+    },
+    "course_list": {
+        "id": "course_list",
+        "name": "Course List",
+        "course_ids": [
+            "INSO3001",
+            "INSO3003",
+            "INEL3001",
+            "INEL3002",
+            "INGL3001",
+            "INSO3004"
+        ]
+    },
+    "REGU": {
+        "id": "REGU",
+        "name": "Regular Courses",
+        "list_type": "CATEGORY",
+        "credits": 123,
+        "courses": []
+    },
+    "INSO3001": {
+        "id": "INSO3001",
+        "course_id": 1,
+        "prereqs": [],
+        "coreqs": [],
+        "category": "REGU"
+    },
+    "INSO3003": {
+        "id": "INSO3003",
+        "course_id": 2,
+        "prereqs": [
+            {
+                "classification": "INSO3001",
+                "course_id": 1,
+                "department_id": 41,
+                "name": "INSO Course A",
+                "id": "INSO3001"
+            },
+            {
+                "classification": "INEL3001",
+                "course_id": 3,
+                "department_id": 46,
+                "name": "INEL Course A",
+                "id": "INEL3001"
+            }
+        ],
+        "coreqs": [],
+        "category": "REGU"
+    },
+    "INEL3001": {
+        "id": "INEL3001",
+        "course_id": 3,
+        "prereqs": [],
+        "coreqs": [],
+        "category": "REGU"
+    },
+    "INEL3002": {
+        "id": "INEL3002",
+        "course_id": 4,
+        "prereqs": [],
+        "coreqs": [
+            {
+                "classification": "INEL3001",
+                "course_id": 3,
+                "department_id": 46,
+                "name": "INEL Course A",
+                "id": "INEL3001"
+            }
+        ],
+        "category": "REGU"
+    },
+    "INGL3001": {
+        "id": "INGL3001",
+        "course_id": 5,
+        "prereqs": [],
+        "coreqs": [],
+        "category": "REGU"
+    },
+    "INSO3004": {
+        "id": "INSO3004",
+        "course_id": 6,
+        "prereqs": [
+            {
+                "classification": "INSO3003",
+                "course_id": 2,
+                "department_id": 41,
+                "name": "INSO Course B",
+                "id": "INSO3003"
+            },
+            {
+                "classification": "INEL3002",
+                "course_id": 4,
+                "department_id": 46,
+                "name": "INEL Course B",
+                "id": "INEL3002"
+            }
+        ],
+        "coreqs": [],
+        "category": "REGU"
+    },
+    "46_2022_spring": {
+        "id": "46_2022_spring",
+        "name": "Spring",
+        "list_type": "SEMESTER",
+        "year": "2022",
+        "courses": [
+            {
+                "id": "INSO3001",
+                "course_id": 1,
+                "department_id": 41,
+                "name": "INSO Course A",
+                "classification": "INSO3001"
+            },
+            {
+                "id": "INEL3001",
+                "course_id": 3,
+                "department_id": 46,
+                "name": "INEL Course A",
+                "classification": "INEL3001"
+            }
+        ]
+    },
+    "46_2022_summer": {
+        "id": "46_2022_summer",
+        "name": "Summer",
+        "list_type": "SEMESTER",
+        "year": "2022",
+        "courses": [
+            {
+                "id": "INSO3003",
+                "course_id": 2,
+                "department_id": 41,
+                "name": "INSO Course B",
+                "classification": "INSO3003"
+            },
+            {
+                "id": "INEL3002",
+                "course_id": 4,
+                "department_id": 46,
+                "name": "INEL Course B",
+                "classification": "INEL3002"
+            }
+        ]
+    },
+    "46_2022_ext_summer": {
+        "id": "46_2022_ext_summer",
+        "name": "Extended Summer",
+        "list_type": "SEMESTER",
+        "year": "2022",
+        "courses": [
+            {
+                "id": "INSO3004",
+                "course_id": 6,
+                "department_id": 41,
+                "name": "INSO Course C",
+                "classification": "INSO3004"
+            }
+        ]
+    },
+    "46_2022_fall": {
+        "id": "46_2022_fall",
+        "name": "Fall",
+        "list_type": "SEMESTER",
+        "year": "2022",
+        "courses": [
+            {
+                "id": "INGL3001",
+                "course_id": 5,
+                "department_id": 45,
+                "name": "INGL Course A",
+                "classification": "INGL3001"
+            }
+        ]
+    },
+    "session_id": "b3ffabed-df08-47a6-abf5-f07fa072f191"
+}

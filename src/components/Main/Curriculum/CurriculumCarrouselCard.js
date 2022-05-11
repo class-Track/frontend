@@ -11,12 +11,17 @@ import {
 } from "@mui/material";
 import { fontSize } from "@mui/system";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function CurriculumCarrouselCard(props) {
+  const history = useHistory();
   const [highlight, setHighlight] = useState(false);
 
   let item = props.item;
+
+  const viewCurriculum = () => {
+    history.push("/Curriculum/" + props.item.curriculum_sequence);
+  };
 
   return (
     <Card style={highlight ? { background: "lightgray" } : {}}>
@@ -67,7 +72,7 @@ export default function CurriculumCarrouselCard(props) {
           <table width={"100%"}>
             <tr>
               <td>
-                <CardButtonRow {...props} />
+                <CardButtonRow {...props} viewCurriculum={viewCurriculum} />
               </td>
             </tr>
           </table>
@@ -86,7 +91,12 @@ function CardButtonRow(props) {
       <tr>
         <td></td>
         <td width={1}>
-          <IconButton onClick={() => {}}>
+          <IconButton
+            onClick={() => {
+              console.log(item.curriculum_sequence);
+              props.viewCurriculum();
+            }}
+          >
             <Edit />
           </IconButton>
         </td>

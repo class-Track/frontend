@@ -2,6 +2,8 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie/es6";
 import PrintIcon from "@mui/icons-material/Print";
+import ShareIcon from "@mui/icons-material/Share";
+import EditIcon from "@mui/icons-material/Edit";
 import List from "../Builder/List";
 import {
   Stack,
@@ -12,22 +14,23 @@ import {
   SpeedDialIcon,
   SpeedDialAction,
   Fab,
+  Grid,
+  Divider,
+  Typography,
 } from "@mui/material";
 
 export default function Viewer(props) {
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
-  const [curriculumData, setCurriculumData] = useState();
+  const [curriculum, setCurriculum] = useState();
   const [loadCurriculum, setLoadCurriculum] = useState(false);
+  const [years, setYears] = useState([]);
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const curriculum_id = props.id;
 
   useEffect(() => {
-    if (session_id) {
-      // getUserData();
-      getCurriculum();
-    }
+    getCurriculum();
   }, []);
 
   const getUserData = async () => {
@@ -69,14 +72,14 @@ export default function Viewer(props) {
     setLoadCurriculum(false);
     await axios({
       method: "GET",
-      url: tempAPI + "currGraph/curr",
+      url: tempAPI + "currGraph",
       params: {
-        id: "CIIC_57_V28",
+        id: props.id,
       },
     })
       .then((res) => {
         console.log(res.data);
-        setCurriculumData(res.data);
+        setCurriculum(res.data);
         setLoadCurriculum(true);
       })
       .catch((error) => {
@@ -85,27 +88,97 @@ export default function Viewer(props) {
   };
 
   return (
-    <div>
+    <div style={{ margin: 40 }}>
       {loadCurriculum ? (
-        <Stack
-          direction="row"
+        <Grid
+          container
+          direction="column"
           justifyContent="center"
-          alignItems="center"
-          spacing={2}
+          alignItems="stretch"
         >
-          {curriculumData["years"].map((year, i) =>
-            curriculumData[year]["semesters_ids"].map((semester_id, i) => (
-              <List
-                key={i}
-                list={curriculumData[semester_id]}
-                courses={curriculumData[semester_id]["courses"]}
-                title={curriculumData[semester_id].name}
-                subtitle={"Year " + year}
-                length={450}
-              />
-            ))
-          )}
-        </Stack>
+          <Grid
+            xs={12}
+            item
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={1}
+          >
+            <Grid item>
+              <Typography variant={"h4"}>{curriculum.name}</Typography>
+            </Grid>
+            <Grid item>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton>
+                <ShareIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid
+            xs={12}
+            item
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={2}
+          >
+            {curriculum.year_list.year_ids.reverse().map((year_id, i) => (
+              <Grid item key={year_id}>
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="stretch"
+                >
+                  <Grid xs={12} item key={i}>
+                    <Divider sx={{ p: 1 }}>
+                      <Typography
+                        component="h2"
+                        variant="h4"
+                        color="gray"
+                        gutterBottom
+                      >
+                        {year_id}
+                      </Typography>
+                    </Divider>
+                  </Grid>
+                  <Grid
+                    xs={24}
+                    item
+                    key={i + 1}
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={4}
+                  >
+                    {curriculum[year_id].semester_ids.map((semester_id, j) => (
+                      <Grid xs={3} key={i + 1 + j} item>
+                        <List
+                          key={i + 1 + j}
+                          list={curriculum[semester_id]}
+                          courses={curriculum[semester_id]["courses"]}
+                          title={curriculum[semester_id]["name"]}
+                          subtitle={curriculum[semester_id]["year"]}
+                          length={450}
+                          isDragDisabled={true}
+                          lists={curriculum}
+                          {...props}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
       ) : (
         <p>loading curriculum...</p>
       )}

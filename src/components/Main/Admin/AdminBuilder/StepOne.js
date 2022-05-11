@@ -71,7 +71,7 @@ export default function StepOne(props) {
           credits: credits,
         });
         props.setCurriculum({
-          name: curriculum_sequence,
+          name: degree_name + " Base Curriculum",
           user_id: props.user["user_id"],
           degree_id: degree_id,
           degree_name: degree_name,
@@ -81,7 +81,7 @@ export default function StepOne(props) {
           curriculum_sequence: curriculum_sequence,
           length: length,
           credits: credits,
-        })
+        });
       })
       .catch((err) => {
         console.log(err);

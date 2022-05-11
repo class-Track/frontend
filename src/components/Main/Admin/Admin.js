@@ -18,20 +18,33 @@ import {
 } from "@mui/material";
 import AdminCategories from "./AdminCategories";
 
-export default function Admin() {
+export default function Admin(props) {
+  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const [index, setIndex] = useState(0);
+
+  const createCourses = async () => {
+    await axios({
+      method: "POST",
+      url: tempAPI + "course",
+      data: {
+        session_id: props.Session,
+        department_id: 79,
+        name: "Biology " + index,
+        classification: "BIOL" + (3000 + index).toString(),
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setIndex((prev) => prev + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-      >
-        <AdminCourses />
-        <AdminDepartments />
-        <AdminDegrees />
-        <AdminCategories />
-      </Stack>
+      <Button onClick={() => createCourses()} disabled>index: {index}</Button>
     </div>
   );
 }

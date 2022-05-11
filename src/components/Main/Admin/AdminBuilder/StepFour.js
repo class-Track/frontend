@@ -95,12 +95,12 @@ export default function StepFour(props) {
   const addReqs = () => {
     let newCourse = {};
     newCourse = {
-      ...props.builderLists[course],
+      ...props.lists[course],
       prereqs: prereqs,
       coreqs: coreqs,
     };
     props.setBuilderLists({
-      ...props.builderLists,
+      ...props.lists,
       [course]: newCourse,
     });
     resetReqsDialogs();
@@ -108,17 +108,17 @@ export default function StepFour(props) {
 
   const addYear = (index) => {
     let newYear = (
-      parseInt(props.builderLists["year_list"]["year_ids"][index]) + 1
+      parseInt(props.lists["year_list"]["year_ids"][index]) + 1
     ).toString();
     let newYearList = {
-      ...props.builderLists["year_list"],
-      year_ids: [...props.builderLists["year_list"]["year_ids"], newYear],
+      ...props.lists["year_list"],
+      year_ids: [...props.lists["year_list"]["year_ids"], newYear],
     };
     let temp_years = {};
     temp_years[newYear] = {
       id: newYear,
       name: newYear,
-      semester_ids: createSemesters(
+      semester_ids: props.createSemesters(
         props.info["degree_id"],
         props.User["user_id"],
         newYear
@@ -129,47 +129,19 @@ export default function StepFour(props) {
     temp_years[newYear]["semester_ids"].forEach((semester_id, j) => {
       temp_semesters[semester_id] = {
         id: semester_id,
-        name: getSemesterName(j),
+        name: props.getSemesterName(j),
         year: newYear,
         courses: [],
       };
     });
     props.setBuilderLists({
-      ...props.builderLists,
+      ...props.lists,
       ...temp_semesters,
       ...temp_years,
       year_list: newYearList,
     });
     nextYear();
     setAddOpenYear(false);
-  };
-
-  const createSemesters = (degree_id, user_id, year) => {
-    return [
-      degree_id + "_" + year + "_spring",
-      degree_id + "_" + year + "_fall",
-      degree_id + "_" + year + "_summer",
-      degree_id + "_" + year + "_ext_summer",
-    ];
-  };
-
-  const getSemesterName = (index) => {
-    switch (index) {
-      case 0:
-        return "Spring";
-        break;
-      case 1:
-        return "Fall";
-        break;
-      case 2:
-        return "Summer";
-        break;
-      case 3:
-        return "Extended Summer";
-        break;
-      default:
-        return undefined;
-    }
   };
 
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -179,7 +151,7 @@ export default function StepFour(props) {
     <MobileStepper
       style={{ background: "#FBFBF8" }}
       variant="dots"
-      steps={props.builderLists["category_list"]["category_ids"].length}
+      steps={props.lists["category_list"]["category_ids"].length}
       position="static"
       activeStep={indexCategory}
       sx={{ maxWidth: 400, flexGrow: 1 }}
@@ -189,7 +161,7 @@ export default function StepFour(props) {
           onClick={nextCategory}
           disabled={
             indexCategory ===
-            props.builderLists["category_list"]["category_ids"].length - 1
+            props.lists["category_list"]["category_ids"].length - 1
           }
         >
           {theme.direction === "rtl" ? (
@@ -226,8 +198,7 @@ export default function StepFour(props) {
       <DialogContent style={{ minWidth: 500 }}>
         <DialogContentText>
           Add the year{" "}
-          {parseInt(props.builderLists["year_list"]["year_ids"][indexYear]) + 1}
-          ?
+          {parseInt(props.lists["year_list"]["year_ids"][indexYear]) + 1}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -243,8 +214,7 @@ export default function StepFour(props) {
           onClick={() => {
             console.log(
               "adding next year",
-              parseInt(props.builderLists["year_list"]["year_ids"][indexYear]) +
-                1
+              parseInt(props.lists["year_list"]["year_ids"][indexYear]) + 1
             );
             addYear(indexYear);
           }}
@@ -346,8 +316,7 @@ export default function StepFour(props) {
           onClick={() => {
             console.log("adding requirements");
             if (
-              prereqs.length &&
-              coreqs.length &&
+              (prereqs.length || coreqs.length) &&
               !intersection(prereqs, coreqs).length
             ) {
               setErrorAddReqs(false);
@@ -366,83 +335,101 @@ export default function StepFour(props) {
 
   return (
     <div style={{ margin: 20 }}>
-      <Stack
+      <Grid
+        container
         direction="row"
         justifyContent="center"
         alignItems="center"
         spacing={2}
       >
-        <List
-          key={0}
-          ref={props.builderLists}
-          list={
-            props.builderLists[
-              props.builderLists["category_list"]["category_ids"][indexCategory]
-            ]
-          }
-          courses={
-            props.builderLists[
-              props.builderLists["category_list"]["category_ids"][indexCategory]
-            ]["courses"]
-          }
-          title={
-            props.builderLists[
-              props.builderLists["category_list"]["category_ids"][indexCategory]
-            ]["name"]
-          }
-          subtitle={
-            props.builderLists[
-              props.builderLists["category_list"]["category_ids"][indexCategory]
-            ]["id"]
-          }
-          length={450}
-          footer={navigation}
-          loadReqs={loadReqs}
-          {...props}
-        />
-        <IconButton
-          disabled={indexYear === 0}
-          onClick={() => {
-            prevYear();
-          }}
-        >
-          <ChevronLeftIcon />
-        </IconButton>
-        {props.builderLists[
-          props.builderLists["year_list"]["year_ids"][indexYear]
-        ]["semester_ids"].map((semester_id, i) => (
+        <Grid key={"categories"} xs={2} item>
           <List
-            key={i + 1}
-            ref={props.builderLists}
-            list={props.builderLists[semester_id]}
-            courses={props.builderLists[semester_id]["courses"]}
-            title={props.builderLists[semester_id]["name"]}
-            subtitle={props.builderLists[semester_id]["year"]}
+            key={0}
+            // ref={props.lists}
+            list={
+              props.lists[
+                props.lists["category_list"]["category_ids"][indexCategory]
+              ]
+            }
+            courses={
+              props.lists[
+                props.lists["category_list"]["category_ids"][indexCategory]
+              ]["courses"]
+            }
+            title={
+              props.lists[
+                props.lists["category_list"]["category_ids"][indexCategory]
+              ]["name"]
+            }
+            subtitle={
+              props.lists[
+                props.lists["category_list"]["category_ids"][indexCategory]
+              ]["id"]
+            }
             length={450}
+            footer={navigation}
             loadReqs={loadReqs}
             {...props}
           />
-        ))}
-        <IconButton
-          onClick={() => {
-            if (
-              indexYear ===
-              props.builderLists["year_list"]["year_ids"].length - 1
-            ) {
-              setAddOpenYear(true);
-            } else {
-              nextYear();
-            }
-          }}
-        >
-          {indexYear ===
-          props.builderLists["year_list"]["year_ids"].length - 1 ? (
-            <AddIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
-        </IconButton>
-      </Stack>
+        </Grid>
+        <Grid key={"left_button"} xs={0.5} item>
+          <IconButton
+            disabled={indexYear === 0}
+            onClick={() => {
+              prevYear();
+            }}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        </Grid>
+        <Grid key={"semesters"} xs={9} item>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
+            {props.lists[props.lists["year_list"]["year_ids"][indexYear]][
+              "semester_ids"
+            ].map((semester_id, i) => (
+              <Grid key={420 + i} xs={3} item>
+                <List
+                  key={i + 1}
+                  // ref={props.lists}
+                  list={props.lists[semester_id]}
+                  courses={props.lists[semester_id]["courses"]}
+                  title={props.lists[semester_id]["name"]}
+                  subtitle={props.lists[semester_id]["year"]}
+                  length={450}
+                  loadReqs={loadReqs}
+                  {...props}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+        <Grid key={"right_button"} xs={0.5} item>
+          <IconButton
+            onClick={() => {
+              if (
+                indexYear ===
+                props.lists["year_list"]["year_ids"].length - 1
+              ) {
+                setAddOpenYear(true);
+              } else {
+                nextYear();
+              }
+            }}
+          >
+            {indexYear === props.lists["year_list"]["year_ids"].length - 1 ? (
+              <AddIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </Grid>
+      </Grid>
       {addYearDialog}
       {addReqsDialog}
     </div>

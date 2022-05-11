@@ -1,5 +1,11 @@
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { CircularProgress, Divider, Grid, IconButton, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import CurriculumCarrouselCard from "./CurriculumCarrouselCard";
 
@@ -14,8 +20,75 @@ export default function CurriculumCarrousel(props) {
   };
 
   return (
-    <>
-      <div style={{ fontSize: "1.25em" }}>
+    <div style={{ paddingBottom: 20 }}>
+      <Grid container>
+        <Grid xs={12} item>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item>
+              <Typography variant={"h5"} style={{ fontWeight: "bold" }}>
+                {props.title}
+              </Typography>
+            </Grid>
+            <Grid item>
+              {props.headerButton ? <props.headerButton /> : <div />}
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={12} item>
+          <Divider style={{ marginTop: "5px", marginBottom: "25px" }} />
+        </Grid>
+        <Grid xs={12} item>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid xs={1} item>
+              <IconButton
+                onClick={Backward}
+                disabled={
+                  props.loading || !props.curriculums || startIndex === 0
+                }
+              >
+                <ArrowLeft />
+              </IconButton>
+            </Grid>
+            <Grid xs={10} item>
+              {props.curriculums.length == 0 || props.loading ? (
+                <div style={{ textAlign: "center", marginTop: "20px" }}>
+                  <CircularProgress />
+                </div> //pass down everything but all the curriculums
+              ) : (
+                <CarrouselGrid
+                  {...props}
+                  curriculums={undefined}
+                  items={props.curriculums.slice(startIndex, startIndex + 3)}
+                  editButtons={props.editButtons}
+                />
+              )}
+            </Grid>
+            <Grid xs={1} item>
+              <IconButton
+                onClick={Forward}
+                disabled={
+                  props.loading ||
+                  !props.curriculums ||
+                  props.curriculums.length <= startIndex + 3
+                }
+              >
+                <ArrowRight />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* <div style={{ fontSize: "1.25em" }}>
         <table width="100%">
           <tr>
             <td>
@@ -41,7 +114,7 @@ export default function CurriculumCarrousel(props) {
           <td>
             {props.curriculums.length == 0 || props.loading ? (
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <CircularProgress size={"50px"} />
+                <CircularProgress />
               </div> //pass down everything but all the curriculums
             ) : (
               <CarrouselGrid
@@ -65,8 +138,8 @@ export default function CurriculumCarrousel(props) {
             </IconButton>
           </td>
         </tr>
-      </table>
-    </>
+      </table> */}
+    </div>
   );
 }
 

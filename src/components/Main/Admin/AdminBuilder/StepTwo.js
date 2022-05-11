@@ -33,6 +33,10 @@ export default function StepTwo(props) {
     getOptions();
   }, []);
 
+  useEffect(() => {
+    console.log(props.categories);
+  }, [props.categories]);
+
   const getOptions = async () => {
     await axios({
       method: "GET",
@@ -117,10 +121,21 @@ export default function StepTwo(props) {
               classification !== ""
             ) {
               addCategory({
-                id: id,
+                id:
+                  props.curriculum.department_id +
+                  "_" +
+                  props.curriculum.degree_id +
+                  "_" +
+                  classification,
+                category_id: id,
                 name: category,
-                classification: classification,
-                credits: credits,
+                classification:
+                  props.curriculum.department_id +
+                  "_" +
+                  props.curriculum.degree_id +
+                  "_" +
+                  classification,
+                credits: parseInt(credits),
               });
             } else {
               console.log("missing input");

@@ -48,7 +48,7 @@ function CenteredCircular() {
 export default function App() {
   const cookies = new Cookies();
   const [builderLists, setBuilderLists] = useState({});
-  const [currLists, setCurrLists] = useState(lists);
+  const [currLists, setCurrLists] = useState({});
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
   const API = "https://classtrack-backend.herokuapp.com/classTrack/";
@@ -152,6 +152,74 @@ export default function App() {
     }
   };
 
+  const dragEndBuilder = (result) => {
+    console.log(result);
+    const { destination, source, draggableId } = result;
+    const draggableObject =
+      currLists[source.droppableId]["courses"][source.index];
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = currLists[source.droppableId];
+    const end = currLists[destination.droppableId];
+
+    // if dropping into the same list, run this code
+    if (destination.droppableId === source.droppableId) {
+      // rearrange course in source list
+      const newStartCourses = Array.from(start["courses"]);
+      newStartCourses.splice(source.index, 1);
+      newStartCourses.splice(destination.index, 0, draggableObject);
+      // create a new list
+      const newStart = {
+        ...start,
+        courses: newStartCourses,
+      };
+      // create a state
+      const newCurrLists = {
+        ...currLists,
+        [newStart.id]: newStart,
+      };
+      // update state
+      setBuilderLists(newCurrLists);
+      return;
+    }
+    // if dropping into a different list, run this code
+    else {
+      // remove course from source and update
+      const newStartCourses = Array.from(start["courses"]);
+      newStartCourses.splice(source.index, 1);
+      const newStart = {
+        ...start,
+        courses: newStartCourses,
+      };
+      // add course to destination and update
+      const newEndCourses = Array.from(end["courses"]);
+      newEndCourses.splice(destination.index, 0, draggableObject);
+      const newEnd = {
+        ...end,
+        courses: newEndCourses,
+      };
+      // create a state
+      const newCurrLists = {
+        ...currLists,
+        [newStart.id]: newStart,
+        [newEnd.id]: newEnd,
+      };
+      // update state
+      setBuilderLists(newCurrLists);
+      return;
+    }
+  };
+
   //This is the set session that must be passed down
   const saveSession = (SessionID) => {
     //Set the cookie
@@ -218,180 +286,194 @@ export default function App() {
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <div>
-      <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        {Session ? (
+          <Navbar
+            Session={Session}
+            User={User}
+            removeSession={removeSession}
+            setUser={setUser}
+            InvalidSession={InvalidSession}
+            API={API}
+          />
+        ) : (
+          <div />
+        )}
+        <CssBaseline />
+        <Route exact path="/">
+          {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
+          {Session ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Login">
           {Session ? (
-            <Navbar
-              Session={Session}
-              User={User}
-              removeSession={removeSession}
-              setUser={setUser}
-              InvalidSession={InvalidSession}
-              API={API}
-            />
+            <Redirect to="/Home" />
           ) : (
-            <div />
+            <Login saveSession={saveSession} setLoading={setLoading} />
           )}
-          <CssBaseline />
-          <Route exact path="/">
-            {/* <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} /> */}
-            {Session ? <Redirect to="/Home" /> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Login">
-            {Session ? (
-              <Redirect to="/Home" />
-            ) : (
-              <Login saveSession={saveSession} setLoading={setLoading} />
-            )}
-          </Route>
-          <Route path="/SignUp">
-            {Session ? <Redirect to="/Home" /> : <SignUp API={API} />}
-          </Route>
-          <Route path="/Curriculums">
-            {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Home">
-            {Session ? (
-              <Home Session={Session} User={User} />
-            ) : (
-              <Redirect to="/Login" />
-            )}
-          </Route>
-          <Route path="/Community">
-            {Session ? <Community /> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Profile">
-            {Session ? (
-              <ProfileSelf {...PropsPackage} />
-            ) : (
-              <Redirect to="/Login" />
-            )}
-          </Route>
-          <Route path="/Settings">
-            {Session ? <Settings /> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Builder">
-            {Session ? (
+        </Route>
+        <Route path="/SignUp">
+          {Session ? <Redirect to="/Home" /> : <SignUp API={API} />}
+        </Route>
+        <Route path="/Curriculums">
+          {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Home">
+          {Session ? (
+            <Home Session={Session} User={User} />
+          ) : (
+            <Redirect to="/Login" />
+          )}
+        </Route>
+        <Route path="/Community">
+          {Session ? <Community /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Profile">
+          {Session ? (
+            <ProfileSelf {...PropsPackage} />
+          ) : (
+            <Redirect to="/Login" />
+          )}
+        </Route>
+        <Route path="/Settings">
+          {Session ? <Settings /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Builder">
+          {Session ? (
+            <DragDropContext onDragEnd={dragEnd}>
               <Builder lists={builderLists} API={API} />
-            ) : (
-              <Redirect to="/Login" />
-            )}
-          </Route>
-          <Route path="/Viewer">
-            {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Curriculums">
-            {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
-          </Route>
-          <Route path="/Curriculum/:id">
+            </DragDropContext>
+          ) : (
+            <Redirect to="/Login" />
+          )}
+        </Route>
+        <Route path="/Viewer">
+          {Session ? <Viewer API={API} /> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Curriculums">
+          {Session ? <>Curriculums here</> : <Redirect to="/Login" />}
+        </Route>
+        <Route path="/Curriculum/:id">
+          <DragDropContext onDragEnd={dragEnd}>
             {/* The curriculum viewer comes later so imma just leave this here for now */}
             <PreIDedDisplay
               {...PropsPackage}
               component={Viewer}
               typename={"Curriculum"}
             />
-          </Route>
-          <Route path="/User/:id">
+          </DragDropContext>
+        </Route>
+        <Route path="/Builder/:id">
+          <DragDropContext onDragEnd={dragEndBuilder}>
+            {/* The curriculum viewer comes later so imma just leave this here for now */}
             <PreIDedDisplay
               {...PropsPackage}
-              component={ProfileUser}
-              typename={"user"}
+              component={Builder}
+              typename={"Builder"}
             />
-          </Route>
-          <Route path="/Department/:id">
-            <PreIDedDisplay
-              {...PropsPackage}
-              component={ProfileDepartment}
-              typename={"Department"}
-            />
-          </Route>
-          <Route path="/University/:id">
-            <PreIDedDisplay
-              {...PropsPackage}
-              component={ProfileUni}
-              typename={"University"}
-            />
-          </Route>
-          {User ? (
-            <div>
-              <Route path="/Admin">
-                {Session ? (
-                  User.isAdmin ? (
-                    <Admin Session={Session} User={User} />
-                  ) : (
-                    <Redirect to="/Home" />
-                  )
+          </DragDropContext>
+        </Route>
+        <Route path="/User/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileUser}
+            typename={"user"}
+          />
+        </Route>
+        <Route path="/Department/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileDepartment}
+            typename={"Department"}
+          />
+        </Route>
+        <Route path="/University/:id">
+          <PreIDedDisplay
+            {...PropsPackage}
+            component={ProfileUni}
+            typename={"University"}
+          />
+        </Route>
+        {User ? (
+          <div>
+            <Route path="/Admin">
+              {Session ? (
+                User.isAdmin ? (
+                  <Admin Session={Session} User={User} />
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-              <Route path="/AdminCourses">
-                {Session ? (
-                  User.isAdmin ? (
-                    <AdminCourses Session={Session} User={User} />
-                  ) : (
-                    <Redirect to="/Home" />
-                  )
+                  <Redirect to="/Home" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+            <Route path="/AdminCourses">
+              {Session ? (
+                User.isAdmin ? (
+                  <AdminCourses Session={Session} User={User} />
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-              <Route path="/AdminDepartments">
-                {Session ? (
-                  User.isAdmin ? (
-                    <AdminDepartments Session={Session} User={User} />
-                  ) : (
-                    <Redirect to="/Home" />
-                  )
+                  <Redirect to="/Home" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+            <Route path="/AdminDepartments">
+              {Session ? (
+                User.isAdmin ? (
+                  <AdminDepartments Session={Session} User={User} />
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-              <Route path="/AdminDegrees">
-                {Session ? (
-                  User.isAdmin ? (
-                    <AdminDegrees Session={Session} User={User} />
-                  ) : (
-                    <Redirect to="/Home" />
-                  )
+                  <Redirect to="/Home" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+            <Route path="/AdminDegrees">
+              {Session ? (
+                User.isAdmin ? (
+                  <AdminDegrees Session={Session} User={User} />
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-              <Route path="/AdminCategories">
-                {Session ? (
-                  User.isAdmin ? (
-                    <AdminCategories Session={Session} User={User} />
-                  ) : (
-                    <Redirect to="/Home" />
-                  )
+                  <Redirect to="/Home" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+            <Route path="/AdminCategories">
+              {Session ? (
+                User.isAdmin ? (
+                  <AdminCategories Session={Session} User={User} />
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-              <Route path="/AdminBuilder">
-                {Session ? (
-                  User.isAdmin ? (
+                  <Redirect to="/Home" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+            <Route path="/AdminBuilder">
+              {Session ? (
+                User.isAdmin ? (
+                  <DragDropContext onDragEnd={dragEnd}>
                     <AdminBuilder
-                      builderLists={builderLists}
+                      lists={builderLists}
                       setBuilderLists={setBuilderLists}
                       Session={Session}
                       User={User}
                     />
-                  ) : (
-                    <Redirect to="/Builder" />
-                  )
+                  </DragDropContext>
                 ) : (
-                  <Redirect to="/Login" />
-                )}
-              </Route>
-            </div>
-          ) : (
-            <div />
-          )}
-          {/* <Footer /> */}
-        </ThemeProvider>
-      </DragDropContext>
+                  <Redirect to="/Builder" />
+                )
+              ) : (
+                <Redirect to="/Login" />
+              )}
+            </Route>
+          </div>
+        ) : (
+          <div />
+        )}
+        {/* <Footer /> */}
+      </ThemeProvider>
     </div>
   );
 }
