@@ -12,6 +12,8 @@ import {
   DialogContentText,
   DialogTitle,
   Stack,
+  Snackbar,
+  Alert,
   Autocomplete,
 } from "@mui/material";
 
@@ -29,6 +31,9 @@ export default function AdminCourses(props) {
   const [delOpen, setDelOpen] = useState(false);
   const [errorAdd, setErrorAdd] = useState(false);
   const [errorEdit, setErrorEdit] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const addMessage = "Enter the information for this new course below";
   const editMessage = "Enter the new information for this course below";
   const deleteMessage = "Deleting the following course";
@@ -46,6 +51,13 @@ export default function AdminCourses(props) {
     getCourses();
     getDepartments();
   }, []);
+
+  const handleAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
 
   const createData = (
     index,
@@ -77,12 +89,18 @@ export default function AdminCourses(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        if(res.status === 200) {
+          console.log(res.data);
+          setAlert(true);
+          setSuccess(true);
+        }
         resetDialogs();
       })
       .catch((err) => {
         console.log(err.data);
         resetDialogs();
+        setAlert(true);
+        setSuccess(false);
       });
   };
 
@@ -221,9 +239,10 @@ export default function AdminCourses(props) {
     >
       <DialogTitle>Add Course</DialogTitle>
       <DialogContent style={{ minWidth: 500 }}>
-        <DialogContentText color={errorAdd ? "red" : "gray"}>
-          {errorAdd ? errorMessage : addMessage}
-        </DialogContentText>
+        { errorAdd ? <Alert severity="warning"> You must fill out all fields! </Alert> : 
+        <DialogContentText color="gray"> {addMessage}  </DialogContentText>
+        }
+        
         <Stack style={{ margin: 10, padding: 10 }} spacing={2}>
           <TextField
             id="name"
@@ -432,6 +451,11 @@ export default function AdminCourses(props) {
       {departments ? addDialog : <div />}
       {departments ? editDialog : <div />}
       {deleteDialog}
+      <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlert}>
+          <Alert onClose={handleAlert} severity={success ? "success" : "error"} sx={{ width: '100%' }}>
+            {success ? "Course was created" : "Error creating course"}
+          </Alert>
+      </Snackbar>
     </div>
   );
 }
