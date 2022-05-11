@@ -48,6 +48,7 @@ function CenteredCircular() {
 export default function App() {
   const cookies = new Cookies();
   const [builderLists, setBuilderLists] = useState({});
+  const [builderFilter, setBuilderFilter] = useState("");
   const [currLists, setCurrLists] = useState({});
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
@@ -87,8 +88,17 @@ export default function App() {
   const dragEnd = (result) => {
     console.log(result);
     const { destination, source, draggableId } = result;
-    const draggableObject =
-      builderLists[source.droppableId]["courses"][source.index];
+    const draggableObject = builderLists[source.droppableId]["courses"].filter(
+      (object) =>
+        object["classification"].toLowerCase().includes(builderFilter) ||
+        object["classification"].includes(builderFilter) ||
+        builderFilter === ""
+    )[source.index];
+    const realSourceIndex = builderLists[source.droppableId]["courses"]
+      .map((course) => {
+        return course["classification"];
+      })
+      .indexOf(draggableId);
 
     if (!destination) {
       return;
@@ -108,7 +118,7 @@ export default function App() {
     if (destination.droppableId === source.droppableId) {
       // rearrange course in source list
       const newStartCourses = Array.from(start["courses"]);
-      newStartCourses.splice(source.index, 1);
+      newStartCourses.splice(realSourceIndex, 1);
       newStartCourses.splice(destination.index, 0, draggableObject);
       // create a new list
       const newStart = {
@@ -128,7 +138,7 @@ export default function App() {
     else {
       // remove course from source and update
       const newStartCourses = Array.from(start["courses"]);
-      newStartCourses.splice(source.index, 1);
+      newStartCourses.splice(realSourceIndex, 1);
       const newStart = {
         ...start,
         courses: newStartCourses,
@@ -241,7 +251,13 @@ export default function App() {
       currLists[year]["semester_ids"].forEach((semester, j) => {
         currLists[semester]["courses"].forEach((course, k) => {
           if (course["classification"] in temp_reqs) {
-            console.log("found", course["classification"], "in", year, semester);
+            console.log(
+              "found",
+              course["classification"],
+              "in",
+              year,
+              semester
+            );
             delete temp_reqs[course];
           }
         });
@@ -500,6 +516,8 @@ export default function App() {
                     <AdminBuilder
                       lists={builderLists}
                       setLists={setBuilderLists}
+                      filter={builderFilter}
+                      setFilter={setBuilderFilter}
                       Session={Session}
                       User={User}
                     />

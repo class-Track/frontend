@@ -13,6 +13,7 @@ import {
   MobileStepper,
   Button,
   useTheme,
+  TextField,
 } from "@mui/material";
 
 const list_style = {
@@ -29,6 +30,7 @@ const card_style = {
 export default function List(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [filter, setFilter] = useState("");
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -38,12 +40,25 @@ export default function List(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const searchField = (
+    <TextField
+      fullWidth
+      label="Search..."
+      variant="standard"
+      value={filter}
+      onChange={(e) => {
+        setFilter(e.target.value);
+        props.setFilter(e.target.value);
+      }}
+    />
+  );
+
   return (
     <div>
       <Card style={card_style} elevation={6}>
         <CardHeader
           title={props.title}
-          subheader={props.subtitle}
+          subheader={props.isCategory ? searchField : props.subtitle}
           style={{ backgroundColor: "#FBFBF8" }}
         />
         <Divider />
@@ -54,16 +69,23 @@ export default function List(props) {
               {...provided.droppableProps}
               style={{ ...list_style, minHeight: props.length }}
             >
-              {props.courses.map((course, index) => (
-                <Course
-                  {...props}
-                  course={course}
-                  id={course.id}
-                  index={index}
-                  key={course.id}
-                  disableDrag={props.disableDrag}
-                />
-              ))}
+              {props.courses
+                .filter(
+                  (object) =>
+                    object["classification"].toLowerCase().includes(filter) ||
+                    object["classification"].includes(filter) ||
+                    filter === ""
+                )
+                .map((course, index) => (
+                  <Course
+                    {...props}
+                    course={course}
+                    id={course.id}
+                    index={index}
+                    key={course.id}
+                    disableDrag={props.disableDrag}
+                  />
+                ))}
               {provided.placeholder}
             </div>
           )}

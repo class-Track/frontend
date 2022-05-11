@@ -50,6 +50,7 @@ export default function StepFour(props) {
   const theme = useTheme();
   const [currYear, setCurrYear] = useState(2022);
   const [currCategory, setCurrCategory] = useState("LIBR");
+  const [filter, setFilter] = useState("");
   const [indexYear, setIndexYear] = useState(0);
   const [indexCategory, setIndexCategory] = useState(0);
   const [addOpenYear, setAddOpenYear] = useState(false);
@@ -369,6 +370,7 @@ export default function StepFour(props) {
             length={450}
             footer={navigation}
             loadReqs={loadReqs}
+            isCategory={true}
             {...props}
           />
         </Grid>
