@@ -40,7 +40,7 @@ export default function AdminBuilder(props) {
   const [categories, setCategories] = useState({});
   const [categoryKeys, setCategoryKeys] = useState([]);
   const [categoryLists, setCategoryLists] = useState({});
-  const [builderLists, setBuilderLists] = useState({});
+  // const [builderLists, setLists] = useState({});
 
   useEffect(() => {
     console.log(curriculum);
@@ -101,6 +101,7 @@ export default function AdminBuilder(props) {
       categoryLists[key].forEach((course, i) => {
         temp_courses[course["classification"]] = {
           id: course["classification"],
+          classification: course["classification"],
           course_id: course["course_id"],
           credits: course["credits"],
           prereqs: [],
@@ -166,7 +167,7 @@ export default function AdminBuilder(props) {
     };
 
     console.log(newBuilderList);
-    props.setBuilderLists(newBuilderList);
+    props.setLists(newBuilderList);
   };
 
   const handleNext = () => {

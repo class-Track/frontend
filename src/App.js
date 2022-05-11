@@ -357,6 +357,8 @@ export default function App() {
             {/* The curriculum viewer comes later so imma just leave this here for now */}
             <PreIDedDisplay
               {...PropsPackage}
+              User={User}
+              Session={Session}
               component={Viewer}
               typename={"Curriculum"}
             />
@@ -367,6 +369,10 @@ export default function App() {
             {/* The curriculum viewer comes later so imma just leave this here for now */}
             <PreIDedDisplay
               {...PropsPackage}
+              User={User}
+              Session={Session}
+              lists={currLists}
+              setLists={setCurrLists}
               component={Builder}
               typename={"Builder"}
             />
@@ -375,6 +381,8 @@ export default function App() {
         <Route path="/User/:id">
           <PreIDedDisplay
             {...PropsPackage}
+            User={User}
+            Session={Session}
             component={ProfileUser}
             typename={"user"}
           />
@@ -382,6 +390,8 @@ export default function App() {
         <Route path="/Department/:id">
           <PreIDedDisplay
             {...PropsPackage}
+            User={User}
+            Session={Session}
             component={ProfileDepartment}
             typename={"Department"}
           />
@@ -389,6 +399,8 @@ export default function App() {
         <Route path="/University/:id">
           <PreIDedDisplay
             {...PropsPackage}
+            User={User}
+            Session={Session}
             component={ProfileUni}
             typename={"University"}
           />
@@ -456,7 +468,7 @@ export default function App() {
                   <DragDropContext onDragEnd={dragEnd}>
                     <AdminBuilder
                       lists={builderLists}
-                      setBuilderLists={setBuilderLists}
+                      setLists={setBuilderLists}
                       Session={Session}
                       User={User}
                     />

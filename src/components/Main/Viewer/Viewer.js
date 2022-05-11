@@ -5,6 +5,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import ShareIcon from "@mui/icons-material/Share";
 import EditIcon from "@mui/icons-material/Edit";
 import List from "../Builder/List";
+import { Link, useHistory } from "react-router-dom";
 import {
   Stack,
   IconButton,
@@ -20,6 +21,7 @@ import {
 } from "@mui/material";
 
 export default function Viewer(props) {
+  const history = useHistory();
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
   const [curriculum, setCurriculum] = useState();
@@ -87,8 +89,13 @@ export default function Viewer(props) {
       });
   };
 
+  const editCurriculum = () => {
+    history.push("/Builder/" + props.id);
+  };
+
   return (
     <div style={{ margin: 40 }}>
+      <p>{props.Session}</p>
       {loadCurriculum ? (
         <Grid
           container
@@ -109,7 +116,7 @@ export default function Viewer(props) {
               <Typography variant={"h4"}>{curriculum.name}</Typography>
             </Grid>
             <Grid item>
-              <IconButton>
+              <IconButton onClick={() => editCurriculum()}>
                 <EditIcon />
               </IconButton>
             </Grid>
@@ -180,7 +187,7 @@ export default function Viewer(props) {
           </Grid>
         </Grid>
       ) : (
-        <p>loading curriculum...</p>
+        <p>loading curriculum for viewer...</p>
       )}
     </div>
   );

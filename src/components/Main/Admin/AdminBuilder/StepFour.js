@@ -99,7 +99,7 @@ export default function StepFour(props) {
       prereqs: prereqs,
       coreqs: coreqs,
     };
-    props.setBuilderLists({
+    props.setLists({
       ...props.lists,
       [course]: newCourse,
     });
@@ -134,7 +134,7 @@ export default function StepFour(props) {
         courses: [],
       };
     });
-    props.setBuilderLists({
+    props.setLists({
       ...props.lists,
       ...temp_semesters,
       ...temp_years,

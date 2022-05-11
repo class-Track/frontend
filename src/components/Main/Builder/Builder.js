@@ -12,6 +12,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
+import StepFour from "../Admin/AdminBuilder/StepFour";
 import {
   Stack,
   IconButton,
@@ -27,11 +28,14 @@ import { Cookie } from "@mui/icons-material";
 export default function Builder(props) {
   const cookies = new Cookies();
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
-  const sessionID = cookies.get("SessionID");
-  const years = props.lists["year_list"]["year_ids"];
-  const [yearIndex, setYearIndex] = useState(years.length - 1);
+  const [info, setInfo] = useState({});
+  const [loadCurriculum, setLoadCurriculum] = useState(false);
+  const [yearIndex, setYearIndex] = useState(0);
   const actions = [
-    { icon: <SaveIcon onClick={() => saveGraph()} />, name: "Save" },
+    {
+      icon: <SaveIcon onClick={() => console.log("pressed save")} />,
+      name: "Save",
+    },
     {
       icon: <DeleteIcon onClick={() => console.log("pressed delete")} />,
       name: "Delete",
@@ -43,96 +47,84 @@ export default function Builder(props) {
   ];
 
   useEffect(() => {
-    getGraph();
-  });
+    getCurriculum();
+  }, []);
 
-  const getGraph = async () => {
+  const getCurriculum = async () => {
     await axios({
       method: "GET",
-      url: tempAPI + "currGraph/curr",
+      url: tempAPI + "currGraph",
       params: {
-        name: "Test_Curriculum_4_54",
+        id: props.id,
       },
     })
       .then((res) => {
         console.log(res.data);
+        props.setLists(res.data);
+        setLoadCurriculum(true);
       })
-      .catch((error) => {
-        console.log(error.data);
-      });
-  };
-
-  const saveGraph = async () => {
-    let semesters = [];
-    await axios({
-      method: "POST",
-      url: props.API + "me",
-      data: {
-        session_id: sessionID,
-      },
-    })
-      .then((res) => {
-        years.forEach((year) => {
-          props.lists[year]["semester_ids"].forEach((semester) => {
-            semesters.push({
-              ...props.lists[semester],
-              id:
-                res.data["degree_id"] +
-                "_" +
-                res.data["user_id"] +
-                "_" +
-                props.lists[semester].id,
-            });
-          });
-        });
-        let tempResponse = {
-          graph: [
-            {
-              name:
-                "Test_Curriculum_" +
-                res.data["degree_id"] +
-                "_" +
-                res.data["user_id"],
-              // program: res.data["degree_id"],
-              program: 4,
-              user: res.data["user_id"],
-              semesters: semesters,
-            },
-          ],
-        };
-        console.log(tempResponse);
-        axios({
-          method: "POST",
-          url: tempAPI + "currGraph/student",
-          data: tempResponse,
-        })
-          .then((res) => {
-            console.log("result:", res.data);
-          })
-          .catch((error) => {
-            console.log("error:", error);
-          });
-      })
-      .catch((error) => {
-        console.log(error.data);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   const nextYear = () => {
-    if (yearIndex + 1 < years.length) {
-      setYearIndex(yearIndex + 1);
-    }
+    // if (yearIndex + 1 < years.length) {
+    //   setYearIndex(yearIndex + 1);
+    // }
   };
 
   const prevYear = () => {
-    if (yearIndex - 1 >= 0) {
-      setYearIndex(yearIndex - 1);
+    // if (yearIndex - 1 >= 0) {
+    //   setYearIndex(yearIndex - 1);
+    // }
+  };
+
+  const createSemesters = (degree_id, user_id, year) => {
+    return [
+      degree_id + "_" + year + "_spring",
+      degree_id + "_" + year + "_summer",
+      degree_id + "_" + year + "_ext_summer",
+      degree_id + "_" + year + "_fall",
+    ];
+  };
+
+  const getSemesterName = (index) => {
+    switch (index) {
+      case 0:
+        return "Spring";
+        break;
+      case 1:
+        return "Summer";
+        break;
+      case 2:
+        return "Extended Summer";
+        break;
+      case 3:
+        return "Fall";
+        break;
+      default:
+        return undefined;
     }
   };
 
   return (
     <div>
-      <Stack
+      <p>{props.id}</p>
+      {loadCurriculum ? (
+        <StepFour
+          {...props}
+          info={info}
+          user={props.User}
+          session={props.Session}
+          isDragDisabled={false}
+          createSemesters={createSemesters}
+          getSemesterName={getSemesterName}
+        />
+      ) : (
+        <></>
+      )}
+      {/* <Stack
         direction="row"
         justifyContent="center"
         alignItems="center"
@@ -193,7 +185,7 @@ export default function Builder(props) {
             tooltipTitle={action.name}
           />
         ))}
-      </SpeedDial>
+      </SpeedDial> */}
     </div>
   );
 }
