@@ -20,6 +20,7 @@ export default function AdminCourses(props) {
   const [courses, setCourses] = useState();
   const [departments, setDepartments] = useState();
   const [name, setName] = useState("");
+  const [credits, setCredits] = useState("");
   const [classification, setClassification] = useState("");
   const [id, setID] = useState("");
   const [departmentID, setDepartmentID] = useState("");
@@ -36,6 +37,7 @@ export default function AdminCourses(props) {
     { id: "index", label: "Index", minWidth: 100 },
     { id: "id", label: "ID", minWidth: 100 },
     { id: "name", label: "Course Name", minWidth: 200 },
+    { id: "credits", label: "Course Credits", minWidth: 100 },
     { id: "department_id", label: "Department ID", minWidth: 100 },
     { id: "classification", label: "Classification", minWidth: 100 },
   ];
@@ -45,11 +47,24 @@ export default function AdminCourses(props) {
     getDepartments();
   }, []);
 
-  const createData = (index, id, name, department_id, classification) => {
-    return { index, id, name, department_id, classification };
+  const createData = (
+    index,
+    id,
+    name,
+    credits,
+    department_id,
+    classification
+  ) => {
+    return { index, id, name, credits, department_id, classification };
   };
 
-  const addCourse = async (name, department_id, classification, session_id) => {
+  const addCourse = async (
+    name,
+    credits,
+    department_id,
+    classification,
+    session_id
+  ) => {
     await axios({
       method: "POST",
       url: tempAPI + "course",
@@ -57,6 +72,7 @@ export default function AdminCourses(props) {
         session_id: session_id,
         department_id: department_id,
         name: name,
+        credits: parseInt(credits),
         classification: classification,
       },
     })
@@ -84,6 +100,7 @@ export default function AdminCourses(props) {
               i,
               value["course_id"],
               value["name"],
+              value["credits"],
               value["department_id"],
               value["classification"]
             )
@@ -117,6 +134,7 @@ export default function AdminCourses(props) {
   const editCourse = async (
     course_id,
     name,
+    credits,
     department_id,
     classification,
     session_id
@@ -126,6 +144,7 @@ export default function AdminCourses(props) {
       url: tempAPI + "course/update/" + course_id,
       data: {
         name: name,
+        credits: parseInt(credits),
         department_id: department_id,
         classification: classification,
         session_id: session_id,
@@ -184,6 +203,7 @@ export default function AdminCourses(props) {
   const resetDialogs = () => {
     getCourses();
     setName("");
+    setCredits("");
     setClassification("");
     setID("");
     setDepartmentID("");
@@ -211,6 +231,14 @@ export default function AdminCourses(props) {
             onChange={(e) => {
               setErrorAdd(false);
               setName(e.target.value);
+            }}
+          />
+          <TextField
+            id="credits"
+            label="Course Credits"
+            onChange={(e) => {
+              setErrorAdd(false);
+              setCredits(e.target.value);
             }}
           />
           <TextField
@@ -248,9 +276,20 @@ export default function AdminCourses(props) {
         <Button
           onClick={() => {
             console.log("adding course", name);
-            if (name !== "" && classification !== "" && departmentID !== "") {
+            if (
+              name !== "" &&
+              credits !== "" &&
+              classification !== "" &&
+              departmentID !== ""
+            ) {
               setErrorAdd(false);
-              addCourse(name, departmentID, classification, props.Session);
+              addCourse(
+                name,
+                credits,
+                departmentID,
+                classification,
+                props.Session
+              );
             } else {
               setErrorAdd(true);
             }
@@ -279,6 +318,14 @@ export default function AdminCourses(props) {
             onChange={(e) => {
               setErrorEdit(false);
               setName(e.target.value);
+            }}
+          />
+          <TextField
+            id="credits"
+            label="Course Credits"
+            onChange={(e) => {
+              setErrorAdd(false);
+              setCredits(e.target.value);
             }}
           />
           <TextField
@@ -316,7 +363,14 @@ export default function AdminCourses(props) {
             console.log("editing course", name);
             if (name !== "" && classification !== "" && departmentID !== "") {
               setErrorEdit(false);
-              editCourse(id, name, departmentID, classification, props.Session);
+              editCourse(
+                id,
+                name,
+                credits,
+                departmentID,
+                classification,
+                props.Session
+              );
             } else {
               setErrorEdit(true);
             }

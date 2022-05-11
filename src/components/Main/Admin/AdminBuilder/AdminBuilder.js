@@ -102,6 +102,7 @@ export default function AdminBuilder(props) {
         temp_courses[course["classification"]] = {
           id: course["classification"],
           course_id: course["course_id"],
+          credits: course["credits"],
           prereqs: [],
           coreqs: [],
           category: key,
@@ -110,12 +111,14 @@ export default function AdminBuilder(props) {
       temp_categories[key] = {
         id: categories[key]["id"],
         category_id: categories[key]["category_id"],
+        classification: categories[key]["classsification"],
         name: categories[key]["name"],
         list_type: "CATEGORY",
         credits: categories[key]["credits"],
         courses: categoryLists[key].map((course, i) => ({
           id: course["classification"],
           course_id: course["course_id"],
+          credits: course["credits"],
           department_id: course["department_id"],
           name: course["name"],
           classification: course["classification"],
@@ -251,26 +254,22 @@ export default function AdminBuilder(props) {
             if (props.lists[semester]["courses"].length) {
               props.lists[semester]["courses"].forEach((course) => {
                 if (props.lists[course["id"]]["prereqs"].length) {
-                  props.lists[course["id"]]["prereqs"].forEach(
-                    (prereq) => {
-                      console.log("before pushing:", prereq);
-                      temp_prereqs.push({
-                        id: course["id"],
-                        pre_requisite: prereq["id"],
-                      });
-                    }
-                  );
+                  props.lists[course["id"]]["prereqs"].forEach((prereq) => {
+                    console.log("before pushing:", prereq);
+                    temp_prereqs.push({
+                      id: course["id"],
+                      pre_requisite: prereq["id"],
+                    });
+                  });
                 }
                 if (props.lists[course["id"]]["coreqs"].length) {
-                  props.lists[course["id"]]["coreqs"].forEach(
-                    (coreq) => {
-                      console.log("before pushing:", coreq);
-                      temp_coreqs.push({
-                        id: course["id"],
-                        co_requisite: coreq["id"],
-                      });
-                    }
-                  );
+                  props.lists[course["id"]]["coreqs"].forEach((coreq) => {
+                    console.log("before pushing:", coreq);
+                    temp_coreqs.push({
+                      id: course["id"],
+                      co_requisite: coreq["id"],
+                    });
+                  });
                 }
               });
             }
