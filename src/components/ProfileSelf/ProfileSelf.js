@@ -1,58 +1,50 @@
-import Cookies from "universal-cookie/es6";
 import React, { useState, useEffect } from "react";
 import ProfileCard from "./ProfileCard";
-import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import { GetUserProfile } from "../../API";
 
 
 
-export default function ProfileSelf({API, User, Session}) {
-    const [session_id, setSessionID] = useState(Session);
-    const [userData, setUserData] = useState(User);
-
+export default function ProfileSelf(props) {
   
+    const [profile,setProfile] = useState(undefined)
+    const [loading,setLoading] = useState(false)
+    const [error,setError] = useState(undefined)
+
     useEffect(() => {
-      if (session_id) {
-        getUserData();
+      if (props.Session) {
+        GetUserProfile(props.Session,setLoading,setProfile, setError)
       }
-    }, []);
+    }, [props.Session]);
   
-    const getUserData = async () => {
-      await axios({
-        method: "POST",
-        url: API + "me",
-        data: {
-          session_id: session_id,
-        },
-      })
-        .then((res) => {
-          console.log("res:", res.data);
-          setUserData(res.data);
-        })
-        .catch((error) => {
-          console.log("error:", error);
-        });
-    };
-
     // Using hardcode right now
-    let user = 
-    {
-        email: "julio.aguilar@email.com",
-        first_name: "Julio",
-        isAdmin: true,
-        last_name: "Aguilar",
-        university_id: 2,
-        user_id: 57
+    // let user = 
+    // {
+    //     email: "julio.aguilar@email.com",
+    //     first_name: "Julio",
+    //     isAdmin: true,
+    //     last_name: "Aguilar",
+    //     university_id: 2,
+    //     user_id: 57
+    // }
+
+    if(error){
+      return(<div style={{textAlign:'center'}}>{error}</div>)
+    }
+
+    if(!profile || loading){
+      return(<div style={{textAlign:'center'}}><CircularProgress/></div>)
     }
 
     //I leave this component as a separate thing in case we want to add anything around the profile of the current user (like options to manage it)
     // return(<>Display for currently logged in user. This should eventually delegate to ProfileUser.</>)
     return(
     <ProfileCard 
-        name = {`${user.first_name} ${user.last_name}`}
-        email = {`${user.email}`}
+        name = {`${profile.first_name} ${profile.last_name}`}
+        email = {`${profile.email}`}
         // curriculum = {`${user.user_id}`}
-        curriculum = "Software Engineering"
+        curriculum = {`${profile.degree_name}`}
         // university = {`${user.university_id}`}
-        university = "University of Puerto Rico - Mayaguez" 
+        university = {`${profile.university_name}`}
     />)
 }
