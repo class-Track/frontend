@@ -95,7 +95,6 @@ export default function Viewer(props) {
 
   return (
     <div style={{ margin: 40 }}>
-      <p>{props.Session}</p>
       {loadCurriculum ? (
         <Grid
           container
@@ -135,55 +134,59 @@ export default function Viewer(props) {
             alignItems="stretch"
             spacing={2}
           >
-            {curriculum.year_list.year_ids.reverse().map((year_id, i) => (
-              <Grid item key={year_id}>
-                <Grid
-                  container
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="stretch"
-                >
-                  <Grid xs={12} item key={i}>
-                    <Divider sx={{ p: 1 }}>
-                      <Typography
-                        component="h2"
-                        variant="h4"
-                        color="gray"
-                        gutterBottom
-                      >
-                        {year_id}
-                      </Typography>
-                    </Divider>
-                  </Grid>
+            {curriculum.year_list.year_ids
+              .sort((a, b) => (a > b ? 1 : -1))
+              .map((year_id, i) => (
+                <Grid item key={year_id}>
                   <Grid
-                    xs={24}
-                    item
-                    key={i + 1}
                     container
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={4}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="stretch"
                   >
-                    {curriculum[year_id].semester_ids.map((semester_id, j) => (
-                      <Grid xs={3} key={i + 1 + j} item>
-                        <List
-                          key={i + 1 + j}
-                          list={curriculum[semester_id]}
-                          courses={curriculum[semester_id]["courses"]}
-                          title={curriculum[semester_id]["name"]}
-                          subtitle={curriculum[semester_id]["year"]}
-                          length={450}
-                          isDragDisabled={true}
-                          lists={curriculum}
-                          {...props}
-                        />
-                      </Grid>
-                    ))}
+                    <Grid xs={12} item key={i}>
+                      <Divider sx={{ p: 1 }}>
+                        <Typography
+                          component="h2"
+                          variant="h4"
+                          color="gray"
+                          gutterBottom
+                        >
+                          {year_id}
+                        </Typography>
+                      </Divider>
+                    </Grid>
+                    <Grid
+                      xs={24}
+                      item
+                      key={i + 1}
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      spacing={4}
+                    >
+                      {curriculum[year_id].semester_ids
+                        .sort((a, b) => (a > b ? 1 : -1))
+                        .map((semester_id, j) => (
+                          <Grid xs={3} key={i + 1 + j} item>
+                            <List
+                              key={i + 1 + j}
+                              list={curriculum[semester_id]}
+                              courses={curriculum[semester_id]["courses"]}
+                              title={curriculum[semester_id]["name"]}
+                              subtitle={curriculum[semester_id]["year"]}
+                              length={450}
+                              isDragDisabled={true}
+                              lists={curriculum}
+                              {...props}
+                            />
+                          </Grid>
+                        ))}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            ))}
+              ))}
           </Grid>
         </Grid>
       ) : (
