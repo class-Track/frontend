@@ -32,11 +32,6 @@ export default function Home(props) {
     getLists();
   }, [props.User]);
 
-  // getUserCurriculum(props.Session, setCurriculum).then((res) => {
-  //   console.log("Frontend getUserCurriculum: ", res)
-  //   userCurriculum = res
-  // })
-
   const getLists = async () => {
     if (props.User) {
       if (props.User.isAdmin) {
@@ -52,21 +47,39 @@ export default function Home(props) {
             console.log(err);
           });
       } else {
-        await axios({
-          method: "GET",
-          url: tempAPI + "curriculum/" + props.User.user_id,
-        })
-          .then((res) => {
-            console.log("curriculums", res.data);
-            setCurriculums(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          getUserCurrs(props.User.user_id);
+          getUserDrafts(props.User.user_id);
       }
     }
   };
 
+  const getUserCurrs = async(id) => {
+    await axios({
+      method: "GET",
+      url: `${tempAPI}curriculum/user/${id}`,
+    })
+    .then((res) => {
+      console.log("curriculums", res.data);
+      setCurriculums(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const getUserDrafts = async(id) => {
+    await axios({
+      method: "GET",
+      url: `${tempAPI}curriculum/user_draft/${id}`,
+    })
+    .then((res) => {
+      console.log("curriculums", res.data);
+      setDraftCurriculum(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
   return (
     <div style={{ margin: 50 }}>
       {props.User ? (
@@ -96,14 +109,14 @@ export default function Home(props) {
                   editButtons={true}
                 />
               </div>
-              <div style={{ padding: 10 }}>
+              {/* <div style={{ padding: 10 }}>
                 <CurriculumCarrousel
                   {...props}
                   title={"Recomended"}
                   loading={false}
                   curriculums={DummyData}
                 />
-              </div>
+              </div> */}
             </div>
           )}
         </div>

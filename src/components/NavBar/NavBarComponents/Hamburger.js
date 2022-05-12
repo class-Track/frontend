@@ -160,17 +160,6 @@ export default function Hamburger(props) {
         )}
 
         <Divider />
-        <List>
-          <ListItem>
-            <ListItemText style={{ textAlign: "center" }}>
-              Dark Mode:
-              <Switch
-                checked={props.DarkMode}
-                onChange={() => props.ToggleDarkMode()}
-              />
-            </ListItemText>
-          </ListItem>
-        </List>
       </Box>
     </Drawer>
   );
