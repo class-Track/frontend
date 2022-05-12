@@ -36,6 +36,32 @@ export const GetUser = async (
     });
 };
 
+export const GetUserProfile = async (
+  Session,
+  setLoading,
+  setProfile,
+  setError
+) => {
+  setLoading(true);
+  console.log(Session);
+  await axios({
+    method: "POST",
+    url: APIURL + "profile",
+    data: {
+      session_id: Session,
+    },
+  })
+    .then((res) => {
+      console.log("result:", res.data);
+      setProfile(res.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log("error:", error);
+      setError(error)
+    });
+};
+
 export const LogIn = async (email, password) => {
   return await axios({
     method: "POST",
