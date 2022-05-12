@@ -5,10 +5,13 @@ import axios from "axios";
 
 
 
-export default function ProfileDepartment({propsPackage, API}) {
+export default function ProfileDepartment({PropsPackage, API}) {
     const cookies = new Cookies();
     const [session_id, setSessionID] = useState(cookies.get("SessionID"));
     const [userData, setUserData] = useState(null);
+
+    console.log(userData)
+    console.log(PropsPackage)
   
     useEffect(() => {
       if (session_id) {
