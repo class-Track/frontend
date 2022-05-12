@@ -24,12 +24,15 @@ import {
   Fab,
   Grid,
   Typography,
+  TextField,
 } from "@mui/material";
 import { Cookie } from "@mui/icons-material";
 
 export default function Builder(props) {
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
   const [info, setInfo] = useState({});
+  const [name, setName] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [loadCurriculum, setLoadCurriculum] = useState(false);
   const actions = [
     {
@@ -51,6 +54,18 @@ export default function Builder(props) {
       getCurriculum();
     }
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(props.lists).length > 0) {
+      getIdentifier();
+    }
+  }, [props.lists]);
+
+  useEffect(() => {
+    if (Object.keys(props.lists).length > 0) {
+      loadNewLists();
+    }
+  }, [identifier, props.lists]);
 
   const getCurriculum = async () => {
     console.log(props.id);
@@ -99,6 +114,92 @@ export default function Builder(props) {
     }
   };
 
+  const getIdentifier = async () => {
+    await axios({
+      method: "GET",
+      url: tempAPI + "curriculums/newID",
+      params: {
+        deptCode: props.lists["deptCode"],
+        user_id: props.User["user_id"],
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setIdentifier(res.data);
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  };
+
+  const loadNewLists = () => {
+    let new_category_list = {
+      ...props.lists["category_list"],
+      category_ids: props.lists["category_list"]["category_ids"].map(
+        (category_id) => {
+          return identifier + "_" + category_id;
+        }
+      ),
+    };
+
+    let new_categories = {};
+    let new_courses = {};
+    props.lists["category_list"]["category_ids"].forEach((category_id) => {
+      new_categories[identifier + "_" + category_id] = {
+        ...props.lists[category_id],
+        classification: identifier + "_" + category_id,
+        id: identifier + "_" + category_id,
+      };
+      props.lists[category_id]["courses"].forEach((course) => {
+        new_courses[course["id"]] = {
+          ...props.lists[course["id"]],
+          category: identifier + "_" + category_id,
+        };
+      });
+    });
+
+    let new_year_list = {};
+    let new_semesters = {};
+    props.lists["year_list"]["year_ids"].forEach((year) => {
+      let new_semester_ids = [];
+      props.lists[year]["semester_ids"].forEach((semester_id) => {
+        new_semester_ids.push(identifier + "_" + semester_id);
+        new_semesters[identifier + "_" + semester_id] = {
+          ...props.lists[semester_id],
+          id: identifier + "_" + semester_id,
+        };
+        props.lists[semester_id]["courses"].forEach((course) => {
+          new_courses[course["id"]] = {
+            ...props.lists[course["id"]],
+            category: identifier + "_" + props.lists[course["id"]]["category"],
+          };
+        });
+      });
+      new_year_list[year] = {
+        ...props.lists[year],
+        semester_ids: new_semester_ids,
+      };
+    });
+
+    console.log({
+      credits: props.lists["credits"],
+      curriculum_sequence: identifier,
+      degree_id: props.lists["degree_id"],
+      degree_name: props.lists["degree_name"],
+      department_id: props.lists["department_id"],
+      department_name: props.lists["department_name"],
+      deptCode: props.lists["deptCode"],
+      length: props.lists["length"],
+      name: name,
+      category_list: new_category_list,
+      year_list: new_year_list,
+      course_list: props.lists["course_list"],
+      ...new_categories,
+      ...new_semesters,
+      ...new_courses,
+    });
+  };
+
   return (
     <div style={{ margin: 30 }}>
       {loadCurriculum ? (
@@ -117,8 +218,16 @@ export default function Builder(props) {
             alignItems="center"
             spacing={1}
           >
-            <Grid item>
-              <Typography variant={"h4"}>{props.lists.name}</Typography>
+            <Grid xs={6} item>
+              <TextField
+                fullWidth
+                label="Name"
+                variant="standard"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
             </Grid>
             <Grid item>
               <IconButton onClick={() => console.log("clicked save button")}>

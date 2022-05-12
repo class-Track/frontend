@@ -639,6 +639,7 @@ export default function App() {
 //This function lets us grab the id and pass it down to any component that needs an "id" field
 function PreIDedDisplay(props) {
   let { id } = useParams(); //Pass all props except the component we're displaying (because we don't need to do that), and the id
+  console.log(id);
   return <props.component {...props} component={undefined} id={id} />;
 }
 

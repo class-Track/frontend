@@ -143,6 +143,7 @@ export default function AdminBuilder(props) {
         id: year,
         name: year,
         semester_ids: createSemesters(
+          info["department_id"],
           info["degree_id"],
           props.User["user_id"],
           year
@@ -198,12 +199,12 @@ export default function AdminBuilder(props) {
     return count;
   };
 
-  const createSemesters = (degree_id, user_id, year) => {
+  const createSemesters = (department_id, degree_id, user_id, year) => {
     return [
-      degree_id + "_" + year + "_spring_0",
-      degree_id + "_" + year + "_summer_1",
-      degree_id + "_" + year + "_ext_summer_2",
-      degree_id + "_" + year + "_fall_3",
+      department_id + "_" + degree_id + "_" + year + "_spring_0",
+      department_id + "_" + degree_id + "_" + year + "_summer_1",
+      department_id + "_" + degree_id + "_" + year + "_ext_summer_2",
+      department_id + "_" + degree_id + "_" + year + "_fall_3",
     ];
   };
 
