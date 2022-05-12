@@ -52,7 +52,7 @@ export default function App() {
   const [currLists, setCurrLists] = useState({});
   const [currCourses, setCurrCourses] = useState(courses);
   //There's already a const for API in API.js. IDK why there's one here (?)
-  const API = "https://classtrack-backend.herokuapp.com/classTrack/";
+  const API = "http://localhost:5000/classTrack/";
 
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
   const { width } = useWindowDimensions();
@@ -376,7 +376,7 @@ export default function App() {
         </Route>
         <Route path="/Profile">
           {Session ? (
-            <ProfileSelf {...PropsPackage} />
+            <ProfileSelf {...PropsPackage} API={API} />
           ) : (
             <Redirect to="/Login" />
           )}
