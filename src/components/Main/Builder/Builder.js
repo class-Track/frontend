@@ -22,6 +22,8 @@ import {
   SpeedDialIcon,
   SpeedDialAction,
   Fab,
+  Grid,
+  Typography,
 } from "@mui/material";
 import { Cookie } from "@mui/icons-material";
 
@@ -98,64 +100,53 @@ export default function Builder(props) {
   };
 
   return (
-    <div>
-      <p>{props.id}</p>
+    <div style={{ margin: 30 }}>
       {loadCurriculum ? (
-        <StepFour
-          {...props}
-          info={info}
-          user={props.User}
-          session={props.Session}
-          isDragDisabled={false}
-          createSemesters={createSemesters}
-          getSemesterName={getSemesterName}
-        />
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="stretch"
+        >
+          <Grid
+            xs={12}
+            item
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={1}
+          >
+            <Grid item>
+              <Typography variant={"h4"}>{props.lists.name}</Typography>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => console.log("clicked save button")}>
+                <SaveAsIcon />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => console.log("clicked delete button")}>
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <StepFour
+              {...props}
+              info={info}
+              user={props.User}
+              session={props.Session}
+              isDragDisabled={false}
+              createSemesters={createSemesters}
+              getSemesterName={getSemesterName}
+            />
+          </Grid>
+        </Grid>
       ) : (
         <></>
       )}
-      {/* <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-      >
-        <List
-          key={0}
-          list={props.lists["course_list"]}
-          courses={props.lists["course_list"]["courses"]}
-          scroll={true}
-          title={props.lists["course_list"].name}
-          subtitle={"All Courses"}
-          length={740}
-        />
-        <IconButton
-          disabled={yearIndex === 0}
-          key={1}
-          onClick={() => prevYear()}
-        >
-          <ChevronLeftIcon />
-        </IconButton>
-        {props.lists[years[yearIndex]]["semester_ids"].map((value, index) => (
-          <List
-            key={index + 2}
-            list={props.lists[value]}
-            courses={props.lists[value]["courses"]}
-            title={props.lists[value].name}
-            subtitle={props.lists[value].year}
-            length={450}
-          />
-        ))}
-        {yearIndex === years.length - 1 ? (
-          <IconButton>
-            <AddIcon />
-          </IconButton>
-        ) : (
-          <IconButton key={years.length + 1} onClick={() => nextYear()}>
-            <ChevronRightIcon />
-          </IconButton>
-        )}
-      </Stack> */}
-      <Fab
+      {/* <Fab
         size="large"
         aria-label="add"
         sx={{ position: "absolute", bottom: 16, right: 96 }}
@@ -174,7 +165,7 @@ export default function Builder(props) {
             tooltipTitle={action.name}
           />
         ))}
-      </SpeedDial>
+      </SpeedDial> */}
     </div>
   );
 }

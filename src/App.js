@@ -88,12 +88,14 @@ export default function App() {
   const dragEnd = (result) => {
     console.log(result);
     const { destination, source, draggableId } = result;
+
     const draggableObject = builderLists[source.droppableId]["courses"].filter(
       (object) =>
         object["classification"].toLowerCase().includes(builderFilter) ||
         object["classification"].includes(builderFilter) ||
         builderFilter === ""
     )[source.index];
+
     const realSourceIndex = builderLists[source.droppableId]["courses"]
       .map((course) => {
         return course["classification"];
@@ -165,16 +167,25 @@ export default function App() {
   const dragEndBuilder = (result) => {
     console.log(result);
     const { destination, source, draggableId } = result;
-    const draggableObject =
-      currLists[source.droppableId]["courses"][source.index];
+
+    const draggableObject = currLists[source.droppableId]["courses"].filter(
+      (object) =>
+        object["classification"].toLowerCase().includes(builderFilter) ||
+        object["classification"].includes(builderFilter) ||
+        builderFilter === ""
+    )[source.index];
+
+    const realSourceIndex = currLists[source.droppableId]["courses"]
+      .map((course) => {
+        return course["classification"];
+      })
+      .indexOf(draggableId);
 
     let prereqs = currLists[draggableId]["prereqs"];
     let coreqs = currLists[draggableId]["coreqs"];
 
     console.log("prereqs:", prereqs);
     console.log("coreqs:", coreqs);
-
-    verifyReqs(prereqs, coreqs);
 
     if (!destination) {
       return;
@@ -194,7 +205,7 @@ export default function App() {
     if (destination.droppableId === source.droppableId) {
       // rearrange course in source list
       const newStartCourses = Array.from(start["courses"]);
-      newStartCourses.splice(source.index, 1);
+      newStartCourses.splice(realSourceIndex, 1);
       newStartCourses.splice(destination.index, 0, draggableObject);
       // create a new list
       const newStart = {
@@ -212,59 +223,139 @@ export default function App() {
     }
     // if dropping into a different list, run this code
     else {
-      // remove course from source and update
-      const newStartCourses = Array.from(start["courses"]);
-      newStartCourses.splice(source.index, 1);
-      const newStart = {
-        ...start,
-        courses: newStartCourses,
-      };
-      // add course to destination and update
-      const newEndCourses = Array.from(end["courses"]);
-      newEndCourses.splice(destination.index, 0, draggableObject);
-      const newEnd = {
-        ...end,
-        courses: newEndCourses,
-      };
-      // create a state
-      const newCurrLists = {
-        ...currLists,
-        [newStart.id]: newStart,
-        [newEnd.id]: newEnd,
-      };
-      // update state
-      setCurrLists(newCurrLists);
+      let list_type = currLists[destination.droppableId]["list_type"];
+
+      switch (list_type) {
+        case "SEMESTER":
+          if (validReqs(prereqs, coreqs, destination.droppableId)) {
+            // remove course from source and update
+            const newStartCourses = Array.from(start["courses"]);
+            newStartCourses.splice(realSourceIndex, 1);
+            const newStart = {
+              ...start,
+              courses: newStartCourses,
+            };
+            // add course to destination and update
+            const newEndCourses = Array.from(end["courses"]);
+            newEndCourses.splice(destination.index, 0, draggableObject);
+            const newEnd = {
+              ...end,
+              courses: newEndCourses,
+            };
+            // create a state
+            const newCurrLists = {
+              ...currLists,
+              [newStart.id]: newStart,
+              [newEnd.id]: newEnd,
+            };
+            // update state
+            setCurrLists(newCurrLists);
+          }
+          break;
+        case "CATEGORY":
+          let realDestination = currLists[draggableId]["category"];
+          let realEnd = currLists[realDestination];
+          // remove course from source and update
+          const newStartCourses = Array.from(start["courses"]);
+          newStartCourses.splice(realSourceIndex, 1);
+          const newStart = {
+            ...start,
+            courses: newStartCourses,
+          };
+          // add course to destination and update
+          const newEndCourses = Array.from(realEnd["courses"]);
+          newEndCourses.splice(destination.index, 0, draggableObject);
+          const newEnd = {
+            ...realEnd,
+            courses: newEndCourses,
+          };
+          // create a state
+          const newCurrLists = {
+            ...currLists,
+            [newStart.id]: newStart,
+            [newEnd.id]: newEnd,
+          };
+          // update state
+          setCurrLists(newCurrLists);
+          break;
+        default:
+          break;
+      }
+
       return;
+
+      // // remove course from source and update
+      // const newStartCourses = Array.from(start["courses"]);
+      // newStartCourses.splice(realSourceIndex, 1);
+      // const newStart = {
+      //   ...start,
+      //   courses: newStartCourses,
+      // };
+      // // add course to destination and update
+      // const newEndCourses = Array.from(end["courses"]);
+      // newEndCourses.splice(destination.index, 0, draggableObject);
+      // const newEnd = {
+      //   ...end,
+      //   courses: newEndCourses,
+      // };
+      // // create a state
+      // const newCurrLists = {
+      //   ...currLists,
+      //   [newStart.id]: newStart,
+      //   [newEnd.id]: newEnd,
+      // };
+      // // update state
+      // setCurrLists(newCurrLists);
+      // return;
     }
   };
 
-  const verifyReqs = (prereqs, coreqs, source, destination) => {
-    let temp_reqs = {};
+  const validReqs = (prereqs, coreqs, destination_id) => {
+    let count_prereqs = prereqs.length;
+    let count_coreqs = coreqs.length;
+    let destination = currLists[destination_id];
+    let year_index = currLists["year_list"]["year_ids"].indexOf(destination["year"]);
+    let semester_index =
+      currLists[destination["year"]]["semester_ids"].indexOf(destination_id);
+    let temp_prereqs = {};
+    let temp_coreqs = {};
+
     prereqs.forEach((req, i) => {
-      temp_reqs[req["classification"]] = req;
+      temp_prereqs[req["classification"]] = req;
     });
     coreqs.forEach((req, i) => {
-      temp_reqs[req["classification"]] = req;
+      temp_coreqs[req["classification"]] = req;
     });
 
-    currLists["year_list"]["year_ids"].forEach((year, i) => {
-      currLists[year]["semester_ids"].forEach((semester, j) => {
-        currLists[semester]["courses"].forEach((course, k) => {
-          if (course["classification"] in temp_reqs) {
-            console.log(
-              "found",
-              course["classification"],
-              "in",
-              year,
-              semester
-            );
-            delete temp_reqs[course];
+    console.log("start:", count_prereqs, count_coreqs);
+
+    for (let i = 0; i <= year_index; i++) {
+      let curr_year = currLists["year_list"]["year_ids"][i];
+      for (let j = 0; j <= semester_index; j++) {
+        let curr_semester = currLists[curr_year]["semester_ids"][j];
+        for (let k = 0; k < currLists[curr_semester]["courses"].length; k++) {
+          let curr_course = currLists[curr_semester]["courses"][k];
+          if (j < semester_index) {
+            if (curr_course["classification"] in temp_prereqs) {
+              count_prereqs -= 1;
+            }
           }
-        });
-      });
-    });
+          if (curr_course["classification"] in temp_coreqs) {
+            count_coreqs -= 1;
+          }
+        }
+      }
+    }
 
-    console.log("done:", temp_reqs);
+    console.log(
+      "done:",
+      count_prereqs,
+      count_coreqs,
+      "result:",
+      !count_prereqs,
+      !count_coreqs
+    );
+    return !count_prereqs && !count_coreqs;
   };
 
   //This is the set session that must be passed down
@@ -420,6 +511,8 @@ export default function App() {
               Session={Session}
               lists={currLists}
               setLists={setCurrLists}
+              filter={builderFilter}
+              setFilter={setBuilderFilter}
               component={Builder}
               typename={"Builder"}
             />
