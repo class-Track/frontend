@@ -200,10 +200,10 @@ export default function AdminBuilder(props) {
 
   const createSemesters = (degree_id, user_id, year) => {
     return [
-      degree_id + "_" + year + "_spring",
-      degree_id + "_" + year + "_fall",
-      degree_id + "_" + year + "_summer",
-      degree_id + "_" + year + "_ext_summer",
+      degree_id + "_" + year + "_spring_0",
+      degree_id + "_" + year + "_summer_1",
+      degree_id + "_" + year + "_ext_summer_2",
+      degree_id + "_" + year + "_fall_3",
     ];
   };
 
@@ -213,13 +213,13 @@ export default function AdminBuilder(props) {
         return "Spring";
         break;
       case 1:
-        return "Fall";
-        break;
-      case 2:
         return "Summer";
         break;
-      case 3:
+      case 2:
         return "Extended Summer";
+        break;
+      case 3:
+        return "Fall";
         break;
       default:
         return undefined;

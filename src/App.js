@@ -255,6 +255,7 @@ export default function App() {
         case "CATEGORY":
           let realDestination = currLists[draggableId]["category"];
           let realEnd = currLists[realDestination];
+          console.log(currLists[draggableId]);
           // remove course from source and update
           const newStartCourses = Array.from(start["courses"]);
           newStartCourses.splice(realSourceIndex, 1);
@@ -314,7 +315,9 @@ export default function App() {
     let count_prereqs = prereqs.length;
     let count_coreqs = coreqs.length;
     let destination = currLists[destination_id];
-    let year_index = currLists["year_list"]["year_ids"].indexOf(destination["year"]);
+    let year_index = currLists["year_list"]["year_ids"].indexOf(
+      destination["year"]
+    );
     let semester_index =
       currLists[destination["year"]]["semester_ids"].indexOf(destination_id);
     let temp_prereqs = {};
