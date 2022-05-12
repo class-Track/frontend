@@ -34,24 +34,27 @@ export default function Home(props) {
 
   const getLists = async () => {
     if (props.User) {
-      if (props.User.isAdmin) {
-        await axios({
-          method: "GET",
-          url: tempAPI + "degrees",
-        })
-          .then((res) => {
-            console.log("degrees", res.data);
-            setDegrees(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
+      if (!props.User.isAdmin) {
           getUserCurrs(props.User.user_id);
           getUserDrafts(props.User.user_id);
       }
+      getAllBase();
     }
   };
+
+  const getAllBase = async() => {
+    await axios({
+      method: "GET",
+      url: `${tempAPI}degrees`,
+    })
+      .then((res) => {
+        console.log("degrees", res.data);
+        setDegrees(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const getUserCurrs = async(id) => {
     await axios({
@@ -87,11 +90,9 @@ export default function Home(props) {
           <div style={{ padding: 10 }}>
             <CurriculumCarrousel
               {...props}
-              title={
-                props.User.isAdmin ? "Base Curriculums" : "Your Curriculums"
-              }
+              title="Base Curriculums"
               loading={false}
-              curriculums={props.User.isAdmin ? degrees : curriculums}
+              curriculums={degrees}
               headerButton={NewCurriculumButton}
               editButtons={true}
             />
@@ -103,20 +104,21 @@ export default function Home(props) {
               <div style={{ padding: 10 }}>
                 <CurriculumCarrousel
                   {...props}
-                  title={"Drafts"}
+                  title={"Your Curriculums"}
                   loading={false}
                   curriculums={draftCurriculum}
                   editButtons={true}
                 />
               </div>
-              {/* <div style={{ padding: 10 }}>
+              <div style={{ padding: 10 }}>
                 <CurriculumCarrousel
                   {...props}
-                  title={"Recomended"}
+                  title={"Drafts"}
                   loading={false}
-                  curriculums={DummyData}
+                  curriculums={curriculums}
+                  editButtons={true}
                 />
-              </div> */}
+              </div>
             </div>
           )}
         </div>

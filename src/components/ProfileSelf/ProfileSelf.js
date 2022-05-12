@@ -5,23 +5,16 @@ import axios from "axios";
 
 
 
-export default function ProfileDepartment({PropsPackage, API}) {
-    const cookies = new Cookies();
-    const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-    const [userData, setUserData] = useState(null);
+export default function ProfileSelf({API, User, Session}) {
+    const [session_id, setSessionID] = useState(Session);
+    const [userData, setUserData] = useState(User);
 
-    console.log(userData)
-    console.log(PropsPackage)
   
     useEffect(() => {
       if (session_id) {
         getUserData();
       }
     }, []);
-  
-    const checkSession = async () => {
-      await axios({});
-    };
   
     const getUserData = async () => {
       await axios({
