@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 export default function AdminCourses(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const [courses, setCourses] = useState();
   const [departments, setDepartments] = useState();
   const [name, setName] = useState("");

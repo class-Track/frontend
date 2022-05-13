@@ -61,7 +61,7 @@ export default function CurriculumCarrousel(props) {
               </IconButton>
             </Grid>
             <Grid xs={10} item>
-              {props.curriculums.length === 0 ? <Alert variant="outlined" severity="info"> You don't have any saved Curriculums. </Alert> : props.loading ? (
+              {props.curriculums.length === 0 ? <Alert variant="outlined" severity="info"> There are no curriculums to display. </Alert> : props.loading ? (
                 <div style={{ textAlign: "center", marginTop: "20px" }}>
                   <CircularProgress />
                 </div> //pass down everything but all the curriculums

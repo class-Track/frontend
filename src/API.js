@@ -2,8 +2,8 @@ import Cookies from "universal-cookie/es6";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-// export const APIURL = process.env.APIURL ?? "https://classtrack-backend.herokuapp.com/classTrack/";
-export const APIURL = process.env.APIURL ?? "http://127.0.0.1:5000/classTrack/";
+export const APIURL = process.env.APIURL ?? "https://classtrack-backend.herokuapp.com/classTrack/";
+// export const APIURL = process.env.APIURL ?? "http://127.0.0.1:5000/classTrack/";
 //TODO: REPLACE THE DEFAULT WITH THE ACTUAL API
 
 const cookies = new Cookies();

@@ -15,7 +15,7 @@ const card_style = {
 };
 
 export default function Course(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
 
   const getCourses = async () => {
     return await axios({

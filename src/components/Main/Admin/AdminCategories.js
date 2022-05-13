@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 export default function AdminCategories(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const [categories, setCategories] = useState();
   const [name, setName] = useState("");
   const [id, setID] = useState("");

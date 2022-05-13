@@ -29,7 +29,7 @@ export default function Viewer(props) {
   const [loadCurriculum, setLoadCurriculum] = useState(false);
   const [years, setYears] = useState([]);
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const curriculum_id = props.id;
 
   useEffect(() => {

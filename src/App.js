@@ -53,8 +53,8 @@ export default function App() {
   const [currCourses, setCurrCourses] = useState(courses);
   const [useUpdate, setUseUpdate] = useState(false);
   //There's already a const for API in API.js. IDK why there's one here (?)
-  const API = "http://localhost:5000/classTrack/";
-  // const API = "https://classtrack-backend.herokuapp.com/classTrack/";
+  // const API = "http://localhost:5000/classTrack/";
+  const API = "https://classtrack-backend.herokuapp.com/classTrack/";
 
   //Width of the window. Used to determine if we need to switch to a vertical arrangement
   const { width } = useWindowDimensions();

@@ -39,12 +39,14 @@ export default function ProfileSelf(props) {
     //I leave this component as a separate thing in case we want to add anything around the profile of the current user (like options to manage it)
     // return(<>Display for currently logged in user. This should eventually delegate to ProfileUser.</>)
     return(
-    <ProfileCard 
-        name = {`${profile.first_name} ${profile.last_name}`}
-        email = {`${profile.email}`}
-        // curriculum = {`${user.user_id}`}
-        curriculum = {`${profile.degree_name}`}
-        // university = {`${user.university_id}`}
-        university = {`${profile.university_name}`}
-    />)
+      <div style={{marginTop:60}}>
+      <ProfileCard 
+          name = {`${profile.first_name} ${profile.last_name}`}
+          email = {`${profile.email}`}
+          // curriculum = {`${user.user_id}`}
+          curriculum = {`${profile.degree_name}`}
+          // university = {`${user.university_id}`}
+          university = {`${profile.university_name}`}
+      />
+      </div>)
 }

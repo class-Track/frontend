@@ -21,7 +21,7 @@ function NewCurriculumButton(props) {
 
 export default function Home(props) {
   const history = useHistory();
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const [degrees, setDegrees] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
   const [userCurriculum, setUserCurriculum] = useState([]);

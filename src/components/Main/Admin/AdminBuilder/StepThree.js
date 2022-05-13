@@ -41,7 +41,7 @@ const union = (a, b) => {
 };
 
 export default function StepThree(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [checked, setChecked] = useState([]);

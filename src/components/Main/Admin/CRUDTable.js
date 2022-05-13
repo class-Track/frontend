@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 
 export default function CRUDTable(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const [columns, setColumns] = useState(props.columns);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

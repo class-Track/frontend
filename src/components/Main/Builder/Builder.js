@@ -36,7 +36,7 @@ import {
 import { Cookie } from "@mui/icons-material";
 
 export default function Builder(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const data = props.data;
   const [info, setInfo] = useState({});
   const [name, setName] = useState("");

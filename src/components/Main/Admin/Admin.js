@@ -19,7 +19,7 @@ import {
 import AdminCategories from "./AdminCategories";
 
 export default function Admin(props) {
-  const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
   const [index, setIndex] = useState(0);
 
   const createCourses = async () => {
