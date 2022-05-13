@@ -106,7 +106,7 @@ export default function Home(props) {
                   {...props}
                   title={"Your Curriculums"}
                   loading={false}
-                  curriculums={draftCurriculum}
+                  curriculums={curriculums}
                   editButtons={true}
                 />
               </div>
@@ -115,7 +115,7 @@ export default function Home(props) {
                   {...props}
                   title={"Drafts"}
                   loading={false}
-                  curriculums={curriculums}
+                  curriculums={draftCurriculum}
                   editButtons={true}
                 />
               </div>
