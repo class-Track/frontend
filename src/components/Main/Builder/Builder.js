@@ -237,7 +237,7 @@ export default function Builder(props) {
 
   const updateCurriculum = async () => {
     await axios({
-      method: "PUT",
+      method: "POST",
       url: tempAPI + "update_custom",
       data: newCurriculum,
     })

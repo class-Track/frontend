@@ -513,7 +513,7 @@ export default function App() {
           )}
         </Route>
         <Route path="/Community">
-          {Session ? <Community /> : <Redirect to="/Login" />}
+          {Session ? <Community props={PropsPackage} /> : <Redirect to="/Login" />}
         </Route>
         <Route path="/Profile">
           {Session ? (
