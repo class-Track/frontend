@@ -67,7 +67,7 @@ export default function App() {
   //Loading usestate to make sure we don't start loading 50 times
   const [Loading, setLoading] = useState(false);
 
-  //Warning to show a dialogbox to say ```y o    s i g n    o u t```
+  //Warning to show a dialogbox to say y o    s i g n    o u t
   const [InvalidSession, setInvalidSession] = useState(false);
 
   //Dark mode will not be a user saved preference. It'll be saved in a cookie
@@ -400,7 +400,7 @@ export default function App() {
     setUser(undefined);
   };
 
-  //This runs at legitiately *EVERY* time we load and render ANY page in the app
+  //This runs at legitiately EVERY time we load and render ANY page in the app
   //So here we can set the session and user
 
   if (darkMode !== cookies.get("DarkMode")) {
@@ -419,7 +419,7 @@ export default function App() {
   //This is a properties package that we pass down to every component from here.
   //Please pass it down to everything. It defines whether or not dark mode is enabled, whether or not to use vertical display mode,
   //provides the session (and if it is invalid) and the user
-  //***We only need to load the user once and its handled by this thing and is then passed down. See the if statement right above this definition***
+  //**We only need to load the user once and its handled by this thing and is then passed down. See the if statement right above this definition**
   let PropsPackage = {
     DarkMode: darkMode,
     Session: Session,
