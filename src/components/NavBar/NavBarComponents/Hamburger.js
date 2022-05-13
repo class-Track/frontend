@@ -73,6 +73,7 @@ export default function Hamburger(props) {
                 DarkMode={props.DarkMode}
                 PushTo={PushTo}
               />
+              {props.User && props.User.isAdmin ? <></> :
               <GenerateListItem
                 text="Community"
                 url="/Community"
@@ -81,16 +82,17 @@ export default function Hamburger(props) {
                 DarkMode={props.DarkMode}
                 PushTo={PushTo}
               />
+              }
               {props.User && props.User.isAdmin ? (
                 <div>
-                  <GenerateListItem
+                  {/* <GenerateListItem
                     text="Administrate"
                     url="/Admin"
                     image="admin.png"
                     imageAlt="Admin"
                     DarkMode={props.DarkMode}
                     PushTo={PushTo}
-                  />
+                  /> */}
                   <GenerateListItem
                     text="Courses"
                     url="/AdminCourses"

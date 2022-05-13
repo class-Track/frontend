@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 
 export default function Community({props}) {
     const history = useHistory();
-    const tempAPI = "http://127.0.0.1:5000/classTrack/";
+    const tempAPI = "https://classtrack-backend.herokuapp.com/classTrack/";
     const [topRated, setTopRated] = useState([]);
     const [mostVisited, setMostVisited] = useState([]);
     
