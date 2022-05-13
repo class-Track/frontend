@@ -1,7 +1,6 @@
 import { createStyles, makeStyles } from '@mui/styles';
 import { useState } from "react";
-// import IconButton from "@mui/material/IconButton";
-// import SearchIcon from "@mui/icons-material/Search";
+import StarRateIcon from '@mui/icons-material/StarRate';
 import TextField from "@mui/material/TextField";
 import { 
     Card,
@@ -15,14 +14,9 @@ import {
     IconButton, 
     Typography,
  } from "@mui/material";
-
 const useStyles = makeStyles(() =>
   createStyles({
     Boxy: {
-        // display: "flex",
-        // // alignSelf: "center",
-        // // justifyContent: "center",
-        // flexDirection: "column",
         padding: "3% 8%",
         "boxShadow":"0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)",
         minHeight: "90vh"
@@ -59,17 +53,13 @@ const SearchBar = ({setSearchQuery}) => (
             fontSize: "1.8rem",
             color: "white",
             width: "100%",
-            // height: "100%",
             padding: "3px 0px",
-            // background: "grey",
         }}
-        // color="secondary" focused
         onInput={(e) => {
           setSearchQuery(e.target.value);
         }}
         label="Search Curriculum"
         variant="outlined"
-        // size="small"
       />
     </form>
   );
@@ -111,15 +101,21 @@ export default function CommunityCard(props) {
                 <div style={{ padding: 3 }}>
                     {dataFiltered.map((d) => (
                     <div className={classes.searchText} key={d.id}>
-                        <Card>
+                        <Card sx={{marginTop:"6px"}}>
                             <Box >
                                 <CardContent sx={{textAlign:"center"}} >
-                                    <Typography  component="div" variant="h5">
-                                        {d.name}
-                                    </Typography>
-                                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                                        {d.degree_name}
-                                    </Typography>
+                                    <Box>
+                                        <Typography  component="div" variant="h5">
+                                            {d.name}
+                                        </Typography>
+                                        <Typography variant="subtitle1" color="text.secondary" component="div">
+                                            {d.degree_name}
+                                        </Typography>                                   
+                                    </Box>
+                                    <Box sx={{display:"flex", flexDirection:'row', justifyContent:"center"}}>
+                                       <StarRateIcon sx={{color:"#FFDF00"}} />
+                                       <Typography sx={{alignSelf:"end"}}>{d.rating}</Typography>
+                                    </Box>
                                 </CardContent>
                             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                             </Box>
@@ -134,8 +130,7 @@ export default function CommunityCard(props) {
                                     </Box>
                                     <Box sx={{padding:"5px 3px", flexBasis:"33%", borderLeft:"1px solid rgba(0, 0, 0, 0.14)", borderTop:"1px solid rgba(0, 0, 0, 0.14)"}}>
                                         <Typography variant="subtitle2" color="textSecondary">Course Count</Typography>
-                                        <Typography sx={{color:"#afb3c5"}}>{d.course_count}</Typography>
-                                                                       
+                                        <Typography sx={{color:"#afb3c5"}}>{d.course_count}</Typography>                        
                                     </Box>
                                     </CardContent>
                             </Box>
