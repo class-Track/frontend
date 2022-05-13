@@ -120,6 +120,7 @@ export default function StepFour(props) {
       id: newYear,
       name: newYear,
       semester_ids: props.createSemesters(
+        props.info["department_id"],
         props.info["degree_id"],
         props.User["user_id"],
         newYear
