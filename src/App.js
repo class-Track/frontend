@@ -51,6 +51,7 @@ export default function App() {
   const [builderFilter, setBuilderFilter] = useState("");
   const [currLists, setCurrLists] = useState({});
   const [currCourses, setCurrCourses] = useState(courses);
+  const [useUpdate, setUseUpdate] = useState(false);
   //There's already a const for API in API.js. IDK why there's one here (?)
   const API = "http://localhost:5000/classTrack/";
   // const API = "https://classtrack-backend.herokuapp.com/classTrack/";
@@ -81,6 +82,10 @@ export default function App() {
   useEffect(() => {
     console.log(builderLists);
   }, [builderLists]);
+
+  useEffect(() => {
+    console.log("useUpdate:", useUpdate);
+  }, [useUpdate]);
 
   const dragStart = (result) => {
     // console.log(result);
@@ -425,6 +430,42 @@ export default function App() {
     Vertical: Vertical,
   };
 
+  const RouteViewer = (props) => {
+    return (
+      <DragDropContext onDragEnd={dragEnd}>
+        {/* The curriculum viewer comes later so imma just leave this here for now */}
+        <PreIDedDisplay
+          {...PropsPackage}
+          data={props}
+          User={User}
+          Session={Session}
+          component={Viewer}
+          typename={"Curriculum"}
+        />
+      </DragDropContext>
+    );
+  };
+
+  const RouteBuilder = (props) => {
+    return (
+      <DragDropContext onDragEnd={dragEndBuilder}>
+        {/* The curriculum viewer comes later so imma just leave this here for now */}
+        <PreIDedDisplay
+          {...PropsPackage}
+          User={User}
+          Session={Session}
+          lists={currLists}
+          setLists={setCurrLists}
+          filter={builderFilter}
+          setFilter={setBuilderFilter}
+          component={Builder}
+          typename={"Builder"}
+          data={props}
+        />
+      </DragDropContext>
+    );
+  };
+
   // <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
   return (
     <div>
@@ -461,7 +502,12 @@ export default function App() {
         </Route>
         <Route path="/Home">
           {Session ? (
-            <Home Session={Session} User={User} />
+            <Home
+              Session={Session}
+              User={User}
+              useUpdate={useUpdate}
+              setUseUpdate={setUseUpdate}
+            />
           ) : (
             <Redirect to="/Login" />
           )}
@@ -502,6 +548,8 @@ export default function App() {
               User={User}
               Session={Session}
               component={Viewer}
+              useUpdate={useUpdate}
+              setUseUpdate={setUseUpdate}
               typename={"Curriculum"}
             />
           </DragDropContext>
@@ -518,6 +566,8 @@ export default function App() {
               filter={builderFilter}
               setFilter={setBuilderFilter}
               component={Builder}
+              useUpdate={useUpdate}
+              setUseUpdate={setUseUpdate}
               typename={"Builder"}
             />
           </DragDropContext>
@@ -639,7 +689,6 @@ export default function App() {
 //This function lets us grab the id and pass it down to any component that needs an "id" field
 function PreIDedDisplay(props) {
   let { id } = useParams(); //Pass all props except the component we're displaying (because we don't need to do that), and the id
-  console.log(id);
   return <props.component {...props} component={undefined} id={id} />;
 }
 

@@ -1,210 +1,1833 @@
 {
-    "2022": {
-        "id": "2022",
-        "name": "2022",
-        "semester_ids": [
-            "46_2022_spring",
-            "46_2022_summer",
-            "46_2022_ext_summer",
-            "46_2022_fall"
-        ]
-    },
-    "name": "2_46_admin",
-    "user_id": 126,
-    "degree_id": 46,
-    "degree_name": "Software Engineering",
+  "degree_id": 46,
+  "degree_name": "Software Engineering",
+  "department_id": 2,
+  "department_name": "Computer Science and Engineering",
+  "curriculum_sequence": "INSO_126_V1",
+  "length": 5,
+  "credits": 155,
+  "deptCode": "INSO",
+  "name": "Test Software Engineering",
+  "category_list": {
+    "category_ids": [
+      "INSO_126_V1_2_46_REGU",
+      "INSO_126_V1_2_46_LIBR",
+      "INSO_126_V1_2_46_CORE",
+      "INSO_126_V1_2_46_EDFI",
+      "INSO_126_V1_2_46_SOHU",
+      "INSO_126_V1_2_46_PROF"
+    ],
+    "id": "category_list",
+    "name": "Category List"
+  },
+  "year_list": {
+    "id": "year_list",
+    "name": "Year List",
+    "year_ids": ["2022", "2023", "2024", "2025", "2026"]
+  },
+  "course_list": {
+    "course_ids": [
+      "ALEM3042",
+      "CIIC4082",
+      "ININ4010",
+      "CIIC4025",
+      "INSO4115",
+      "INEL4115",
+      "INEL3105",
+      "CIIC4020",
+      "INGL3104",
+      "FISI3174",
+      "FISI3172",
+      "ESPA3101",
+      "MATE3031",
+      "CIIC3011",
+      "INGL3101",
+      "QUIM3133",
+      "QUIM3131",
+      "FISI3171",
+      "MATE3063",
+      "INGL3103",
+      "CIIC3075",
+      "INGE3011",
+      "FISI3173",
+      "EDFI",
+      "CIIC5018",
+      "CIIC5019",
+      "CIIC4050",
+      "ININ4015",
+      "INSO4116",
+      "FILO3155",
+      "CIIC4030",
+      "ARTE3007",
+      "INSO4151",
+      "ARTE3055",
+      "INGE3045",
+      "EDFI3245",
+      "INGL3102",
+      "ESPA3102",
+      "QUIM3132",
+      "MATE3032",
+      "CIIC4010",
+      "QUIM3134",
+      "MATE4145",
+      "CIIC3081",
+      "ALEM3041",
+      "INSO4101",
+      "INGE3035",
+      "FILO3156",
+      "INSO4117",
+      "CIIC4070",
+      "CIIC4060",
+      "INME4045",
+      "MATE3005"
+    ],
+    "id": "course_list",
+    "name": "Course List"
+  },
+  "user_id": 126,
+  "session_id": "c58a0737-aa9d-4f4e-936b-90bc143cc40e",
+  "INSO_126_V1_2_46_REGU": {
+    "category_id": 6,
+    "classification": "INSO_126_V1_2_46_REGU",
+    "courses": [
+      {
+        "classification": "MATE3005",
+        "course_id": 246,
+        "credits": 5,
+        "department_id": 81,
+        "id": "MATE3005",
+        "name": "Pre-Calculus"
+      }
+    ],
+    "credits": 72,
+    "id": "INSO_126_V1_2_46_REGU",
+    "list_type": "CATEGORY",
+    "name": "Regular Courses"
+  },
+  "INSO_126_V1_2_46_LIBR": {
+    "category_id": 4,
+    "classification": "INSO_126_V1_2_46_LIBR",
+    "courses": [],
+    "credits": 12,
+    "id": "INSO_126_V1_2_46_LIBR",
+    "list_type": "CATEGORY",
+    "name": "Free Electives"
+  },
+  "INSO_126_V1_2_46_CORE": {
+    "category_id": 5,
+    "classification": "INSO_126_V1_2_46_CORE",
+    "courses": [],
+    "credits": 51,
+    "id": "INSO_126_V1_2_46_CORE",
+    "list_type": "CATEGORY",
+    "name": "Core Courses"
+  },
+  "INSO_126_V1_2_46_EDFI": {
+    "category_id": 10,
+    "classification": "INSO_126_V1_2_46_EDFI",
+    "courses": [],
+    "credits": 2,
+    "id": "INSO_126_V1_2_46_EDFI",
+    "list_type": "CATEGORY",
+    "name": "Physical Education Courses"
+  },
+  "INSO_126_V1_2_46_SOHU": {
+    "category_id": 1,
+    "classification": "INSO_126_V1_2_46_SOHU",
+    "courses": [],
+    "credits": 12,
+    "id": "INSO_126_V1_2_46_SOHU",
+    "list_type": "CATEGORY",
+    "name": "Socio-Humanistic Courses"
+  },
+  "INSO_126_V1_2_46_PROF": {
+    "category_id": 3,
+    "classification": "INSO_126_V1_2_46_PROF",
+    "courses": [],
+    "credits": 6,
+    "id": "INSO_126_V1_2_46_PROF",
+    "list_type": "CATEGORY",
+    "name": "Professional Electives"
+  },
+  "INSO_126_V1_46_2022_fall": {
+    "courses": [
+      {
+        "classification": "INGL3102",
+        "course_id": 237,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3102",
+        "name": "Basic Course in English 2"
+      },
+      {
+        "classification": "ESPA3102",
+        "course_id": 148,
+        "credits": 3,
+        "department_id": 83,
+        "id": "ESPA3102",
+        "name": "Basic Spanish 2"
+      },
+      {
+        "classification": "QUIM3132",
+        "course_id": 146,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3132",
+        "name": "General Chemistry 2"
+      },
+      {
+        "classification": "MATE3032",
+        "course_id": 150,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3032",
+        "name": "Calculus 2"
+      },
+      {
+        "classification": "CIIC4010",
+        "course_id": 244,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4010",
+        "name": "Advanced Programming"
+      },
+      {
+        "classification": "QUIM3134",
+        "course_id": 147,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3134",
+        "name": "General Chemistry Lab 2"
+      }
+    ],
+    "id": "INSO_126_V1_46_2022_fall",
+    "list_type": "SEMESTER",
+    "name": "Fall",
+    "year": "2022"
+  },
+  "INSO_126_V1_46_2022_spring": {
+    "courses": [
+      {
+        "classification": "ESPA3101",
+        "course_id": 144,
+        "credits": 3,
+        "department_id": 83,
+        "id": "ESPA3101",
+        "name": "Basic Spanish 1"
+      },
+      {
+        "classification": "MATE3031",
+        "course_id": 140,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3031",
+        "name": "Calculus 1"
+      },
+      {
+        "classification": "CIIC3011",
+        "course_id": 243,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3011",
+        "name": "Intro. to Computer Programming 1"
+      },
+      {
+        "classification": "INGL3101",
+        "course_id": 235,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3101",
+        "name": "Basic Course in English"
+      },
+      {
+        "classification": "QUIM3133",
+        "course_id": 143,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3133",
+        "name": "General Chemistry Lab 1"
+      },
+      {
+        "classification": "QUIM3131",
+        "course_id": 142,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3131",
+        "name": "General Chemistry 1"
+      }
+    ],
+    "id": "INSO_126_V1_46_2022_spring",
+    "list_type": "SEMESTER",
+    "name": "Spring",
+    "year": "2022"
+  },
+  "INSO_126_V1_46_2022_ext_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2022_ext_summer",
+    "list_type": "SEMESTER",
+    "name": "Extended Summer",
+    "year": "2022"
+  },
+  "INSO_126_V1_46_2022_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2022_summer",
+    "list_type": "SEMESTER",
+    "name": "Summer",
+    "year": "2022"
+  },
+  "INSO_126_V1_46_2023_fall": {
+    "courses": [
+      {
+        "classification": "INEL4115",
+        "course_id": 231,
+        "credits": 1,
+        "department_id": 46,
+        "id": "INEL4115",
+        "name": "Electrical Measurements Lab"
+      },
+      {
+        "classification": "INEL3105",
+        "course_id": 165,
+        "credits": 3,
+        "department_id": 46,
+        "id": "INEL3105",
+        "name": "Electrical Systems Analysis I"
+      },
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      },
+      {
+        "classification": "INGL3104",
+        "course_id": 241,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3104",
+        "name": "Intermediate English 2"
+      },
+      {
+        "classification": "FISI3174",
+        "course_id": 160,
+        "credits": 1,
+        "department_id": 78,
+        "id": "FISI3174",
+        "name": "Physics Lab 2"
+      },
+      {
+        "classification": "FISI3172",
+        "course_id": 159,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3172",
+        "name": "Physics 2"
+      }
+    ],
+    "id": "INSO_126_V1_46_2023_fall",
+    "list_type": "SEMESTER",
+    "name": "Fall",
+    "year": "2023"
+  },
+  "INSO_126_V1_46_2023_spring": {
+    "courses": [
+      {
+        "classification": "FISI3171",
+        "course_id": 151,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3171",
+        "name": "Physics 1"
+      },
+      {
+        "classification": "MATE3063",
+        "course_id": 156,
+        "credits": 3,
+        "department_id": 81,
+        "id": "MATE3063",
+        "name": "Calculus 3"
+      },
+      {
+        "classification": "INGL3103",
+        "course_id": 240,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3103",
+        "name": "Intermediate English 1"
+      },
+      {
+        "classification": "CIIC3075",
+        "course_id": 249,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3075",
+        "name": "Foundations of Computing"
+      },
+      {
+        "classification": "INGE3011",
+        "course_id": 251,
+        "credits": 2,
+        "department_id": 82,
+        "id": "INGE3011",
+        "name": "Engineering Graphics"
+      },
+      {
+        "classification": "FISI3173",
+        "course_id": 152,
+        "credits": 1,
+        "department_id": 78,
+        "id": "FISI3173",
+        "name": "Physics Lab 1"
+      }
+    ],
+    "id": "INSO_126_V1_46_2023_spring",
+    "list_type": "SEMESTER",
+    "name": "Spring",
+    "year": "2023"
+  },
+  "INSO_126_V1_46_2023_ext_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2023_ext_summer",
+    "list_type": "SEMESTER",
+    "name": "Extended Summer",
+    "year": "2023"
+  },
+  "INSO_126_V1_46_2023_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2023_summer",
+    "list_type": "SEMESTER",
+    "name": "Summer",
+    "year": "2023"
+  },
+  "INSO_126_V1_46_2024_fall": {
+    "courses": [
+      {
+        "classification": "ALEM3042",
+        "course_id": 197,
+        "credits": 3,
+        "department_id": 85,
+        "id": "ALEM3042",
+        "name": "Aleman 2"
+      },
+      {
+        "classification": "CIIC4082",
+        "course_id": 263,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4082",
+        "name": "Computer Architecture 2"
+      },
+      {
+        "classification": "ININ4010",
+        "course_id": 183,
+        "credits": 3,
+        "department_id": 76,
+        "id": "ININ4010",
+        "name": "Probability and Stats for Engineers"
+      },
+      {
+        "classification": "CIIC4025",
+        "course_id": 262,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4025",
+        "name": "Algorithm Design and Analysis"
+      },
+      {
+        "classification": "INSO4115",
+        "course_id": 265,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4115",
+        "name": "Software Requirements"
+      }
+    ],
+    "id": "INSO_126_V1_46_2024_fall",
+    "list_type": "SEMESTER",
+    "name": "Fall",
+    "year": "2024"
+  },
+  "INSO_126_V1_46_2024_spring": {
+    "courses": [
+      {
+        "classification": "MATE4145",
+        "course_id": 261,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE4145",
+        "name": "Lineal Algebra and Differential Equations"
+      },
+      {
+        "classification": "CIIC3081",
+        "course_id": 259,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3081",
+        "name": "Computer Architecture"
+      },
+      {
+        "classification": "ALEM3041",
+        "course_id": 196,
+        "credits": 3,
+        "department_id": 85,
+        "id": "ALEM3041",
+        "name": "Aleman 1"
+      },
+      {
+        "classification": "INSO4101",
+        "course_id": 258,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4101",
+        "name": "Intro to Software Engineering"
+      },
+      {
+        "classification": "INGE3035",
+        "course_id": 157,
+        "credits": 3,
+        "department_id": 82,
+        "id": "INGE3035",
+        "name": "Engineering Mechanics"
+      }
+    ],
+    "id": "INSO_126_V1_46_2024_spring",
+    "list_type": "SEMESTER",
+    "name": "Spring",
+    "year": "2024"
+  },
+  "INSO_126_V1_46_2024_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2024_summer",
+    "list_type": "SEMESTER",
+    "name": "Summer",
+    "year": "2024"
+  },
+  "INSO_126_V1_46_2024_ext_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2024_ext_summer",
+    "list_type": "SEMESTER",
+    "name": "Extended Summer",
+    "year": "2024"
+  },
+  "INSO_126_V1_46_2025_fall": {
+    "courses": [
+      {
+        "classification": "FILO3156",
+        "course_id": 225,
+        "credits": 3,
+        "department_id": 91,
+        "id": "FILO3156",
+        "name": "Modern and Contemporary Ethics"
+      },
+      {
+        "classification": "INSO4117",
+        "course_id": 275,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4117",
+        "name": "Software Testing"
+      },
+      {
+        "classification": "CIIC4070",
+        "course_id": 274,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4070",
+        "name": "Computer Networks"
+      },
+      {
+        "classification": "CIIC4060",
+        "course_id": 272,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4060",
+        "name": "Databases Systems"
+      },
+      {
+        "classification": "INME4045",
+        "course_id": 277,
+        "credits": 3,
+        "department_id": 47,
+        "id": "INME4045",
+        "name": "Thermodynamics"
+      }
+    ],
+    "id": "INSO_126_V1_46_2025_fall",
+    "list_type": "SEMESTER",
+    "name": "Fall",
+    "year": "2025"
+  },
+  "INSO_126_V1_46_2025_spring": {
+    "courses": [
+      {
+        "classification": "CIIC4050",
+        "course_id": 267,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4050",
+        "name": "Operating Systems"
+      },
+      {
+        "classification": "ININ4015",
+        "course_id": 181,
+        "credits": 3,
+        "department_id": 76,
+        "id": "ININ4015",
+        "name": "Engineering Economic Analysis"
+      },
+      {
+        "classification": "INSO4116",
+        "course_id": 270,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4116",
+        "name": "Software Design"
+      },
+      {
+        "classification": "FILO3155",
+        "course_id": 224,
+        "credits": 3,
+        "department_id": 91,
+        "id": "FILO3155",
+        "name": "Introduction to Ethics"
+      },
+      {
+        "classification": "CIIC4030",
+        "course_id": 268,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4030",
+        "name": "Programming Languages"
+      }
+    ],
+    "id": "INSO_126_V1_46_2025_spring",
+    "list_type": "SEMESTER",
+    "name": "Spring",
+    "year": "2025"
+  },
+  "INSO_126_V1_46_2025_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2025_summer",
+    "list_type": "SEMESTER",
+    "name": "Summer",
+    "year": "2025"
+  },
+  "INSO_126_V1_46_2025_ext_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2025_ext_summer",
+    "list_type": "SEMESTER",
+    "name": "Extended Summer",
+    "year": "2025"
+  },
+  "INSO_126_V1_46_2026_fall": {
+    "courses": [
+      {
+        "classification": "EDFI",
+        "course_id": 290,
+        "credits": 1,
+        "department_id": 84,
+        "id": "EDFI",
+        "name": "Fundamentals of Soccer"
+      },
+      {
+        "classification": "CIIC5018",
+        "course_id": 292,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC5018",
+        "name": "Cryptography and Network Security"
+      },
+      {
+        "classification": "CIIC5019",
+        "course_id": 293,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC5019",
+        "name": "High-Performance Computing"
+      }
+    ],
+    "id": "INSO_126_V1_46_2026_fall",
+    "list_type": "SEMESTER",
+    "name": "Fall",
+    "year": "2026"
+  },
+  "INSO_126_V1_46_2026_spring": {
+    "courses": [
+      {
+        "classification": "ARTE3007",
+        "course_id": 200,
+        "credits": 3,
+        "department_id": 86,
+        "id": "ARTE3007",
+        "name": "Fotografia Artistica"
+      },
+      {
+        "classification": "INSO4151",
+        "course_id": 279,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4151",
+        "name": "Software Engineering Project"
+      },
+      {
+        "classification": "ARTE3055",
+        "course_id": 201,
+        "credits": 3,
+        "department_id": 86,
+        "id": "ARTE3055",
+        "name": "Caligrafia"
+      },
+      {
+        "classification": "INGE3045",
+        "course_id": 164,
+        "credits": 3,
+        "department_id": 82,
+        "id": "INGE3045",
+        "name": "Materials Science for Electrical  Eng."
+      },
+      {
+        "classification": "EDFI3245",
+        "course_id": 291,
+        "credits": 1,
+        "department_id": 84,
+        "id": "EDFI3245",
+        "name": "Elementary Swimming"
+      }
+    ],
+    "id": "INSO_126_V1_46_2026_spring",
+    "list_type": "SEMESTER",
+    "name": "Spring",
+    "year": "2026"
+  },
+  "INSO_126_V1_46_2026_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2026_summer",
+    "list_type": "SEMESTER",
+    "name": "Summer",
+    "year": "2026"
+  },
+  "INSO_126_V1_46_2026_ext_summer": {
+    "courses": [],
+    "id": "INSO_126_V1_46_2026_ext_summer",
+    "list_type": "SEMESTER",
+    "name": "Extended Summer",
+    "year": "2026"
+  },
+  "MATE3005": {
+    "category": "INSO_126_V1_2_46_REGU",
+    "classification": "MATE3005",
+    "coreqs": [],
+    "course_id": 246,
+    "credits": 5,
+    "department_id": 81,
+    "id": "MATE3005",
+    "name": "Pre-Calculus",
+    "prereqs": []
+  },
+  "INGL3102": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGL3102",
+    "coreqs": [],
+    "course_id": 237,
+    "credits": 3,
+    "department_id": 45,
+    "id": "INGL3102",
+    "name": "Basic Course in English 2",
+    "prereqs": [
+      {
+        "classification": "INGL3101",
+        "course_id": 235,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3101",
+        "name": "Basic Course in English"
+      }
+    ]
+  },
+  "ESPA3102": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "ESPA3102",
+    "coreqs": [],
+    "course_id": 148,
+    "credits": 3,
+    "department_id": 83,
+    "id": "ESPA3102",
+    "name": "Basic Spanish 2",
+    "prereqs": [
+      {
+        "classification": "ESPA3101",
+        "course_id": 144,
+        "credits": 3,
+        "department_id": 83,
+        "id": "ESPA3101",
+        "name": "Basic Spanish 1"
+      }
+    ]
+  },
+  "QUIM3132": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "QUIM3132",
+    "coreqs": [
+      {
+        "classification": "QUIM3134",
+        "course_id": 147,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3134",
+        "name": "General Chemistry Lab 2"
+      }
+    ],
+    "course_id": 146,
+    "credits": 3,
+    "department_id": 80,
+    "id": "QUIM3132",
+    "name": "General Chemistry 2",
+    "prereqs": [
+      {
+        "classification": "QUIM3133",
+        "course_id": 143,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3133",
+        "name": "General Chemistry Lab 1"
+      },
+      {
+        "classification": "QUIM3131",
+        "course_id": 142,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3131",
+        "name": "General Chemistry 1"
+      }
+    ]
+  },
+  "MATE3032": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "MATE3032",
+    "coreqs": [],
+    "course_id": 150,
+    "credits": 4,
+    "department_id": 81,
+    "id": "MATE3032",
+    "name": "Calculus 2",
+    "prereqs": [
+      {
+        "classification": "MATE3031",
+        "course_id": 140,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3031",
+        "name": "Calculus 1"
+      }
+    ]
+  },
+  "CIIC4010": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4010",
+    "coreqs": [],
+    "course_id": 244,
+    "credits": 4,
     "department_id": 2,
-    "department_name": "Computer Science and Engineering",
-    "deptCode": "CIICv2",
-    "curriculum_sequence": "2_46_admin",
-    "length": 6,
-    "credits": 132,
-    "year_list": {
-        "id": "year_list",
-        "name": "Year List",
-        "year_ids": [
-            "2022"
-        ]
-    },
-    "category_list": {
-        "id": "category_list",
-        "name": "Category List",
-        "category_ids": [
-            "REGU"
-        ]
-    },
-    "course_list": {
-        "id": "course_list",
-        "name": "Course List",
-        "course_ids": [
-            "INSO3001",
-            "INSO3003",
-            "INEL3001",
-            "INEL3002",
-            "INGL3001",
-            "INSO3004"
-        ]
-    },
-    "REGU": {
-        "id": "REGU",
-        "name": "Regular Courses",
-        "list_type": "CATEGORY",
-        "credits": 123,
-        "courses": []
-    },
-    "INSO3001": {
-        "id": "INSO3001",
-        "course_id": 1,
-        "prereqs": [],
-        "coreqs": [],
-        "category": "REGU"
-    },
-    "INSO3003": {
-        "id": "INSO3003",
-        "course_id": 2,
-        "prereqs": [
-            {
-                "classification": "INSO3001",
-                "course_id": 1,
-                "department_id": 41,
-                "name": "INSO Course A",
-                "id": "INSO3001"
-            },
-            {
-                "classification": "INEL3001",
-                "course_id": 3,
-                "department_id": 46,
-                "name": "INEL Course A",
-                "id": "INEL3001"
-            }
-        ],
-        "coreqs": [],
-        "category": "REGU"
-    },
-    "INEL3001": {
-        "id": "INEL3001",
-        "course_id": 3,
-        "prereqs": [],
-        "coreqs": [],
-        "category": "REGU"
-    },
-    "INEL3002": {
-        "id": "INEL3002",
-        "course_id": 4,
-        "prereqs": [],
-        "coreqs": [
-            {
-                "classification": "INEL3001",
-                "course_id": 3,
-                "department_id": 46,
-                "name": "INEL Course A",
-                "id": "INEL3001"
-            }
-        ],
-        "category": "REGU"
-    },
-    "INGL3001": {
-        "id": "INGL3001",
-        "course_id": 5,
-        "prereqs": [],
-        "coreqs": [],
-        "category": "REGU"
-    },
-    "INSO3004": {
-        "id": "INSO3004",
-        "course_id": 6,
-        "prereqs": [
-            {
-                "classification": "INSO3003",
-                "course_id": 2,
-                "department_id": 41,
-                "name": "INSO Course B",
-                "id": "INSO3003"
-            },
-            {
-                "classification": "INEL3002",
-                "course_id": 4,
-                "department_id": 46,
-                "name": "INEL Course B",
-                "id": "INEL3002"
-            }
-        ],
-        "coreqs": [],
-        "category": "REGU"
-    },
-    "46_2022_spring": {
-        "id": "46_2022_spring",
-        "name": "Spring",
-        "list_type": "SEMESTER",
-        "year": "2022",
-        "courses": [
-            {
-                "id": "INSO3001",
-                "course_id": 1,
-                "department_id": 41,
-                "name": "INSO Course A",
-                "classification": "INSO3001"
-            },
-            {
-                "id": "INEL3001",
-                "course_id": 3,
-                "department_id": 46,
-                "name": "INEL Course A",
-                "classification": "INEL3001"
-            }
-        ]
-    },
-    "46_2022_summer": {
-        "id": "46_2022_summer",
-        "name": "Summer",
-        "list_type": "SEMESTER",
-        "year": "2022",
-        "courses": [
-            {
-                "id": "INSO3003",
-                "course_id": 2,
-                "department_id": 41,
-                "name": "INSO Course B",
-                "classification": "INSO3003"
-            },
-            {
-                "id": "INEL3002",
-                "course_id": 4,
-                "department_id": 46,
-                "name": "INEL Course B",
-                "classification": "INEL3002"
-            }
-        ]
-    },
-    "46_2022_ext_summer": {
-        "id": "46_2022_ext_summer",
-        "name": "Extended Summer",
-        "list_type": "SEMESTER",
-        "year": "2022",
-        "courses": [
-            {
-                "id": "INSO3004",
-                "course_id": 6,
-                "department_id": 41,
-                "name": "INSO Course C",
-                "classification": "INSO3004"
-            }
-        ]
-    },
-    "46_2022_fall": {
-        "id": "46_2022_fall",
-        "name": "Fall",
-        "list_type": "SEMESTER",
-        "year": "2022",
-        "courses": [
-            {
-                "id": "INGL3001",
-                "course_id": 5,
-                "department_id": 45,
-                "name": "INGL Course A",
-                "classification": "INGL3001"
-            }
-        ]
-    },
-    "session_id": "b3ffabed-df08-47a6-abf5-f07fa072f191"
+    "id": "CIIC4010",
+    "name": "Advanced Programming",
+    "prereqs": [
+      {
+        "classification": "CIIC3011",
+        "course_id": 243,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3011",
+        "name": "Intro. to Computer Programming 1"
+      }
+    ]
+  },
+  "QUIM3134": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "QUIM3134",
+    "coreqs": [
+      {
+        "classification": "QUIM3132",
+        "course_id": 146,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3132",
+        "name": "General Chemistry 2"
+      }
+    ],
+    "course_id": 147,
+    "credits": 1,
+    "department_id": 80,
+    "id": "QUIM3134",
+    "name": "General Chemistry Lab 2",
+    "prereqs": [
+      {
+        "classification": "QUIM3133",
+        "course_id": 143,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3133",
+        "name": "General Chemistry Lab 1"
+      },
+      {
+        "classification": "QUIM3131",
+        "course_id": 142,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3131",
+        "name": "General Chemistry 1"
+      }
+    ]
+  },
+  "ESPA3101": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "ESPA3101",
+    "coreqs": [],
+    "course_id": 144,
+    "credits": 3,
+    "department_id": 83,
+    "id": "ESPA3101",
+    "name": "Basic Spanish 1",
+    "prereqs": []
+  },
+  "MATE3031": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "MATE3031",
+    "coreqs": [],
+    "course_id": 140,
+    "credits": 4,
+    "department_id": 81,
+    "id": "MATE3031",
+    "name": "Calculus 1",
+    "prereqs": []
+  },
+  "CIIC3011": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC3011",
+    "coreqs": [],
+    "course_id": 243,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC3011",
+    "name": "Intro. to Computer Programming 1",
+    "prereqs": []
+  },
+  "INGL3101": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGL3101",
+    "coreqs": [],
+    "course_id": 235,
+    "credits": 3,
+    "department_id": 45,
+    "id": "INGL3101",
+    "name": "Basic Course in English",
+    "prereqs": []
+  },
+  "QUIM3133": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "QUIM3133",
+    "coreqs": [],
+    "course_id": 143,
+    "credits": 1,
+    "department_id": 80,
+    "id": "QUIM3133",
+    "name": "General Chemistry Lab 1",
+    "prereqs": [
+      {
+        "classification": "QUIM3131",
+        "course_id": 142,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3131",
+        "name": "General Chemistry 1"
+      }
+    ]
+  },
+  "QUIM3131": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "QUIM3131",
+    "coreqs": [],
+    "course_id": 142,
+    "credits": 3,
+    "department_id": 80,
+    "id": "QUIM3131",
+    "name": "General Chemistry 1",
+    "prereqs": []
+  },
+  "INEL4115": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INEL4115",
+    "coreqs": [
+      {
+        "classification": "INEL3105",
+        "course_id": 165,
+        "credits": 3,
+        "department_id": 46,
+        "id": "INEL3105",
+        "name": "Electrical Systems Analysis I"
+      }
+    ],
+    "course_id": 231,
+    "credits": 1,
+    "department_id": 46,
+    "id": "INEL4115",
+    "name": "Electrical Measurements Lab",
+    "prereqs": []
+  },
+  "INEL3105": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INEL3105",
+    "coreqs": [
+      {
+        "classification": "FISI3172",
+        "course_id": 159,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3172",
+        "name": "Physics 2"
+      },
+      {
+        "classification": "MATE3063",
+        "course_id": 156,
+        "credits": 3,
+        "department_id": 81,
+        "id": "MATE3063",
+        "name": "Calculus 3"
+      }
+    ],
+    "course_id": 165,
+    "credits": 3,
+    "department_id": 46,
+    "id": "INEL3105",
+    "name": "Electrical Systems Analysis I",
+    "prereqs": [
+      {
+        "classification": "MATE3032",
+        "course_id": 150,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3032",
+        "name": "Calculus 2"
+      },
+      {
+        "classification": "INGE3016",
+        "course_id": 155,
+        "credits": 3,
+        "department_id": 82,
+        "id": "INGE3016",
+        "name": "Algorithms and Computer Programming"
+      }
+    ]
+  },
+  "CIIC4020": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4020",
+    "coreqs": [
+      {
+        "classification": "MATE3031",
+        "course_id": 140,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3031",
+        "name": "Calculus 1"
+      }
+    ],
+    "course_id": 252,
+    "credits": 4,
+    "department_id": 2,
+    "id": "CIIC4020",
+    "name": "Data Structures",
+    "prereqs": [
+      {
+        "classification": "CIIC4010",
+        "course_id": 244,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4010",
+        "name": "Advanced Programming"
+      },
+      {
+        "classification": "CIIC3075",
+        "course_id": 249,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3075",
+        "name": "Foundations of Computing"
+      }
+    ]
+  },
+  "INGL3104": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGL3104",
+    "coreqs": [],
+    "course_id": 241,
+    "credits": 3,
+    "department_id": 45,
+    "id": "INGL3104",
+    "name": "Intermediate English 2",
+    "prereqs": [
+      {
+        "classification": "INGL3103",
+        "course_id": 240,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3103",
+        "name": "Intermediate English 1"
+      }
+    ]
+  },
+  "FISI3174": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "FISI3174",
+    "coreqs": [
+      {
+        "classification": "FISI3172",
+        "course_id": 159,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3172",
+        "name": "Physics 2"
+      }
+    ],
+    "course_id": 160,
+    "credits": 1,
+    "department_id": 78,
+    "id": "FISI3174",
+    "name": "Physics Lab 2",
+    "prereqs": [
+      {
+        "classification": "FISI3173",
+        "course_id": 152,
+        "credits": 1,
+        "department_id": 78,
+        "id": "FISI3173",
+        "name": "Physics Lab 1"
+      }
+    ]
+  },
+  "FISI3172": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "FISI3172",
+    "coreqs": [],
+    "course_id": 159,
+    "credits": 4,
+    "department_id": 78,
+    "id": "FISI3172",
+    "name": "Physics 2",
+    "prereqs": [
+      {
+        "classification": "FISI3171",
+        "course_id": 151,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3171",
+        "name": "Physics 1"
+      }
+    ]
+  },
+  "FISI3171": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "FISI3171",
+    "coreqs": [],
+    "course_id": 151,
+    "credits": 4,
+    "department_id": 78,
+    "id": "FISI3171",
+    "name": "Physics 1",
+    "prereqs": []
+  },
+  "MATE3063": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "MATE3063",
+    "coreqs": [],
+    "course_id": 156,
+    "credits": 3,
+    "department_id": 81,
+    "id": "MATE3063",
+    "name": "Calculus 3",
+    "prereqs": []
+  },
+  "INGL3103": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGL3103",
+    "coreqs": [],
+    "course_id": 240,
+    "credits": 3,
+    "department_id": 45,
+    "id": "INGL3103",
+    "name": "Intermediate English 1",
+    "prereqs": [
+      {
+        "classification": "INGL3102",
+        "course_id": 237,
+        "credits": 3,
+        "department_id": 45,
+        "id": "INGL3102",
+        "name": "Basic Course in English 2"
+      }
+    ]
+  },
+  "CIIC3075": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC3075",
+    "coreqs": [
+      {
+        "classification": "MATE3031",
+        "course_id": 140,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3031",
+        "name": "Calculus 1"
+      }
+    ],
+    "course_id": 249,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC3075",
+    "name": "Foundations of Computing",
+    "prereqs": [
+      {
+        "classification": "CIIC3011",
+        "course_id": 243,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3011",
+        "name": "Intro. to Computer Programming 1"
+      }
+    ]
+  },
+  "INGE3011": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGE3011",
+    "coreqs": [],
+    "course_id": 251,
+    "credits": 2,
+    "department_id": 82,
+    "id": "INGE3011",
+    "name": "Engineering Graphics",
+    "prereqs": []
+  },
+  "FISI3173": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "FISI3173",
+    "coreqs": [],
+    "course_id": 152,
+    "credits": 1,
+    "department_id": 78,
+    "id": "FISI3173",
+    "name": "Physics Lab 1",
+    "prereqs": [
+      {
+        "classification": "FISI3171",
+        "course_id": 151,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3171",
+        "name": "Physics 1"
+      }
+    ]
+  },
+  "ALEM3042": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_SOHU",
+    "classification": "ALEM3042",
+    "coreqs": [],
+    "course_id": 197,
+    "credits": 3,
+    "department_id": 85,
+    "id": "ALEM3042",
+    "name": "Aleman 2",
+    "prereqs": []
+  },
+  "CIIC4082": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4082",
+    "coreqs": [],
+    "course_id": 263,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC4082",
+    "name": "Computer Architecture 2",
+    "prereqs": [
+      {
+        "classification": "CIIC3081",
+        "course_id": 259,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3081",
+        "name": "Computer Architecture"
+      }
+    ]
+  },
+  "ININ4010": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "ININ4010",
+    "coreqs": [],
+    "course_id": 183,
+    "credits": 3,
+    "department_id": 76,
+    "id": "ININ4010",
+    "name": "Probability and Stats for Engineers",
+    "prereqs": [
+      {
+        "classification": "INGE3016",
+        "course_id": 155,
+        "credits": 3,
+        "department_id": 82,
+        "id": "INGE3016",
+        "name": "Algorithms and Computer Programming"
+      },
+      {
+        "classification": "MATE3032",
+        "course_id": 150,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3032",
+        "name": "Calculus 2"
+      }
+    ]
+  },
+  "CIIC4025": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4025",
+    "coreqs": [],
+    "course_id": 262,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC4025",
+    "name": "Algorithm Design and Analysis",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      }
+    ]
+  },
+  "INSO4115": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "INSO4115",
+    "coreqs": [],
+    "course_id": 265,
+    "credits": 3,
+    "department_id": 41,
+    "id": "INSO4115",
+    "name": "Software Requirements",
+    "prereqs": [
+      {
+        "classification": "INSO4101",
+        "course_id": 258,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4101",
+        "name": "Intro to Software Engineering"
+      }
+    ]
+  },
+  "MATE4145": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "MATE4145",
+    "coreqs": [],
+    "course_id": 261,
+    "credits": 4,
+    "department_id": 81,
+    "id": "MATE4145",
+    "name": "Lineal Algebra and Differential Equations",
+    "prereqs": [
+      {
+        "classification": "CIIC3011",
+        "course_id": 243,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC3011",
+        "name": "Intro. to Computer Programming 1"
+      },
+      {
+        "classification": "MATE3063",
+        "course_id": 156,
+        "credits": 3,
+        "department_id": 81,
+        "id": "MATE3063",
+        "name": "Calculus 3"
+      },
+      {
+        "classification": "INGE3016",
+        "course_id": 155,
+        "credits": 3,
+        "department_id": 82,
+        "id": "INGE3016",
+        "name": "Algorithms and Computer Programming"
+      }
+    ]
+  },
+  "CIIC3081": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC3081",
+    "coreqs": [
+      {
+        "classification": "INEL4115",
+        "course_id": 231,
+        "credits": 1,
+        "department_id": 46,
+        "id": "INEL4115",
+        "name": "Electrical Measurements Lab"
+      }
+    ],
+    "course_id": 259,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC3081",
+    "name": "Computer Architecture",
+    "prereqs": [
+      {
+        "classification": "INGE3011",
+        "course_id": 251,
+        "credits": 2,
+        "department_id": 82,
+        "id": "INGE3011",
+        "name": "Engineering Graphics"
+      }
+    ]
+  },
+  "ALEM3041": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_SOHU",
+    "classification": "ALEM3041",
+    "coreqs": [],
+    "course_id": 196,
+    "credits": 3,
+    "department_id": 85,
+    "id": "ALEM3041",
+    "name": "Aleman 1",
+    "prereqs": []
+  },
+  "INSO4101": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "INSO4101",
+    "coreqs": [],
+    "course_id": 258,
+    "credits": 3,
+    "department_id": 41,
+    "id": "INSO4101",
+    "name": "Intro to Software Engineering",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      }
+    ]
+  },
+  "INGE3035": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGE3035",
+    "coreqs": [
+      {
+        "classification": "FISI3171",
+        "course_id": 151,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3171",
+        "name": "Physics 1"
+      }
+    ],
+    "course_id": 157,
+    "credits": 3,
+    "department_id": 82,
+    "id": "INGE3035",
+    "name": "Engineering Mechanics",
+    "prereqs": [
+      {
+        "classification": "MATE3031",
+        "course_id": 140,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3031",
+        "name": "Calculus 1"
+      }
+    ]
+  },
+  "FILO3156": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_SOHU",
+    "classification": "FILO3156",
+    "coreqs": [],
+    "course_id": 225,
+    "credits": 3,
+    "department_id": 91,
+    "id": "FILO3156",
+    "name": "Modern and Contemporary Ethics",
+    "prereqs": []
+  },
+  "INSO4117": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "INSO4117",
+    "coreqs": [],
+    "course_id": 275,
+    "credits": 3,
+    "department_id": 41,
+    "id": "INSO4117",
+    "name": "Software Testing",
+    "prereqs": [
+      {
+        "classification": "INSO4101",
+        "course_id": 258,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4101",
+        "name": "Intro to Software Engineering"
+      }
+    ]
+  },
+  "CIIC4070": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4070",
+    "coreqs": [
+      {
+        "classification": "CIIC4050",
+        "course_id": 267,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4050",
+        "name": "Operating Systems"
+      }
+    ],
+    "course_id": 274,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC4070",
+    "name": "Computer Networks",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      }
+    ]
+  },
+  "CIIC4060": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4060",
+    "coreqs": [
+      {
+        "classification": "CIIC4050",
+        "course_id": 267,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4050",
+        "name": "Operating Systems"
+      }
+    ],
+    "course_id": 272,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC4060",
+    "name": "Databases Systems",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      }
+    ]
+  },
+  "INME4045": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INME4045",
+    "coreqs": [],
+    "course_id": 277,
+    "credits": 3,
+    "department_id": 47,
+    "id": "INME4045",
+    "name": "Thermodynamics",
+    "prereqs": [
+      {
+        "classification": "QUIM3132",
+        "course_id": 146,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3132",
+        "name": "General Chemistry 2"
+      },
+      {
+        "classification": "FISI3172",
+        "course_id": 159,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3172",
+        "name": "Physics 2"
+      },
+      {
+        "classification": "QUIM3134",
+        "course_id": 147,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3134",
+        "name": "General Chemistry Lab 2"
+      }
+    ]
+  },
+  "CIIC4050": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4050",
+    "coreqs": [],
+    "course_id": 267,
+    "credits": 4,
+    "department_id": 2,
+    "id": "CIIC4050",
+    "name": "Operating Systems",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      },
+      {
+        "classification": "CIIC4082",
+        "course_id": 263,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4082",
+        "name": "Computer Architecture 2"
+      }
+    ]
+  },
+  "ININ4015": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "ININ4015",
+    "coreqs": [],
+    "course_id": 181,
+    "credits": 3,
+    "department_id": 76,
+    "id": "ININ4015",
+    "name": "Engineering Economic Analysis",
+    "prereqs": [
+      {
+        "classification": "MATE3032",
+        "course_id": 150,
+        "credits": 4,
+        "department_id": 81,
+        "id": "MATE3032",
+        "name": "Calculus 2"
+      }
+    ]
+  },
+  "INSO4116": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "INSO4116",
+    "coreqs": [],
+    "course_id": 270,
+    "credits": 3,
+    "department_id": 41,
+    "id": "INSO4116",
+    "name": "Software Design",
+    "prereqs": [
+      {
+        "classification": "INSO4101",
+        "course_id": 258,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4101",
+        "name": "Intro to Software Engineering"
+      }
+    ]
+  },
+  "FILO3155": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_SOHU",
+    "classification": "FILO3155",
+    "coreqs": [],
+    "course_id": 224,
+    "credits": 3,
+    "department_id": 91,
+    "id": "FILO3155",
+    "name": "Introduction to Ethics",
+    "prereqs": []
+  },
+  "CIIC4030": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "CIIC4030",
+    "coreqs": [],
+    "course_id": 268,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC4030",
+    "name": "Programming Languages",
+    "prereqs": [
+      {
+        "classification": "CIIC4020",
+        "course_id": 252,
+        "credits": 4,
+        "department_id": 2,
+        "id": "CIIC4020",
+        "name": "Data Structures"
+      }
+    ]
+  },
+  "EDFI": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_EDFI",
+    "classification": "EDFI",
+    "coreqs": [],
+    "course_id": 290,
+    "credits": 1,
+    "department_id": 84,
+    "id": "EDFI",
+    "name": "Fundamentals of Soccer",
+    "prereqs": []
+  },
+  "CIIC5018": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_PROF",
+    "classification": "CIIC5018",
+    "coreqs": [],
+    "course_id": 292,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC5018",
+    "name": "Cryptography and Network Security",
+    "prereqs": []
+  },
+  "CIIC5019": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_PROF",
+    "classification": "CIIC5019",
+    "coreqs": [],
+    "course_id": 293,
+    "credits": 3,
+    "department_id": 2,
+    "id": "CIIC5019",
+    "name": "High-Performance Computing",
+    "prereqs": []
+  },
+  "ARTE3007": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_LIBR",
+    "classification": "ARTE3007",
+    "coreqs": [],
+    "course_id": 200,
+    "credits": 3,
+    "department_id": 86,
+    "id": "ARTE3007",
+    "name": "Fotografia Artistica",
+    "prereqs": []
+  },
+  "INSO4151": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_CORE",
+    "classification": "INSO4151",
+    "coreqs": [],
+    "course_id": 279,
+    "credits": 3,
+    "department_id": 41,
+    "id": "INSO4151",
+    "name": "Software Engineering Project",
+    "prereqs": [
+      {
+        "classification": "CIIC4060",
+        "course_id": 272,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4060",
+        "name": "Databases Systems"
+      },
+      {
+        "classification": "INSO4115",
+        "course_id": 265,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4115",
+        "name": "Software Requirements"
+      },
+      {
+        "classification": "INSO4117",
+        "course_id": 275,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4117",
+        "name": "Software Testing"
+      },
+      {
+        "classification": "CIIC4025",
+        "course_id": 262,
+        "credits": 3,
+        "department_id": 2,
+        "id": "CIIC4025",
+        "name": "Algorithm Design and Analysis"
+      },
+      {
+        "classification": "INSO4116",
+        "course_id": 270,
+        "credits": 3,
+        "department_id": 41,
+        "id": "INSO4116",
+        "name": "Software Design"
+      }
+    ]
+  },
+  "ARTE3055": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_LIBR",
+    "classification": "ARTE3055",
+    "coreqs": [],
+    "course_id": 201,
+    "credits": 3,
+    "department_id": 86,
+    "id": "ARTE3055",
+    "name": "Caligrafia",
+    "prereqs": []
+  },
+  "INGE3045": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_REGU",
+    "classification": "INGE3045",
+    "coreqs": [],
+    "course_id": 164,
+    "credits": 3,
+    "department_id": 82,
+    "id": "INGE3045",
+    "name": "Materials Science for Electrical  Eng.",
+    "prereqs": [
+      {
+        "classification": "QUIM3134",
+        "course_id": 147,
+        "credits": 1,
+        "department_id": 80,
+        "id": "QUIM3134",
+        "name": "General Chemistry Lab 2"
+      },
+      {
+        "classification": "QUIM3132",
+        "course_id": 146,
+        "credits": 3,
+        "department_id": 80,
+        "id": "QUIM3132",
+        "name": "General Chemistry 2"
+      },
+      {
+        "classification": "FISI3172",
+        "course_id": 159,
+        "credits": 4,
+        "department_id": 78,
+        "id": "FISI3172",
+        "name": "Physics 2"
+      }
+    ]
+  },
+  "EDFI3245": {
+    "category": "INSO_126_V1_INSO_141_V1_2_46_EDFI",
+    "classification": "EDFI3245",
+    "coreqs": [],
+    "course_id": 291,
+    "credits": 1,
+    "department_id": 84,
+    "id": "EDFI3245",
+    "name": "Elementary Swimming",
+    "prereqs": []
+  }
 }

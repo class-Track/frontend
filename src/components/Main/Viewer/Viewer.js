@@ -22,6 +22,7 @@ import {
 
 export default function Viewer(props) {
   const history = useHistory();
+  const data = props.history;
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
   const [curriculum, setCurriculum] = useState();
@@ -32,7 +33,9 @@ export default function Viewer(props) {
   const curriculum_id = props.id;
 
   useEffect(() => {
-    getCurriculum();
+    if (props.id) {
+      getCurriculum();
+    }
   }, []);
 
   const getUserData = async () => {
@@ -90,7 +93,13 @@ export default function Viewer(props) {
   };
 
   const editCurriculum = () => {
-    history.push("/Builder/" + props.id);
+    history.push({
+      pathname: "/Builder/" + props.id,
+      // state: {
+      //   isDraft: props.data.location.state.isDraft,
+      //   update: props.data.location.state.update,
+      // },
+    });
   };
 
   return (
@@ -135,7 +144,7 @@ export default function Viewer(props) {
             spacing={2}
           >
             {curriculum.year_list.year_ids
-              .sort((a, b) => (a > b ? 1 : -1))
+              // .sort((a, b) => (a > b ? 1 : -1))
               .map((year_id, i) => (
                 <Grid item key={year_id}>
                   <Grid
@@ -167,7 +176,7 @@ export default function Viewer(props) {
                       spacing={4}
                     >
                       {curriculum[year_id].semester_ids
-                        .sort((a, b) => (a > b ? 1 : -1))
+                        // .sort((a, b) => (a > b ? 1 : -1))
                         .map((semester_id, j) => (
                           <Grid xs={3} key={i + 1 + j} item>
                             <List

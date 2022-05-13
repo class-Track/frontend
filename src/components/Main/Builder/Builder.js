@@ -25,15 +25,26 @@ import {
   Grid,
   Typography,
   TextField,
+  FormControlLabel,
+  Switch,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { Cookie } from "@mui/icons-material";
 
 export default function Builder(props) {
   const tempAPI = "http://127.0.0.1:5000/classTrack/";
+  const data = props.data;
   const [info, setInfo] = useState({});
   const [name, setName] = useState("");
-  const [identifier, setIdentifier] = useState("");
-  const [loadCurriculum, setLoadCurriculum] = useState(false);
+  const [newCurriculum, setNewCurriculum] = useState({});
+  const [addOpen, setAddOpen] = useState(false);
+  const [curriculumSequence, setCurriculumSequence] = useState("");
+  const [isDraft, setIsDraft] = useState(false);
+  const addMessage = "Would you like to save this curriculum?";
   const actions = [
     {
       icon: <SaveIcon onClick={() => console.log("pressed save")} />,
@@ -62,10 +73,10 @@ export default function Builder(props) {
   }, [props.lists]);
 
   useEffect(() => {
-    if (Object.keys(props.lists).length > 0) {
-      loadNewLists();
+    if (Object.keys(props.lists).length > 0 && curriculumSequence !== "") {
+      loadCurriculum();
     }
-  }, [identifier, props.lists]);
+  }, [props.lists]);
 
   const getCurriculum = async () => {
     console.log(props.id);
@@ -79,7 +90,7 @@ export default function Builder(props) {
       .then((res) => {
         console.log(res.data);
         props.setLists(res.data);
-        setLoadCurriculum(true);
+        setIsDraft(res.data.isDraft);
       })
       .catch((err) => {
         console.log(err);
@@ -125,84 +136,188 @@ export default function Builder(props) {
     })
       .then((res) => {
         console.log(res.data);
-        setIdentifier(res.data);
+        setCurriculumSequence(res.data);
       })
       .catch((err) => {
         console.log(err.data);
       });
   };
 
-  const loadNewLists = () => {
-    let new_category_list = {
-      ...props.lists["category_list"],
-      category_ids: props.lists["category_list"]["category_ids"].map(
-        (category_id) => {
-          return identifier + "_" + category_id;
-        }
-      ),
-    };
+  const loadCurriculum = () => {
+    let response = {};
 
-    let new_categories = {};
-    let new_courses = {};
-    props.lists["category_list"]["category_ids"].forEach((category_id) => {
-      new_categories[identifier + "_" + category_id] = {
-        ...props.lists[category_id],
-        classification: identifier + "_" + category_id,
-        id: identifier + "_" + category_id,
+    if (props.useUpdate) {
+      console.log("updating curriculum");
+      response = {
+        ...props.lists,
+        name: name,
+        isDraft: isDraft,
+        session_id: props.Session,
       };
-      props.lists[category_id]["courses"].forEach((course) => {
-        new_courses[course["id"]] = {
-          ...props.lists[course["id"]],
-          category: identifier + "_" + category_id,
-        };
-      });
-    });
+    } else {
+      console.log("saving curriculum");
+      let new_category_list = {
+        ...props.lists["category_list"],
+        category_ids: props.lists["category_list"]["category_ids"].map(
+          (category_id) => {
+            return curriculumSequence + "_" + category_id;
+          }
+        ),
+      };
 
-    let new_year_list = {};
-    let new_semesters = {};
-    props.lists["year_list"]["year_ids"].forEach((year) => {
-      let new_semester_ids = [];
-      props.lists[year]["semester_ids"].forEach((semester_id) => {
-        new_semester_ids.push(identifier + "_" + semester_id);
-        new_semesters[identifier + "_" + semester_id] = {
-          ...props.lists[semester_id],
-          id: identifier + "_" + semester_id,
+      let new_categories = {};
+      let new_courses = {};
+      props.lists["category_list"]["category_ids"].forEach((category_id) => {
+        new_categories[curriculumSequence + "_" + category_id] = {
+          ...props.lists[category_id],
+          classification: curriculumSequence + "_" + category_id,
+          id: curriculumSequence + "_" + category_id,
         };
-        props.lists[semester_id]["courses"].forEach((course) => {
+        props.lists[category_id]["courses"].forEach((course) => {
           new_courses[course["id"]] = {
             ...props.lists[course["id"]],
-            category: identifier + "_" + props.lists[course["id"]]["category"],
+            category: curriculumSequence + "_" + category_id,
           };
         });
       });
-      new_year_list[year] = {
-        ...props.lists[year],
-        semester_ids: new_semester_ids,
-      };
-    });
 
-    console.log({
-      credits: props.lists["credits"],
-      curriculum_sequence: identifier,
-      degree_id: props.lists["degree_id"],
-      degree_name: props.lists["degree_name"],
-      department_id: props.lists["department_id"],
-      department_name: props.lists["department_name"],
-      deptCode: props.lists["deptCode"],
-      length: props.lists["length"],
-      name: name,
-      category_list: new_category_list,
-      year_list: new_year_list,
-      course_list: props.lists["course_list"],
-      ...new_categories,
-      ...new_semesters,
-      ...new_courses,
-    });
+      let new_years = {};
+      let new_semesters = {};
+      props.lists["year_list"]["year_ids"].forEach((year) => {
+        let new_semester_ids = [];
+        props.lists[year]["semester_ids"].forEach((semester_id) => {
+          new_semester_ids.push(curriculumSequence + "_" + semester_id);
+          new_semesters[curriculumSequence + "_" + semester_id] = {
+            ...props.lists[semester_id],
+            id: curriculumSequence + "_" + semester_id,
+          };
+          props.lists[semester_id]["courses"].forEach((course) => {
+            new_courses[course["id"]] = {
+              ...props.lists[course["id"]],
+              category:
+                curriculumSequence +
+                "_" +
+                props.lists[course["id"]]["category"],
+            };
+          });
+        });
+        new_years[year] = {
+          ...props.lists[year],
+          semester_ids: new_semester_ids,
+        };
+      });
+
+      response = {
+        degree_id: props.lists["degree_id"],
+        degree_name: props.lists["degree_name"],
+        department_id: props.lists["department_id"],
+        department_name: props.lists["department_name"],
+        curriculum_sequence: curriculumSequence,
+        length: props.lists["length"],
+        credits: props.lists["credits"],
+        deptCode: props.lists["deptCode"],
+        name: name,
+        category_list: new_category_list,
+        year_list: props.lists["year_list"],
+        course_list: props.lists["course_list"],
+        isDraft: isDraft,
+        user_id: props.User["user_id"],
+        session_id: props.Session,
+        ...new_years,
+        ...new_categories,
+        ...new_semesters,
+        ...new_courses,
+      };
+    }
+
+    console.log(response);
+
+    setNewCurriculum(response);
   };
+
+  const updateCurriculum = async () => {
+    await axios({
+      method: "PUT",
+      url: tempAPI + "update_custom",
+      data: newCurriculum,
+    })
+      .then((res) => {
+        console.log(res.data);
+        resetDialogs();
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  };
+
+  const saveCurriculum = async () => {
+    await axios({
+      method: "POST",
+      url: tempAPI + "custom_curriculum",
+      data: newCurriculum,
+    })
+      .then((res) => {
+        console.log(res.data);
+        resetDialogs();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleIsDraft = (event) => {
+    setIsDraft(event.target.checked);
+    console.log("clicking switch isDraft");
+  };
+
+  const openAdd = () => {
+    setAddOpen(true);
+  };
+
+  const resetDialogs = () => {
+    setAddOpen(false);
+  };
+
+  const addDialog = (
+    <Dialog
+      open={addOpen}
+      onClose={() => {
+        setAddOpen(false);
+      }}
+    >
+      <DialogTitle>Save Curriculum</DialogTitle>
+      <DialogContent style={{ minWidth: 500 }}>
+        <DialogContentText color="gray"> {addMessage} </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            console.log("closing add dialog");
+            resetDialogs();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            if (props.useUpdate) {
+              console.log("saving curriculum");
+              updateCurriculum();
+            } else {
+              console.log("updating curriculum");
+              saveCurriculum();
+            }
+          }}
+        >
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <div style={{ margin: 30 }}>
-      {loadCurriculum ? (
+      {Object.keys(props.lists).length ? (
         <Grid
           container
           direction="column"
@@ -216,7 +331,7 @@ export default function Builder(props) {
             direction="row"
             justifyContent="flex-start"
             alignItems="center"
-            spacing={1}
+            spacing={2}
           >
             <Grid xs={6} item>
               <TextField
@@ -230,7 +345,29 @@ export default function Builder(props) {
               />
             </Grid>
             <Grid item>
-              <IconButton onClick={() => console.log("clicked save button")}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={isDraft}
+                    onChange={handleIsDraft}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label="Draft?"
+              />
+            </Grid>
+            <Grid item>
+              <IconButton
+                onClick={() => {
+                  if (props.useUpdate) {
+                    console.log("clicked update curriculum");
+                  } else {
+                    console.log("clicked saving curriculum");
+                  }
+                  loadCurriculum();
+                  openAdd();
+                }}
+              >
                 <SaveAsIcon />
               </IconButton>
             </Grid>
@@ -255,6 +392,7 @@ export default function Builder(props) {
       ) : (
         <></>
       )}
+      {addDialog}
       {/* <Fab
         size="large"
         aria-label="add"

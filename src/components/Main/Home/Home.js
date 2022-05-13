@@ -13,8 +13,7 @@ function NewCurriculumButton(props) {
   return (
     <Tooltip title="Create a new curriculum">
       <Fab size="small" color="primary">
-        {" "}
-        <Add />{" "}
+        <Add />
       </Fab>
     </Tooltip>
   );
@@ -29,20 +28,24 @@ export default function Home(props) {
   const [draftCurriculum, setDraftCurriculum] = useState([]);
 
   useEffect(() => {
+    props.setUseUpdate(false);
+  }, []);
+
+  useEffect(() => {
     getLists();
   }, [props.User]);
 
   const getLists = async () => {
     if (props.User) {
       if (!props.User.isAdmin) {
-          getUserCurrs(props.User.user_id);
-          getUserDrafts(props.User.user_id);
+        getUserCurrs(props.User.user_id);
+        getUserDrafts(props.User.user_id);
       }
       getAllBase();
     }
   };
 
-  const getAllBase = async() => {
+  const getAllBase = async () => {
     await axios({
       method: "GET",
       url: `${tempAPI}degrees`,
@@ -54,34 +57,34 @@ export default function Home(props) {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-  const getUserCurrs = async(id) => {
+  const getUserCurrs = async (id) => {
     await axios({
       method: "GET",
       url: `${tempAPI}curriculum/user/${id}`,
     })
-    .then((res) => {
-      console.log("curriculums", res.data);
-      setCurriculums(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        console.log("curriculums", res.data);
+        setCurriculums(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const getUserDrafts = async(id) => {
+  const getUserDrafts = async (id) => {
     await axios({
       method: "GET",
       url: `${tempAPI}curriculum/user_draft/${id}`,
     })
-    .then((res) => {
-      console.log("curriculums", res.data);
-      setDraftCurriculum(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        console.log("curriculums", res.data);
+        setDraftCurriculum(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div style={{ margin: 50 }}>
@@ -108,6 +111,7 @@ export default function Home(props) {
                   loading={false}
                   curriculums={draftCurriculum}
                   editButtons={true}
+                  update={true}
                 />
               </div>
               <div style={{ padding: 10 }}>
@@ -117,6 +121,7 @@ export default function Home(props) {
                   loading={false}
                   curriculums={curriculums}
                   editButtons={true}
+                  update={true}
                 />
               </div>
             </div>

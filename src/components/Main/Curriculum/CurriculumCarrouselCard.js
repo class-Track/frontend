@@ -20,7 +20,14 @@ export default function CurriculumCarrouselCard(props) {
   let item = props.item;
 
   const viewCurriculum = () => {
-    history.push("/Curriculum/" + props.item.curriculum_sequence);
+    props.setUseUpdate(props.update ? props.update : false);
+    history.push({
+      pathname: "/Curriculum/" + props.item.curriculum_sequence,
+      // state: {
+      //   isDraft: props.isDraft,
+      //   update: props.update,
+      // },
+    });
   };
 
   return (
