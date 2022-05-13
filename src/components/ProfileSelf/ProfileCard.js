@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Avatar } from '@mui/material';
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -111,19 +111,6 @@ export default function ProfileCard(props) {
     );
  }
  
- function Skills(props) {
-    let startKey = 0;
-    return (
-       <div className={classes.card__skills}>
-          {
-             props.skills.map(elem => {
-                return <span className={classes.card__skills_span} key={startKey++}>{elem}</span>
-             })
-          }
-       </div>
-    );
- }
- 
  function Avatar(props) {
     return (
        <div >
@@ -146,15 +133,6 @@ export default function ProfileCard(props) {
     );
  }
  
-//  function Info(props) {
-//     return (
-//        <div className={classes.card__info}>
-//           <span className={classes.card__info_span}>Pens: {props.pens}</span>
-//           <span className={classes.card__info_span}>Posts: {props.posts}</span>
-//           <span className={classes.card__info_span}>Projects: {props.projects}</span>
-//        </div>
-//     );
-//  }
   return (
     <ThemeProvider theme={theme}>
         <div className={classes.card}>
