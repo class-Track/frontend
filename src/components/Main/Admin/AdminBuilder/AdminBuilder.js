@@ -40,6 +40,8 @@ export default function AdminBuilder(props) {
   const [categories, setCategories] = useState({});
   const [categoryKeys, setCategoryKeys] = useState([]);
   const [categoryLists, setCategoryLists] = useState({});
+  const [addOpen, setAddOpen] = useState(false);
+  const addMessage = "Would you like to save this curriculum?";
   // const [builderLists, setLists] = useState({});
 
   useEffect(() => {
@@ -241,6 +243,7 @@ export default function AdminBuilder(props) {
     })
       .then((res) => {
         console.log(res.data);
+        resetDialogs();
       })
       .catch((err) => {
         console.log(err);
@@ -294,6 +297,14 @@ export default function AdminBuilder(props) {
     console.log(response);
   };
 
+  const openAdd = () => {
+    setAddOpen(true);
+  };
+
+  const resetDialogs = () => {
+    setAddOpen(false);
+  };
+
   const stepper = (
     <Stepper activeStep={activeStep}>
       {steps.map((label, index) => {
@@ -318,11 +329,43 @@ export default function AdminBuilder(props) {
           (activeStep === 1 && emptyObject(categories)) ||
           (activeStep === 2 && !totalCourses())
         }
-        onClick={activeStep < steps.length ? handleNext : saveGraph}
+        onClick={activeStep < steps.length - 1 ? handleNext : openAdd}
       >
-        {activeStep < steps.length ? "Next" : "Finish"}
+        {activeStep < steps.length - 1 ? "Next" : "Finish"}
       </Button>
     </Box>
+  );
+
+  const addDialog = (
+    <Dialog
+      open={addOpen}
+      onClose={() => {
+        setAddOpen(false);
+      }}
+    >
+      <DialogTitle>Save Curriculum</DialogTitle>
+      <DialogContent style={{ minWidth: 500 }}>
+        <DialogContentText>{addMessage}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            console.log("closing add dialog");
+            resetDialogs();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            console.log("saving curriculum");
+            saveGraph();
+          }}
+        >
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 
   const components = [
@@ -367,6 +410,7 @@ export default function AdminBuilder(props) {
       {stepper}
       {components[activeStep]}
       {navigation}
+      {addDialog}
     </div>
   );
 }
