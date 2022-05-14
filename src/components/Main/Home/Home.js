@@ -96,7 +96,7 @@ export default function Home(props) {
               title="Base Curriculums"
               loading={false}
               curriculums={degrees}
-              headerButton={NewCurriculumButton}
+              // headerButton={NewCurriculumButton}
               editButtons={true}
             />
           </div>

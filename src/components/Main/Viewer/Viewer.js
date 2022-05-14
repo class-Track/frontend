@@ -10,6 +10,7 @@ import {
   Stack,
   IconButton,
   Button,
+  Alert,
   Icon,
   SpeedDial,
   SpeedDialIcon,
@@ -25,7 +26,7 @@ export default function Viewer(props) {
   const data = props.history;
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
-  const [curriculum, setCurriculum] = useState();
+  const [curriculum, setCurriculum] = useState([]);
   const [loadCurriculum, setLoadCurriculum] = useState(false);
   const [years, setYears] = useState([]);
   const [session_id, setSessionID] = useState(cookies.get("SessionID"));
@@ -89,6 +90,7 @@ export default function Viewer(props) {
       })
       .catch((error) => {
         console.log(error.data);
+        setLoadCurriculum(true);
       });
   };
 
@@ -104,7 +106,7 @@ export default function Viewer(props) {
 
   return (
     <div style={{ margin: 40 }}>
-      {loadCurriculum ? (
+      {(loadCurriculum && curriculum.length > 0) ? (
         <Grid
           container
           direction="column"
@@ -198,7 +200,7 @@ export default function Viewer(props) {
               ))}
           </Grid>
         </Grid>
-      ) : (
+      ) : (loadCurriculum && curriculum.length === 0) ? (<Alert variant="outlined" severity="info"> The curriculum for this Degree hasn't been created yet. </Alert>) : (
         <p>loading curriculum for viewer...</p>
       )}
     </div>
